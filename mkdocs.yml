@@ -1,0 +1,14 @@
+site_name: Ahtapot Projesi Dokümantasyon
+pages:
+- "ANASAYFA": index.md
+- "HAKKINDA": hakkinda.md
+theme: readthedocs
+repo_url: https://github.com/Pardus-Ahtapot/Dokumanlar/tree/master/docs
+markdown_extensions:
+    - extra
+    - smarty
+    - toc:
+        permalink: True
+    - sane_lists
+    - footnotes
+
