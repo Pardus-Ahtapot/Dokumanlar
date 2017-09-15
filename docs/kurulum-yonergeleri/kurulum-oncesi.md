@@ -2,7 +2,7 @@
 
 ### Pardus-Ahtapot ISO'sunun indirilmesi
 
-Pardus-Ahtapot ISO'su **http://depo.pardus.org.tr** adresinden indirebilinir.
+Pardus-Ahtapot ISO'su **http://depo.pardus.org.tr/pub/ISO/Ahtapot/pardus-ahtapot-kurumsal5-amd64.iso** adresinden indirebilinir.
 
 ### CA Sunucusunun Kurulması
 
