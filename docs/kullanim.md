@@ -1,0 +1,1 @@
+# Ahtapot Bileşenleri Kullanım Yönergeleri

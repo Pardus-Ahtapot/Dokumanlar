@@ -1,9 +1,45 @@
 site_name: Ahtapot Projesi Dokümantasyon
 pages:
 - "ANASAYFA": index.md
+- "KURULUM YÖNERGELERİ":
+    - 'Kuruluma Başlamadan Önce': 'kurulum-yonergeleri/kurulum-oncesi.md'
+    - 'Pardus Temel ISO Kurulumu': 'kurulum-yonergeleri/pardus-temel-iso-kurulumu.md'
+    - 'CA Kurulumu ve Anahtar Yönetimi': 'kurulum-yonergeleri/ca-kurulum.md'
+    - 'Merkezi Yönetim Sistemi ve Güvenlik Duvarı Kurulumları': 'kurulum-yonergeleri/merkezi-yonetim-sistemi-ile-ahtapot-kurulumlari-yapilmasi.md'
+    - 'Sanal Özel Ağ Sistemi (VPN) Kurulumu': 'kurulum-yonergeleri/vpn-kurulum.md'
+    - 'Güvenli Internet Erişim Sistemi (PROXY) Kurulumu': 'kurulum-yonergeleri/proxy-kurulum.md'
+    - 'Siber Olay, Açıklık, Risk İzleme ve Yönetim Sistemi Kurulumu': 'kurulum-yonergeleri/siem-kurulum.md'
+- "KULLANIM KLAVUZLARI": 
+    - 'Güvenlik Duvarı Yönetim Sistemi Kullanımı': 'kullanim-klavuzlari/gdys-kullanim.md'
+    - 'Geçici Kural Tanımlama Sistemi Kullanımı': 'kullanim-klavuzlari/gkts-kullanim.md'
+    - 'Ansible Playbook Yönetimi': 'kullanim-klavuzlari/mys-kullanim.md'
+    - 'Limitli Kullanıcı Konsolu': 'kullanim-klavuzlari/lkk-kullanim.md'
+    - 'Siber Olay, Açıklık, Risk İzleme ve Yönetim Sistemi Kullanımı': 'kullanim-klavuzlari/siem-kullanim.md'
+    - 'ELK ile Oluşan Alarmlar İçin Local Harita ve Coğrafi IP Veritabanı Oluşturulması': 'kullanim-klavuzlari/es-cografi-harita.md'
+    - 'Portscanner Kullanım' : 'kullanim-klavuzlari/portscan-kullanim.md'
+    - 'Ocswb Kullanım' : 'kullanim-klavuzlari/ocswb-kullanim.md'
+    - 'Güvenli Internet Erişim Sistemi (PROXY) Kullanım' : 'kullanim-klavuzlari/proxy-kullanim.md'
+    - 'ELK Kullanım' : 'kullanim-klavuzlari/elk-kullanim.md'
+    - '5651 İmzalama Kullanımı' : 'kullanim-klavuzlari/imzalama.md'
+    - 'Sistemler Üzerinde USB Kullanımını Engelleme' : 'kullanim-klavuzlari/usbengelleme.md'
+    - 'MYS Yapısında Test Sistemi Oluşturulması ve Kullanımı' : 'kullanim-klavuzlari/test-sistem.md'
+    - 'MYS Yapısında Kurulmayan Sistemler İçin Yapılması Gereken Değişiklikler' : 'kullanim-klavuzlari/kurulmayan-sistemler.md'
+    - 'Ahtapot Hata Ayıklama Rehberi' : 'kullanim-klavuzlari/hataayiklama.md'
+- "DIZAYN":
+    - 'Merkezi Yönetim Sistemi': 'dizayn/merkezi-yonetim-sistemi.md'
+    - 'Merkezi Güvenlik Duvarı Yönetim Sistemi Kontrol Paneli': 'dizayn/merkezi-guvenlik-duvari-yonetim-sistemi-kontrol-paneli.md'
+    - 'Güvenlik Duvarı Hizmet Dışı Bırakma Saldırıları Önleme Amaçlı Kernel Parametreleri': 'dizayn/guvenlik-duvari-hizmet-disi-birakma-saldirilari-onleme-amacli-kernel-parametreleri.md'
+    - 'Gitlab Yedekleme Sistemi' : 'dizayn/gitlab-yedekleme-sistemi.md'
+    - 'Siber Olay, Açıklık, Risk İzleme ve Yönetim Sistemi Tasarımı' : 'dizayn/SIEM.md'
+    - 'Güvenlik Duvarı Yönetim Sistemi' : 'dizayn/guvenlik-duvari-yonetim-sistemi.md'
+    - 'Geçici Kural Tanımlama Sistemi' : 'dizayn/gecici-kural-tanimlama-sistemi.md'
+    - 'Güvenli İnternet Erişim Sistemi' : 'dizayn/guvenli-internet-erisim-sistemi.md'
+    - 'Ahtapot Projesinde Sistemlere Kurulan Paketler ve Bağımlılıkları' : 'dizayn/paketler.md'
+- "GEREKLİ DOSYALAR":
+    - 'Firewall Builder Konfigürasyon Dosyası': 'dosyalar/gdys-fwb.md'
 - "HAKKINDA": hakkinda.md
 theme: readthedocs
-repo_url: https://github.com/Pardus-Ahtapot/Dokumanlar/tree/master/docs
+#repo_url: https://github.com/Pardus-Ahtapot/Dokumanlar/tree/master/docs
 markdown_extensions:
     - extra
     - smarty
