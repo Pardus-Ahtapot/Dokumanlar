@@ -8,6 +8,7 @@ Ahtapot, Pardus Linux üzerine inşa edilen ve bir kurumun ihtiyaç duyacağı t
 
 ## Bileşenler
 
+* Merkezi Yönetim Sistemi (MYS)
 * Güvenlik Duvarı Yönetim Sistemi (GDYS)
 * Güvenli İnternet Erişim Sistemi (GİnES)
 * Siber Olay, Açıklık, Risk İzleme ve Yönetim Sistemi
