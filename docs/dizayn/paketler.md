@@ -177,9 +177,8 @@ Bu dokümanda, Ahtapot Projesinde Sistemlere Kurulan Paketler ve Bağımlılıkl
 
 		|Paket Listesi        |                  |                 |               |
 		|---------------------|------------------|-----------------|---------------|
-		|libacl1|lsb-base|openssh-client|openssh-server|
-		|duplicity|libattr1|base-files|libpopt0|
-		|libc6||||
+		|libc6|libattr1|base-files|libpopt0|
+		|libacl1|lsb-base|||
 
 		
 ###DHCP Rolü İle Yüklenen Paketler
