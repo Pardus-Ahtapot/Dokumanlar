@@ -12,12 +12,6 @@ Bu dokümanda, Ahtapot Projesinde Sistemlere Kurulan Paketler ve Bağımlılıkl
 
 * Base rolünde yüklenen paketler, MYS kapsamında yönetilen tüm makinalara kurulan ortak paketlerdir.
 	* auditd : Loglama yapılması için yüklenmiş pakettir
-		* Reverse Depends:
-
-		|Paket Listesi  |                       |
-		|---------------|-----------------------|
-		|udispd-plugins |libvirt-daemon-system  |
-
 
 		* Dependencies: 
 
@@ -29,13 +23,7 @@ Bu dokümanda, Ahtapot Projesinde Sistemlere Kurulan Paketler ve Bağımlılıkl
 
 		
 	* sysstat : Performans raporlaması için yüklenmiş pakettir
-		* Reverse Depends:
 
-		|Paket Listesi             |     |         |        |
-		|--------------------------|-----|---------|--------| 
-		|plainbox-provider-checkbox|isag |i3blocks |dtc-xen |
-
-		
 		* Dependencies: 
 
 		|Paket Listesi |            |            |         |
@@ -46,19 +34,7 @@ Bu dokümanda, Ahtapot Projesinde Sistemlere Kurulan Paketler ve Bağımlılıkl
 
 		
 	* ntp : Zaman senkranizasyonu için yüklenmiş pakettir
-		* Reverse Depends:
 
-		|Paket Listesi        |                  |                 |               |
-		|---------------------|------------------|-----------------|---------------|
-		|openstack-compute-node|fake-hwclock   |lava-dispatcher|aiccu|
-		|gnome-system-tools |debci|lava-server|predict|
-		|chrony|gnumed-client|mate-system-tools|predict-gsat|
-		|bwctl-server|hobbit-plugins|netsniff-ng|radioclk|
-		|dms-core|ircd-ratbox|openafs-fileserver|samba|
-		|openstack-cloud-services|dovecot-core|openntpd|slony1-2-bin|
-		|education-main-server|lava|jffnms|tucnak2|
-
-		
 		* Dependencies: 
 
 		|Paket Listesi        |                  |                 |               |
@@ -69,22 +45,7 @@ Bu dokümanda, Ahtapot Projesinde Sistemlere Kurulan Paketler ve Bağımlılıkl
 
 		
 	* bash : Bash bağımlılığı bulunan uygulmamları için yüklenmiş pakettir
-		* Reverse Depends:
 
-		|Paket Listesi        |                  |                 |               |
-		|---------------------|------------------|-----------------|---------------|
-		|autojump|diffmon|inxi|origami|
-		|backupninja|dpatch|kernel-patch-viewos|plowshare4|
-		|bash-builtins|emacs-goodies-el|libbash|podget|
-		|bash-completion|fadecut|linux-patch-debianlogo|powerline|
-		|bash-doc|fiaif|linux-patch-grsecurity2|prey|
-		|bashburn|firehol|lrzip|rdup|biabam|
-		|foomatic-db-engine|mason|s3dvt|colortest|
-		|foomatic-filters|monotone|txt2regex|common-lisp-controller|
-		|git-ftp|netscript-2.4|votca-csg-scripts|devscripts-el|
-		|gt5|netscript-ipfilter|votca-csg-tutorials||
-
-		
  		* Dependencies: 
 
 		|Paket Listesi        |                  |                 |               |
@@ -95,20 +56,7 @@ Bu dokümanda, Ahtapot Projesinde Sistemlere Kurulan Paketler ve Bağımlılıkl
 
 		
 	* rsyslog : Loglama yapılması için yüklenmiş pakettir
-		* Reverse Depends:
 
-		|Paket Listesi        |                  |                 |               |
-		|---------------------|------------------|-----------------|---------------|
-		|anacron|heartbeat|nullmailer|rsyslog-mongodb|
-		|apparmor|initscripts|prelude-lml|rsyslog-mysql|
-		|approx|ldirectord|psad|rsyslog-pgsql|
-		|arno-iptables-firewall|loganalyzer|request-tracker4|rsyslog-relp|
-		|auth2db|logcheck|rlinetd|sympa|
-		|cloudprint|ltsp-client|rsyslog-elasticsearch|ufw|
-		|education-common|ltsp-client-core|rsyslog-gnutls|xinetd|
-		|fwlogwatch|lyskom-server|rsyslog-gssapi|xwatch|
-
-		
 		* Dependencies: 
 
 		|Paket Listesi        |                  |                 |               |
@@ -121,26 +69,7 @@ Bu dokümanda, Ahtapot Projesinde Sistemlere Kurulan Paketler ve Bağımlılıkl
 
 		
 	* sudo : Kullanıcı yetkilerini düzenleme amaçlı yüklenmiş pakettir.
-		* Reverse Depends: 
 
-		|Paket Listesi        |                  |                 |               |
-		|---------------------|------------------|-----------------|---------------|
-		|apt-dater-host|etckeeper|mini-buildd|qemu-user|
-		|apt-file|fvwm-crystal|mountpy|qemu-user-static|
-		|apt-src|geximon|neutron-dhcp-agent|ranger|
-		|neutron-plugin-linuxbridge-agent|gksu|neutron-l3-agent|smb4k|
-		|neutron-plugin-nec-agent|gnumed-server|ara|sshuttle|
-		|auto-apt|hobbit-plugins|arriero|sudo-ldap|
-		|neutron-plugin-openvswitch-agent|inxi|bashburn|sudo-ldap|
-		|bundler|kdesudo|ctdb|ubuntu-dev-tools|
-		|ldap-account-manager-lamdaemon|lava-dispatcher|pconsole|wajig|
-		|python-oslo.rootwrap|pbuilder|piuparts-slave|wicd-cli|
-		|drobo-utils|libgksu2-0|python-nova|wicd-curses|
-		|dtc-xen|linaro-image-tools|dkms|winetricks|
-		|education-standalone|live-config|elida|xara-gtk|
-		|python3-oslo.rootwrap|matlab-support|q4wine|xfce4-session|
-
-		
 		* Dependencies: 
 
 		|Paket Listesi        |                  |                 |               |
@@ -150,31 +79,7 @@ Bu dokümanda, Ahtapot Projesinde Sistemlere Kurulan Paketler ve Bağımlılıkl
 
 		
 	* logrotate: Logların belirli periyotlar ile arşivlenmesi için gerekli pakettir
-		* Reverse Depends:
 
-		|Paket Listesi        |                  |                 |               |
-		|---------------------|------------------|-----------------|---------------|
-		|aolserver4-daemon|icecc|prayer|sympa|
-		|apt-cacher-ng|ippl|privoxy|syslog-ng-core|
-		|argus-server|kdm|pyca|tinyproxy|
-		|atftpd|knockd|pygopherd|tor|
-		|bareos-director|ldirectord|quagga|twatch|
-		|bdii|leafnode|rabbitmq-server|uucp|
-		|cacti|libvirt-daemon-system|radosgw|vsftpd|
-		|ceph|libzypp|rsnapshot|xinetd|
-		|clamav-base|liquidsoap|rsyslog|xtel|
-		|clamav-freshclam|logstash|samba|xtide|
-		|clamav-milter|logster|sendmail-base|yaws|
-		|cricket|mailman|sipwitch|yrmcds|
-		|cron|masqmail|sks|zabbix-agent|ctdb|
-		|mgetty|slbackup|zabbix-proxy-mysql|cubemap|
-		|muddleftpd|slony1-2-bin|zabbix-proxy-pgsql|distributed-net|
-		|net-acct|squid3|zabbix-proxy-sqlite3|dsyslog|
-		|ninja|sugarplum|zabbix-server-mysql|heartbeat|
-		|pawserv|super|zabbix-server-pgsql|heimdal-kdc|
-		|postgresql-common||||
-
-		
 		* Dependencies:
 	
 		|Paket Listesi        |                  |                 |               |
@@ -194,13 +99,7 @@ Bu dokümanda, Ahtapot Projesinde Sistemlere Kurulan Paketler ve Bağımlılıkl
 
 		
 	* rsyslog-gnutls : Rsyslog üzerinden TLS ile log gönderimi için kurulan pakettir.
-		* Reverse Depends:
 
-		|Paket Listesi        |
-		|---------------------|
-		|rsyslog|
-
-		
 		* Dependencies:
 
 		|Paket Listesi        |                  |                 |               |
@@ -228,36 +127,6 @@ Bu dokümanda, Ahtapot Projesinde Sistemlere Kurulan Paketler ve Bağımlılıkl
 			 
 * Ansible rolünde yüklenen paketler, MYS kapsamında yönetilen Ansible görevi verilen tüm makinalara kurulan ortak paketlerdir.
 	* git : Merkezi Yönetim Sistemine ait playbookların depolanması için kullanılan git adresine erişim yapılması amacı ile yüklenmiş pakettir.
-		* Reverse Depends: 
-
-		|Paket Listesi        |                  |                 |               |
-		|---------------------|------------------|-----------------|---------------|
-		|blogofile|git-el|gitweb|phpunit-git|
-		|bugs-everywhere|git-email|grokmirror|pkg-perl-tools|
-		|buildbot|git-extras|guilt|propellor|
-		|bup|git-flow|hg-fast-export|prt|git-dpm|
-		|calypso|git-ftp|hobbit-plugins|python-git|
-		|commit-patch|git-gui|ikiwiki|python-setuptools-git|
-		|dh-make-perl|git-man|ikiwiki-hosting-web|python-vcversioner|
-		|dh-ocaml|git-mediawiki|julia|python3-setuptools-git|
-		|drush|git-notifier|kdesrc-build|python3-vcversioner|
-		|duck|git-reintegrate|kdevplatform8-libs|qgit|
-		|etckeeper|git-remote-bzr|keyringer|qtcreator|
-		|fdroidserver|git-remote-gcrypt|kgb-bot|rebar|
-		|flashbake|git-remote-hg|kup-server|redmine|
-		|fusionforge-plugin-scmgit|git-repair|lava-dev|ruby-git|
-		|giggle|git-review|lava-dispatcher|ruby-grack|
-		|git-all|git-sh|ldap-git-backup|sparkleshare|
-		|git-annex|git-svn|libapp-nopaste-perl|sputnik|
-		|git-arch|git2cl|libgit-repository-perl|stgit|
-		|git-buildpackage|gitg|libgit-wrapper-perl|svn-all-fast-export|
-		|git-core|github-backup|magit|tig|
-		|git-cvs|gitit|myrepos|ui-auto|
-		|git-cvs|gitk|opam|undertaker|
-		|git-daemon-run|gitolite3|pass|vcsh|
-		|git-daemon-sysvinit|gitpkg|pepper|zim|
-		|git-doc|gitstats|php-monolog|zsh-antigen|
-
 		
 		* Dependencies: 
 
@@ -293,33 +162,6 @@ Bu dokümanda, Ahtapot Projesinde Sistemlere Kurulan Paketler ve Bağımlılıkl
 
 		
 	* python-requests : ansible’ın bağımlılık paketi olduğu için yüklenmiş pakettir.
-		* Reverse Depends: 
-
-		|Paket Listesi        |                  |                 |               |
-		|---------------------|------------------|-----------------|---------------|
-		|beets|python-ceilometer|python-mandrill|python-socketio-client|
-		|cloud-init|python-ceph|python-neutron|python-softlayer|
-		|dosage|python-cinder|python-neutronclient|python-sphinxcontrib.issuetracker|
-		|encuentro|python-cinderclient|python-nova|python-stdeb|
-		|epigrass|python-debiancontributors|python-novaclient|python-subliminal|
-		|euca2ools|python-designateclient|python-openstackclient|python-swiftclient|
-		|gertty|python-docker|python-pip|python-swiftsc|
-		|git-review|python-fedmsg|python-plotly|python-troveclient|
-		|httpie|python-fedora|python-pycarddav|python-tuskarclient|
-		|lava-dispatcher|python-gcm-client|python-pypump|python-twitter|
-		|linkchecker|python-geopy|python-pysaml2|python-weboob|
-		|mopidy-beets|python-glance|python-pyvmomi|python-x2go|
-		|mopidy-soundcloud|python-glanceclient|python-requestbuilder|python3-responses|
-		|nikola|python-guessit|python-requests-kerberos|radicale|python-social-auth|
-		|pybit-client|python-heat|python-requests-mock|slapos-client|
-		|python-acoustid|python-heatclient|python-requests-oauthlib|ssh-import-id|
-		|python-awsauth|python-influxdb|python-responses|streamtuner2|
-		|python-barbicanclient|python-jenkinsapi|python-saharaclient|syslog-ng-mod-elasticsearch|
-		|python-boto|python-keystoneclient|python-savannaclient|vim-youcompleteme|
-		|python-botocore|python-keystonemiddleware|python-seamicroclient|wapiti|
-		|python-braintree|python-libturpial|python-smstrade|python-catcher|
-		|python-livestreamer||||
-
 		
 		* Dependencies: 
 
@@ -330,27 +172,6 @@ Bu dokümanda, Ahtapot Projesinde Sistemlere Kurulan Paketler ve Bağımlılıkl
 
 		
 	* rsync: Logların gönderilmesi için yüklenmiş pakettir.
-		* Reverse Depends: 
-
-		|Paket Listesi        |                  |                 |               |
-		|---------------------|------------------|-----------------|---------------|
-		|backintime-common|flexbackup|live-tools|rsnapshot|
-		|backupninja|gadmin-rsync|lsb-core|rssh|
-		|backuppc|git|lsyncd|rsyncrypto|
-		|barman|git-annex|luckybackup|simple-cdd|
-		|bzrtools|git-remote-gcrypt|lxc|sisu|
-		|clamav-unofficial-sigs|git-repair|mrb|slack|
-		|clsync|gnumed-server|mrs|subversion-tools|
-		|debaux|grml2usb|nanoc|swift-account|
-		|debmirror|grsync|opam|swift-container|
-		|dirvish|hdup|openssh-known-hosts|swift-object|
-		|dms-core|inosync|python-poker-engine|swift-object-expirer|
-		|dput|jailtool|python-tomahawk|tailor|
-		|duplicity|ksplice|python3-tomahawk|vserver-debiantools|
-		|education-common|libfile-rsync-perl|repmgr|vzctl|
-		|fdroidserver|libguestfs-rsync|rsbackup|vzdump|
-		|flashybrid|live-boot||||
-
 		
 		* Dependencies: 
 
@@ -365,12 +186,6 @@ Bu dokümanda, Ahtapot Projesinde Sistemlere Kurulan Paketler ve Bağımlılıkl
 
 * DHCP rolünde yüklenen paketler, MYS kapsamında yönetilen Dhcp görevi verilen tüm makinalara kurulan ortak paketlerdir.
 	* Udhcpd : DHCP servisini kuran pakettir.
-		* Reverse Depends: 
-
-		|Paket Listesi        |                  |
-		|---------------------|------------------|
-		|di-netboot-assistant|dhcp-helper|
-
 		
 		* Dependencies:
 
@@ -404,12 +219,6 @@ Bu dokümanda, Ahtapot Projesinde Sistemlere Kurulan Paketler ve Bağımlılıkl
 
 		
 	* Elasticsearch : ElasticSearch uygulamasını barındıran pakettir.
-		* Reverse Depends:
-
-		|Paket Listesi        |
-		|---------------------|
-		|search-guard-ssl|
-
 		
 		* Dependencies:
 
@@ -419,12 +228,6 @@ Bu dokümanda, Ahtapot Projesinde Sistemlere Kurulan Paketler ve Bağımlılıkl
 
 		
 	* Search-guard-ssl : Search Guard uygulamasının SSL üzerinden çalışmasını sağlayan pakettir.
-		* Reverse Depends:
-
-		|Paket Listesi        |
-		|---------------------|
-		|search-guard|
-
 		
 		* Dependencies:
 
@@ -445,25 +248,6 @@ Bu dokümanda, Ahtapot Projesinde Sistemlere Kurulan Paketler ve Bağımlılıkl
 
 * Firewall rolünde yüklenen paketler, MYS kapsamında yönetilen Firewall görevi verilen tüm makinalara kurulan ortak paketlerdir.
 	* iptables : Güvenlik Duvarı kuralları için yüklenmiş pakettir.
-		* Reverse Depends: 
-
-		|Paket Listesi        |                  |                 |               |
-		|---------------------|------------------|-----------------|---------------|
-		|apf-firewall|fwanalog|libxtables10|puppet-module-puppetlabs-firewall|
-		|arno-iptables-firewall|fwknop-server|linux-igd|pyroman|
-		|collectd|fwsnort|miniupnpd|python-netfilter|
-		|collectd-core|heartbeat|mxallowd|shorewall|
-		|concordance-common|ipkungfu|netscript-2.4|shorewall-core|
-		|dtc-xen-firewall|ipset|netscript-ipfilter|shorewall-lite|
-		|ebtables|iptables-dev|network-config|shorewall6|
-		|education-main-server|iptables-dev|network-manager|shorewall6-lite|
-		|education-thin-client-server|iptables-persistent|nova-compute|sshguard|
-		|fail2ban|kvpnc|nova-network|sshuttle|
-		|ferm|libiptables-ipv4-ipqueue-perl|olpc-powerd|ufw|
-		|fiaif|libpam-shield|p3scan|uif|
-		|firehol|libvirt-daemon-system|ppp-gatekeeper|uruk|
-		|firewalld|libxtables10|psad|util-vserver|
-
 
 		* Dependencies:
 
@@ -472,11 +256,6 @@ Bu dokümanda, Ahtapot Projesinde Sistemlere Kurulan Paketler ve Bağımlılıkl
 		|libc6|libnfnetlink0|libxtables10|
 
 	* iptables-persistent : Güvenlik Duvarı kuralları için yüklenmiş pakettir.
-		* Reverse Depends: 
-
-		|Paket Listesi        |                  |
-		|---------------------|------------------|
-		|netfilter-persistent|dms-core|
 
 		* Dependencies: 
 
@@ -485,27 +264,6 @@ Bu dokümanda, Ahtapot Projesinde Sistemlere Kurulan Paketler ve Bağımlılıkl
 		|netfilter-persistent|iptables|debconf|debconf-2.0|
 
 	* rsync : Logların belirli periyotlarda merkez sunucuya gönderilmesi için yüklenmiş pakettir.
-		* Reverse Depends: 
-
-		|Paket Listesi        |                  |                 |               |
-		|---------------------|------------------|-----------------|---------------| 
-		|backintime-common|flexbackup|live-boot|rsnapshot|
-		|backupninja|gadmin-rsync|live-tools|rssh|
-		|backuppc|git|lsb-core|rsyncrypto|
-		|barman|git|lsyncd|simple-cdd|
-		|bzrtools|git-annex|luckybackup|sisu|
-		|clamav-unofficial-sigs|git-remote-gcrypt|lxc|slack|
-		|clsync|git-repair|mrb|subversion-tools|
-		|debaux|gnumed-server|mrs|swift-account|
-		|debmirror|grml2usb|nanoc|swift-container|
-		|dirvish|grsync|opam|swift-object|
-		|dms-core|hdup|openssh-known-hosts|swift-object-expirer|
-		|dput|inosync|python-poker-engine|tailor|
-		|duplicity|jailtool|python-tomahawk|vserver-debiantools|
-		|education-common|ksplice|python3-tomahawk|vzctl|
-		|fdroidserver|libfile-rsync-perl|repmgr|vzdump|
-		|flashybrid|libguestfs-rsync|rsbackup||
-
 
 		* Dependencies: 
 
@@ -516,11 +274,6 @@ Bu dokümanda, Ahtapot Projesinde Sistemlere Kurulan Paketler ve Bağımlılıkl
 		|duplicity||||
 
 	* keepalived : Güvenlik Duvarı yedekliliği için yüklenmiş pakettir.
-		* Reverse Depends: 
-
-		|Paket Listesi        |                  |
-		|---------------------|------------------| 
-		|yrmcds|ipvsadm|
 
 		* Dependencies: 
 
@@ -538,11 +291,6 @@ Bu dokümanda, Ahtapot Projesinde Sistemlere Kurulan Paketler ve Bağımlılıkl
 		|libc6|libncurses5|libtinfo5|
 
 	* ifenslave : Güvenlik duvarı arabirim yedekliliği için yüklenmiş pakettir.
-		* Reverse Depends: 
-
-		|Paket Listesi        |
-		|---------------------|
-		|ifenslave-2.6|
 
 		* Dependencies: 
 
@@ -574,11 +322,6 @@ Bu dokümanda, Ahtapot Projesinde Sistemlere Kurulan Paketler ve Bağımlılıkl
 		|lsb-base|cron|||
 	
 	* Mtr-tiny : Güvenlik duvarı anlık izleme için yüklenmiş pakettir.
-		* Reverse Depends: 
-
-		|Paket Listesi        |           |
-		|---------------------|-----------| 
-		|mtr|education-common|
 
 		* Dependencies: 
 
@@ -588,6 +331,7 @@ Bu dokümanda, Ahtapot Projesinde Sistemlere Kurulan Paketler ve Bağımlılıkl
 |		suidmanager||||
 
 	* Iptstate : Güvenlik duvarı anlık izleme için yüklenmiş pakettir.
+	
 		* Dependencies: 
 
 		|Paket Listesi        |                  |                 |               |
@@ -596,6 +340,7 @@ Bu dokümanda, Ahtapot Projesinde Sistemlere Kurulan Paketler ve Bağımlılıkl
 		|libstdc++6|libtinfo5||| 
 		
 	* Bmon : Güvenlik duvarı anlık izleme için yüklenmiş pakettir.
+	
 		* Dependencies: 
 
 		|Paket Listesi        |                  |                 |               |
@@ -624,35 +369,6 @@ Bu dokümanda, Ahtapot Projesinde Sistemlere Kurulan Paketler ve Bağımlılıkl
 		|fwbuilder-common|libqt4-network|libstdc++6||
 
 	* git : Güvenlik Duvarı Yönetim Sistemi için kullanılan git adresine erişim yapılması amacı ile yüklenmiş pakettir.
-		* Reverse Depends: 
-
-		|Paket Listesi        |                  |                 |               |
-		|---------------------|------------------|-----------------|---------------|
-		|blogofile|git-el|gitweb|phpunit-git|
-		|bugs-everywhere|git-email|grokmirror|pkg-perl-tools|
-		|buildbot|git-extras|guilt|propellor|
-		|bup|git-flow|hg-fast-export|prt|git-dpm|
-		|calypso|git-ftp|hobbit-plugins|python-git|
-		|commit-patch|git-gui|ikiwiki|python-setuptools-git|
-		|dh-make-perl|git-man|ikiwiki-hosting-web|python-vcversioner|
-		|dh-ocaml|git-mediawiki|julia|python3-setuptools-git|
-		|drush|git-notifier|kdesrc-build|python3-vcversioner|
-		|duck|git-reintegrate|kdevplatform8-libs|qgit|
-		|etckeeper|git-remote-bzr|keyringer|qtcreator|
-		|fdroidserver|git-remote-gcrypt|kgb-bot|rebar|
-		|flashbake|git-remote-hg|kup-server|redmine|
-		|fusionforge-plugin-scmgit|git-repair|lava-dev|ruby-git|
-		|giggle|git-review|lava-dispatcher|ruby-grack|
-		|git-all|git-sh|ldap-git-backup|sparkleshare|
-		|git-annex|git-svn|libapp-nopaste-perl|sputnik|
-		|git-arch|git2cl|libgit-repository-perl|stgit|
-		|git-buildpackage|gitg|libgit-wrapper-perl|svn-all-fast-export|
-		|git-core|github-backup|magit|tig|
-		|git-cvs|gitit|myrepos|ui-auto|
-		|git-cvs|gitk|opam|undertaker|
-		|git-daemon-run|gitolite3|pass|vcsh|
-		|git-daemon-sysvinit|gitpkg|pepper|zim|
-		|git-doc|gitstats|php-monolog|zsh-antigen|
 
 		* Dependencies: 
 
@@ -670,36 +386,7 @@ Bu dokümanda, Ahtapot Projesinde Sistemlere Kurulan Paketler ve Bağımlılıkl
 		|gitk|iberror-perl|||
 
 	* python-qt4 : GDYS Gui kullanımı için yüklenmiş pakettir.
-		* Reverse Depends: 
-
-		|Paket Listesi        |                  |                 |               |
-		|---------------------|------------------|-----------------|---------------| 
-		|anki|kde-config-touchpad|python-coherence|python-whiteboard|
-		|apt-offline-gui|laptop-mode-tools|python-electrum|python-yade|
-		|autokey-qt|libqgis-dev|python-hachoir-metadata|qbzr|
-		|babiloo|linkchecker-gui|python-kde4|qct|
-		|binwalk|maptransfer|python-kde4|qtqr|
-		|buildnotify|minirok|python-matplotlib|qweborf|
-		|code-saturne|mnemosyne|python-mecavideo|relational|
-		|cyclograph-qt4|monkeystudio|python-pdftools|reportbug-ng|
-		|dff|ninja-ide|python-poppler-qt4|seascope|
-		|drobo-utils|nuitkapython-pyface|series60-remote|eficas|
-		|onionshare|python-pyqtgraph|subdownloader|encuentro|
-		|openlp|python-pyudev|tortoisehg|ffado-mixer-qt4|
-		|openmolar|python-qgis|treeline|frescobaldi|
-		|opensesame|python-qscintilla2|trimage|git-cola|
-		|openteacher|python-qt4-dbg|turpial|gns3|
-		|picard|python-qt4-gl|uicilibris|gnuradio|
-		|polybori-gui|python-qt4-phonon|ulatencygr-air-modes|
-		|puddletag|python-qt4-sqlveusz|hgview|
-		|pyfai|python-qt4reactor|veusz-helpers|hplip-gui|
-		|pymca|python-qwt5-qt4|veusz-helpers-dbg|ioapps|
-		|pynagram|python-sip|vistrails|ipython-qtconsole|
-		|pypibrowser|python-skimage|vitables|ipython-qtconsole|
-		|pyqt4-dev-tools|python-spyderlib|writetype|ipython-qtconsole|
-		|python-avc|python-taurus|kanyremote|python-avogadro|
-		|python-vigra||||
-
+	
 		* Dependencies: 
 
 		|Paket Listesi        |                  |                 |               |
@@ -715,32 +402,6 @@ Bu dokümanda, Ahtapot Projesinde Sistemlere Kurulan Paketler ve Bağımlılıkl
 		|libqt4-help|libqtcore4|python-qt4-gl||
 
 	* python-requests : ansible’ın bağımlılık paketi olduğu için yüklenmiş pakettir.
-		* Reverse Depends: 
-
-		|Paket Listesi        |                  |                 |               |
-		|---------------------|------------------|-----------------|---------------|
-		|beets|python-ceilometer|python-mandrill|python-socketio-client|
-		|cloud-init|python-ceph|python-neutron|python-softlayer|
-		|dosage|python-cinder|python-neutronclient|python-sphinxcontrib.issuetracker|
-		|encuentro|python-cinderclient|python-nova|python-stdeb|
-		|epigrass|python-debiancontributors|python-novaclient|python-subliminal|
-		|euca2ools|python-designateclient|python-openstackclient|python-swiftclient|
-		|gertty|python-docker|python-pip|python-swiftsc|
-		|git-review|python-fedmsg|python-plotly|python-troveclient|
-		|httpie|python-fedora|python-pycarddav|python-tuskarclient|
-		|lava-dispatcher|python-gcm-client|python-pypump|python-twitter|
-		|linkchecker|python-geopy|python-pysaml2|python-weboob|
-		|mopidy-beets|python-glance|python-pyvmomi|python-x2go|
-		|mopidy-soundcloud|python-glanceclient|python-requestbuilder|python3-responses|
-		|nikola|python-guessit|python-requests-kerberos|radicale|python-social-auth|
-		|pybit-client|python-heat|python-requests-mock|slapos-client|
-		|python-acoustid|python-heatclient|python-requests-oauthlib|ssh-import-id|
-		|python-awsauth|python-influxdb|python-responses|streamtuner2|
-		|python-barbicanclient|python-jenkinsapi|python-saharaclient|syslog-ng-mod-elasticsearch|
-		|python-boto|python-keystoneclient|python-savannaclient|vim-youcompleteme|
-		|python-botocore|python-keystonemiddleware|python-seamicroclient|wapiti|
-		|python-braintree|python-libturpial|python-smstrade|python-catcher|
-		|python-livestreamer||||
 
 		* Dependencies: 
 
@@ -750,14 +411,6 @@ Bu dokümanda, Ahtapot Projesinde Sistemlere Kurulan Paketler ve Bağımlılıkl
 		|python-chardet|python-ndg-httpsclient|python-pyasn1||
 
 	* python-pexpect : GDYS Gui kullanımı için yüklenmiş pakettir.
-		* Reverse Depends: 
-
-		|Paket Listesi        |                  |                 |               |
-		|---------------------|------------------|-----------------|---------------| 
-		|cinnamon|ipython|mysql-workbench|python-smartpm|
-		|cman|lava-dispatcher|python-pexpect-doc|python-tomahawk|
-		|fence-agents|lavapdu-daemon|python-pexpect-doc|python-trove|
-		|hplip||||
 	
 		* Dependencies: 
 
@@ -766,16 +419,6 @@ Bu dokümanda, Ahtapot Projesinde Sistemlere Kurulan Paketler ve Bağımlılıkl
 		|python:any|python-pexpect-doc|
 
 	* Xauth : GDYS Gui kullanımı için yüklenmiş pakettir.
-		* Reverse Depends: 
-
-		|Paket Listesi        |                  |                 |               |
-		|---------------------|------------------|-----------------|---------------| 
-		|dropbear|ltsp-server-standalone|openssh-server|slim|
-		|kdm-gdmcompat|oar-node|openssh-server|tightvncserver|
-		|ldm-server|oar-user|pkpgcounter|xbase-clients|
-		|libgksu2-0|open-vm-tools-desktop|python-mne|xinit|
-		|libkdesu5|openssh-client|python-nemu|xorg|
-		|ltsp-server|openssh-client|||
 
 		* Dependencies: 
 
@@ -795,35 +438,6 @@ Bu dokümanda, Ahtapot Projesinde Sistemlere Kurulan Paketler ve Bağımlılıkl
 
 * GitLab rolünde yüklenen paketler, MYS kapsamında yönetilen GitLab görevi verilen tüm makinalara kurulan ortak paketlerdir.
 	* git : Merkezi Yönetim Sistemine ait playbookların depolanması için kullanılan git adresine erişim yapılması amacı ile yüklenmiş pakettir.
-		* Reverse Depends: 
-
-		|Paket Listesi        |                  |                 |               |
-		|---------------------|------------------|-----------------|---------------|
-		|blogofile|git-el|gitweb|phpunit-git|
-		|bugs-everywhere|git-email|grokmirror|pkg-perl-tools|
-		|buildbot|git-extras|guilt|propellor|
-		|bup|git-flow|hg-fast-export|prt|git-dpm|
-		|calypso|git-ftp|hobbit-plugins|python-git|
-		|commit-patch|git-gui|ikiwiki|python-setuptools-git|
-		|dh-make-perl|git-man|ikiwiki-hosting-web|python-vcversioner|
-		|dh-ocaml|git-mediawiki|julia|python3-setuptools-git|
-		|drush|git-notifier|kdesrc-build|python3-vcversioner|
-		|duck|git-reintegrate|kdevplatform8-libs|qgit|
-		|etckeeper|git-remote-bzr|keyringer|qtcreator|
-		|fdroidserver|git-remote-gcrypt|kgb-bot|rebar|
-		|flashbake|git-remote-hg|kup-server|redmine|
-		|fusionforge-plugin-scmgit|git-repair|lava-dev|ruby-git|
-		|giggle|git-review|lava-dispatcher|ruby-grack|
-		|git-all|git-sh|ldap-git-backup|sparkleshare|
-		|git-annex|git-svn|libapp-nopaste-perl|sputnik|
-		|git-arch|git2cl|libgit-repository-perl|stgit|
-		|git-buildpackage|gitg|libgit-wrapper-perl|svn-all-fast-export|
-		|git-core|github-backup|magit|tig|
-		|git-cvs|gitit|myrepos|ui-auto|
-		|git-cvs|gitk|opam|undertaker|
-		|git-daemon-run|gitolite3|pass|vcsh|
-		|git-daemon-sysvinit|gitpkg|pepper|zim|
-		|git-doc|gitstats|php-monolog|zsh-antigen|
 		
 		* Dependencies: 
 
@@ -851,33 +465,6 @@ Bu dokümanda, Ahtapot Projesinde Sistemlere Kurulan Paketler ve Bağımlılıkl
 
 * GKTS rolünde yüklenen paketler, MYS kapsamında yönetilen GKTS görevi verilen tüm makinalara kurulan ortak paketlerdir.
 	* python-django : GKTS uygulmasında kullanılan pakettir.
-		* Reverse Depends:
-
-		|Paket Listesi        |                  |                 |               |
-		|---------------------|------------------|-----------------|---------------| 
-		|ahtapot-ocs-wb|python-django-braces|python-django-markupfield|python-django-threaded-multihost|
-		|ahtapot-portscan|python-django-captcha|python-django-model-utils|python-django-threadedcomments|
-		|autoradio|python-django-celery|python-django-mptt|python-django-tinymce|
-		|bcfg2-server|python-django-classy-tags|python-django-mumble|python-django-treebeard|
-		|bcfg2-web|python-django-common|python-django-mumble|python-django-uuidfield|
-		|dicoweb|python-django-contact-form|python-django-nose|python-django-websocket|
-		|djagios|python-django-countries|python-django-picklefield|python-django-xmlrpc|
-		|django-testproject|python-django-crispy-forms|python-django-polymorphic|python-djangorestframework|
-		|django-testscenarios|python-django-dajaxice|python-django-pyscss|python-fs-plugin-django|
-		|graphite-web|python-django-debug-toolbar|python-django-ratelimit|python-jingo|
-		|lava-server|python-django-discover-runner|python-django-registration|python-kombu|
-		|mini-buildd|python-django-djapian|python-django-restricted-resource|python-model-mommy|
-		|planet-venus|python-django-extdirect|python-django-reversion|python-mongoengine|
-		|python-ajax-select|python-django-extensions|python-django-rosetta|python-openstack-auth|
-		|python-appconf|python-django-filters|python-django-sekizai|python-pytils|
-		|python-bootstrapform|python-django-floppyforms|python-django-shorturls|python-scrapy|
-		|python-compressor|python-django-formfieldset|python-django-shortuuidfield|python-wtforms|
-		|python-django-adminaudit|python-django-genshi|python-django-sitetree|python3-django-jsonfield|
-		|python-django-app-plugins|python-django-guardian|python-django-south|python3-django-nose|
-		|python-django-auth-ldap|python-django-haystack|python-django-tables2|python3-django-xmlrpc|
-		|python-django-auth-openid|python-django-horizon|python-django-tagging|python-django-tastypie|
-		|python-django-authority|python-django-jsonfield|python-django-taggit|python-django-macaddress|
-		|python-django-bitfield||||
 
 		* Dependencies:
 
@@ -898,15 +485,6 @@ Bu dokümanda, Ahtapot Projesinde Sistemlere Kurulan Paketler ve Bağımlılıkl
 		|uwsgi-core|lsb-base|initscripts|
 
 	* python-sqlite : GKTS uygulmasında kullanılan pakettir.
-		* Reverse Depends:
-
-		|Paket Listesi        |                  |                 |               |
-		|---------------------|------------------|-----------------|---------------| 
-		|python-django|python-sqlobject|python-kaa-base|griffith|
-		|yum|python-sqlite-dbg|python-freevo|dtc-xen|
-		|thuban|python-pysqlite1.1|python-django|datapm|
-		|supybot|python-pycarddav|openlp|bcfg2-web|
-		|python-webpy||||
 
 		* Dependencies:
 
@@ -946,7 +524,9 @@ Bu dokümanda, Ahtapot Projesinde Sistemlere Kurulan Paketler ve Bağımlılıkl
 ###Logstash rolü ile kurulan paketler
 
 * Logstash rolünde yüklenen paketler, MYS kapsamında yönetilen Logstash görevi verilen tüm makinalara kurulan ortak paketlerdir.
+
 	* logstash : logstash uygulamasını barındıran pakettir.
+	
 		* Dependencies:
 
 		|Paket Listesi        |
@@ -969,17 +549,6 @@ Bu dokümanda, Ahtapot Projesinde Sistemlere Kurulan Paketler ve Bağımlılıkl
 
 * NTP rolünde yüklenen paketler, MYS kapsamında yönetilen NTP görevi verilen tüm makinalara kurulan ortak paketlerdir.
 	* ntp : Zaman senkranizasyonu için yüklenmiş pakettir
-		* Reverse Depends: 
-
-		|Paket Listesi        |                  |                 |               |
-		|---------------------|------------------|-----------------|---------------| 
-		|aiccu|fake-hwclock|lava-dispatcher|openstack-compute-node|
-		|bwctl-server|gnome-system-tools|lava-server|predict|
-		|chrony|gnumed-client|mate-system-tools|predict-gsat|
-		|debci|hobbit-plugins|netsniff-ng|radioclk|
-		|dms-core|ircd-ratbox|openafs-fileserver|samba|
-		|dovecot-core|jffnms|openntpd|slony1-2-bin|
-		|education-main-server|lava|openstack-cloud-services|tucnak2|
 
 		* Dependencies: 
 
@@ -993,15 +562,7 @@ Bu dokümanda, Ahtapot Projesinde Sistemlere Kurulan Paketler ve Bağımlılıkl
 
 * Ocswb rolünde yüklenen paketler, MYS kapsamında yönetilen Ocswb görevi verilen tüm makinalara kurulan ortak paketlerdir.
 	* python-sqlite : Ocswb uygulmasında kullanılan pakettir.
-		* Reverse Depends:
 
-		|Paket Listesi        |                  |                 |               |
-		|---------------------|------------------|-----------------|---------------| 
-		|python-django|python-sqlobject|python-kaa-base|griffith|
-		|yum|python-sqlite-dbg|python-freevo|dtc-xen|
-		|thuban|python-pysqlite1.1|python-django|datapm|
-		|supybot|python-pycarddav|openlp|bcfg2-web|
-		|python-webpy||||
 
 		* Dependencies:
 
@@ -1012,33 +573,6 @@ Bu dokümanda, Ahtapot Projesinde Sistemlere Kurulan Paketler ve Bağımlılıkl
 		|python2.4-sqlite||||
 
 	* python-django : Ocswb uygulmasında kullanılan pakettir.
-		* Reverse Depends:
-
-		|Paket Listesi        |                  |                 |               |
-		|---------------------|------------------|-----------------|---------------| 
-		|ahtapot-ocs-wb|python-django-braces|python-django-markupfield|python-django-threaded-multihost|
-		|ahtapot-portscan|python-django-captcha|python-django-model-utils|python-django-threadedcomments|
-		|autoradio|python-django-celery|python-django-mptt|python-django-tinymce|
-		|bcfg2-server|python-django-classy-tags|python-django-mumble|python-django-treebeard|
-		|bcfg2-web|python-django-common|python-django-mumble|python-django-uuidfield|
-		|dicoweb|python-django-contact-form|python-django-nose|python-django-websocket|
-		|djagios|python-django-countries|python-django-picklefield|python-django-xmlrpc|
-		|django-testproject|python-django-crispy-forms|python-django-polymorphic|python-djangorestframework|
-		|django-testscenarios|python-django-dajaxice|python-django-pyscss|python-fs-plugin-django|
-		|graphite-web|python-django-debug-toolbar|python-django-ratelimit|python-jingo|
-		|lava-server|python-django-discover-runner|python-django-registration|python-kombu|
-		|mini-buildd|python-django-djapian|python-django-restricted-resource|python-model-mommy|
-		|planet-venus|python-django-extdirect|python-django-reversion|python-mongoengine|
-		|python-ajax-select|python-django-extensions|python-django-rosetta|python-openstack-auth|
-		|python-appconf|python-django-filters|python-django-sekizai|python-pytils|
-		|python-bootstrapform|python-django-floppyforms|python-django-shorturls|python-scrapy|
-		|python-compressor|python-django-formfieldset|python-django-shortuuidfield|python-wtforms|
-		|python-django-adminaudit|python-django-genshi|python-django-sitetree|python3-django-jsonfield|
-		|python-django-app-plugins|python-django-guardian|python-django-south|python3-django-nose|
-		|python-django-auth-ldap|python-django-haystack|python-django-tables2|python3-django-xmlrpc|
-		|python-django-auth-openid|python-django-horizon|python-django-tagging|python-django-tastypie|
-		|python-django-authority|python-django-jsonfield|python-django-taggit|python-django-macaddress|
-		|python-django-bitfield||||
 
 		* Dependencies:
 
@@ -1052,11 +586,6 @@ Bu dokümanda, Ahtapot Projesinde Sistemlere Kurulan Paketler ve Bağımlılıkl
 		|ipython||||
 
 	* uwsgi : Ocswb uygulmasında kullanılan pakettir.
-       	* Reverse Depends:
-
-		|Paket Listesi        |                  |                 |
-		|---------------------|------------------|-----------------|
-		|libapache2-mod-uwsgi|libapache2-mod-ruwsgi|libapache2-mod-proxy-uwsgi|
 	
 		* Dependencies:
 
@@ -1065,25 +594,14 @@ Bu dokümanda, Ahtapot Projesinde Sistemlere Kurulan Paketler ve Bağımlılıkl
 		|uwsgi-core|lsb-base|initscripts|
 
 	* uwsgi-plugin-python
-        * Reverse Depends:
 
-		|Paket Listesi        |                  |                               |
-		|---------------------|------------------|-------------------------------| 
-		|uwsgi-plugin-greenlet-python|uwsgi-app-integration-plugins|python-uwsgidecorators|
-
-       	* Dependencies:
+       		* Dependencies:
 
 		|Paket Listesi        |                  |                                |
 		|---------------------|------------------|--------------------------------| 
 		|libc6|libpython2.7|uwsgi-core|
 
 	* django-jet
-       	* Reverse Depends:
-
-		|Paket Listesi        |                  |                 |               |
-		|---------------------|------------------|-----------------|---------------| 
-		|ahtapot-portscan|ahtapot-ocs-wb|ahtapot-ocs-wb|ahtapot-portscan|
-		|ahtapot-portscan|ahtapot-ocs-wb|||
 	
 		* Dependencies:
 
@@ -1092,32 +610,6 @@ Bu dokümanda, Ahtapot Projesinde Sistemlere Kurulan Paketler ve Bağımlılıkl
 		|python|
 
     * python-requests : ansible’ın bağımlılık paketi olduğu için yüklenmiş pakettir.
-		* Reverse Depends: 
-
-		|Paket Listesi        |                  |                 |               |
-		|---------------------|------------------|-----------------|---------------|
-		|beets|python-ceilometer|python-mandrill|python-socketio-client|
-		|cloud-init|python-ceph|python-neutron|python-softlayer|
-		|dosage|python-cinder|python-neutronclient|python-sphinxcontrib.issuetracker|
-		|encuentro|python-cinderclient|python-nova|python-stdeb|
-		|epigrass|python-debiancontributors|python-novaclient|python-subliminal|
-		|euca2ools|python-designateclient|python-openstackclient|python-swiftclient|
-		|gertty|python-docker|python-pip|python-swiftsc|
-		|git-review|python-fedmsg|python-plotly|python-troveclient|
-		|httpie|python-fedora|python-pycarddav|python-tuskarclient|
-		|lava-dispatcher|python-gcm-client|python-pypump|python-twitter|
-		|linkchecker|python-geopy|python-pysaml2|python-weboob|
-		|mopidy-beets|python-glance|python-pyvmomi|python-x2go|
-		|mopidy-soundcloud|python-glanceclient|python-requestbuilder|python3-responses|
-		|nikola|python-guessit|python-requests-kerberos|radicale|python-social-auth|
-		|pybit-client|python-heat|python-requests-mock|slapos-client|
-		|python-acoustid|python-heatclient|python-requests-oauthlib|ssh-import-id|
-		|python-awsauth|python-influxdb|python-responses|streamtuner2|
-		|python-barbicanclient|python-jenkinsapi|python-saharaclient|syslog-ng-mod-elasticsearch|
-		|python-boto|python-keystoneclient|python-savannaclient|vim-youcompleteme|
-		|python-botocore|python-keystonemiddleware|python-seamicroclient|wapiti|
-		|python-braintree|python-libturpial|python-smstrade|python-catcher|
-		|python-livestreamer||||
 
 		* Dependencies: 
 
@@ -1127,14 +619,6 @@ Bu dokümanda, Ahtapot Projesinde Sistemlere Kurulan Paketler ve Bağımlılıkl
 		|python:any|python-chardet|python-ndg-httpsclient|python-pyasn1| 
     
     * nginx :  Ocswb Web Servisi için kurulan pakettir.
-       	* Reverse Depends:
-
-		|Paket Listesi        |                  |                 |               |
-		|---------------------|------------------|-----------------|---------------| 
-		|samizdat|pyblosxom|puppetmaster-common|photofloat|
-		|nginx-light|nginx-full|nginx-extras|nginx-common|
-		|fusiondirectory|fcgiwrap|coquelicot|collectd-core|
-		|cacti||||
 
 		* Dependencies:
 
@@ -1160,13 +644,6 @@ Bu dokümanda, Ahtapot Projesinde Sistemlere Kurulan Paketler ve Bağımlılıkl
 
 * OpenVPN rolünde yüklenen paketler, MYS kapsamında yönetilen OpenVPN görevi verilen tüm makinalara kurulan ortak paketlerdir.
 	* openvpn : OpenVPN uygulamasını barındıran pakettir.
-		* Reverse Depends:
-
-		|Paket Listesi        |                  |                 |               |
-		|---------------------|------------------|-----------------|---------------| 
-		|alienvault-dummy-common|openvpn-auth-radius|openvpn-auth-ldap|network-manager-openvpn|
-		|kvpnc|gadmin-openvpn-server|gadmin-openvpn-client|eurephia|
-		|collectd-core||||
 
 		* Dependencies:
 
@@ -1188,24 +665,6 @@ Bu dokümanda, Ahtapot Projesinde Sistemlere Kurulan Paketler ve Bağımlılıkl
 
 * Ossec rolünde yüklenen paketler, MYS kapsamında yönetilen Ossec görevi verilen tüm makinalara kurulan ortak paketlerdir.
 	* python-crypto : Python uygulaması için kriptolu algortima ve protokoller içeren pakettir.
-		* Reverse Depends:
-
-		|Paket Listesi        |                  |                 |               |
-		|---------------------|------------------|-----------------|---------------| 
-		|ansible|bitpim|bittornado|bittornado-gui|
-		|dtc-xen|emesene|gajim|glipper|
-		|kedpm|keysync|obfsproxy|ossec-auto-server|
-		|ossec-hids-agent|pwman3|pyaimt|pyicqt|
-		|pymsnt|python-beaker|python-crypto-dbg|python-crypto-doc|
-		|python-elixir|python-gdata|python-glance|python-heat|
-		|python-impacket|python-keyczar|python-keyring|python-keystone|
-		|python-libcloud|python-livestreamer|python-oauthlib|python-openstackclient|
-		|python-paramiko|python-potr|python-pskc|python-pyghmi|
-		|python-pyhsm|python-pysaml2|python-pysnmp4|python-recaptcha|
-		|python-samba|python-scapy|python-secretstorage|python-twisted-conch|
-		|revelation|salt-master|salt-minion|sat-xmpp-core|
-		|subdownloader|svtplay-dl|tahoe-lafs|volatility|
-		|winpdb|winswitch|yokadi||
 
 		* Dependencies:
 
@@ -1225,11 +684,6 @@ Bu dokümanda, Ahtapot Projesinde Sistemlere Kurulan Paketler ve Bağımlılıkl
 
 * Ossimcik rolünde yüklenen paketler, MYS kapsamında yönetilen Ossimcik görevi verilen tüm makinalara kurulan ortak paketlerdir.
 	* ossec-hids : Ossec Server uygulamasını barındıran pakettir.
-		* Reverse Depends:
-
-		|Paket Listesi                       |                 |
-		|------------------------------------|-----------------|
-		|ossim-framework|alienvault-ossec|
 		
 		* Dependencies:
 
@@ -1238,11 +692,6 @@ Bu dokümanda, Ahtapot Projesinde Sistemlere Kurulan Paketler ve Bağımlılıkl
 		|libc6|ibssl1.0.0|expect|
 		
 	* alienvault-ossec : Alienvault Ossec uygulamasını barındıran pakettir.
-		* Reverse Depends:
-
-		|Paket Listesi               |
-		|----------------------------| 
-		|alienvault-dummy-sensor|
 		
 		* Dependencies:
 
@@ -1261,11 +710,6 @@ Bu dokümanda, Ahtapot Projesinde Sistemlere Kurulan Paketler ve Bağımlılıkl
 		|libdbd-mysql|libdbd-pgsql|libdbd-sqlite3|libdbd-freetds|
 		
 	* rsyslog-gnutls : Rsyslog üzerinden TLS ile log gönderimi için kurulan pakettir.
-		* Reverse Depends:
-
-		|Paket Listesi            |
-		|-------------------------| 
-		|rsyslog|
 		
 		* Dependencies:
 
@@ -1278,16 +722,7 @@ Bu dokümanda, Ahtapot Projesinde Sistemlere Kurulan Paketler ve Bağımlılıkl
 
 * PortScanner rolünde yüklenen paketler, MYS kapsamında yönetilen PortScanner görevi verilen tüm makinalara kurulan ortak paketlerdir.
 	* python-sqlite : PortScanner uygulmasında kullanılan pakettir.
-		* Reverse Depends:
-
-		|Paket Listesi        |                  |                 |               |
-		|---------------------|------------------|-----------------|---------------| 
-		|python-django|python-sqlobject|python-kaa-base|griffith|
-		|yum|python-sqlite-dbg|python-freevo|dtc-xen|
-		|thuban|python-pysqlite1.1|python-django|datapm|
-		|supybot|python-pycarddav|openlp|bcfg2-web|
-		|python-webpy||||
-
+	
 		* Dependencies:
 
 		|Paket Listesi        |                  |                 |               |
@@ -1297,34 +732,7 @@ Bu dokümanda, Ahtapot Projesinde Sistemlere Kurulan Paketler ve Bağımlılıkl
 		|python2.4-sqlite||||
 		
 	* python-django : PortScanner uygulmasında kullanılan pakettir.
-		* Reverse Depends:
-
-		|Paket Listesi        |                  |                 |               |
-		|---------------------|------------------|-----------------|---------------| 
-		|ahtapot-ocs-wb|python-django-braces|python-django-markupfield|python-django-threaded-multihost|
-		|ahtapot-portscan|python-django-captcha|python-django-model-utils|python-django-threadedcomments|
-		|autoradio|python-django-celery|python-django-mptt|python-django-tinymce|
-		|bcfg2-server|python-django-classy-tags|python-django-mumble|python-django-treebeard|
-		|bcfg2-web|python-django-common|python-django-mumble|python-django-uuidfield|
-		|dicoweb|python-django-contact-form|python-django-nose|python-django-websocket|
-		|djagios|python-django-countries|python-django-picklefield|python-django-xmlrpc|
-		|django-testproject|python-django-crispy-forms|python-django-polymorphic|python-djangorestframework|
-		|django-testscenarios|python-django-dajaxice|python-django-pyscss|python-fs-plugin-django|
-		|graphite-web|python-django-debug-toolbar|python-django-ratelimit|python-jingo|
-		|lava-server|python-django-discover-runner|python-django-registration|python-kombu|
-		|mini-buildd|python-django-djapian|python-django-restricted-resource|python-model-mommy|
-		|planet-venus|python-django-extdirect|python-django-reversion|python-mongoengine|
-		|python-ajax-select|python-django-extensions|python-django-rosetta|python-openstack-auth|
-		|python-appconf|python-django-filters|python-django-sekizai|python-pytils|
-		|python-bootstrapform|python-django-floppyforms|python-django-shorturls|python-scrapy|
-		|python-compressor|python-django-formfieldset|python-django-shortuuidfield|python-wtforms|
-		|python-django-adminaudit|python-django-genshi|python-django-sitetree|python3-django-jsonfield|
-		|python-django-app-plugins|python-django-guardian|python-django-south|python3-django-nose|
-		|python-django-auth-ldap|python-django-haystack|python-django-tables2|python3-django-xmlrpc|
-		|python-django-auth-openid|python-django-horizon|python-django-tagging|python-django-tastypie|
-		|python-django-authority|python-django-jsonfield|python-django-taggit|python-django-macaddress|
-		|python-django-bitfield||||
-			
+				
 		* Dependencies:
 
 		|Paket Listesi        |                  |                 |               |
@@ -1337,12 +745,7 @@ Bu dokümanda, Ahtapot Projesinde Sistemlere Kurulan Paketler ve Bağımlılıkl
 		|ipython||||
 		
 	* uwsgi : PortScanner uygulmasında kullanılan pakettir.
-       	* Reverse Depends:
-
-		|Paket Listesi        |                  |                                |
-		|---------------------|------------------|--------------------------------| 
-		|libapache2-mod-uwsgi|libapache2-mod-ruwsgi|libapache2-mod-proxy-uwsgi|
-		
+   		
 		* Dependencies:
 
 		|Paket Listesi        |                  |                               |
@@ -1350,25 +753,14 @@ Bu dokümanda, Ahtapot Projesinde Sistemlere Kurulan Paketler ve Bağımlılıkl
 		|uwsgi-core|lsb-base|initscripts|
 
 	* uwsgi-plugin-python : PortScanner uyluması için python plugindir.
-       	* Reverse Depends:
-
-		|Paket Listesi        |                  |                                |
-		|---------------------|------------------|--------------------------------| 
-		|uwsgi-plugin-greenlet-python|uwsgi-app-integration-plugins|python-uwsgidecorators|
-
-       	* Dependencies:
+  
+    	   	* Dependencies:
 
 		|Paket Listesi        |                  |                                |
 		|---------------------|------------------|--------------------------------| 
 		|libc6|libpython2.7|uwsgi-core|
 
 	* django-jet : ProtScanner arayüzü için kullanılan pakettir.
-        * Reverse Depends:
-
-		|Paket Listesi        |                  |                 |               |
-		|---------------------|------------------|-----------------|---------------| 
-		|ahtapot-portscan|ahtapot-ocs-wb|ahtapot-ocs-wb|ahtapot-portscan|
-		|ahtapot-portscan|ahtapot-ocs-wb|||
 			
 		* Dependencies:
 
@@ -1377,32 +769,6 @@ Bu dokümanda, Ahtapot Projesinde Sistemlere Kurulan Paketler ve Bağımlılıkl
 		|python|
 
 	* python-requests : PortScanner uygulamasında bulunan Python scriptler için yüklenmiş pakettir.
-		* Reverse Depends: 
-
-		|Paket Listesi        |                  |                 |               |
-		|---------------------|------------------|-----------------|---------------|
-		|beets|python-ceilometer|python-mandrill|python-socketio-client|
-		|cloud-init|python-ceph|python-neutron|python-softlayer|
-		|dosage|python-cinder|python-neutronclient|python-sphinxcontrib.issuetracker|
-		|encuentro|python-cinderclient|python-nova|python-stdeb|
-		|epigrass|python-debiancontributors|python-novaclient|python-subliminal|
-		|euca2ools|python-designateclient|python-openstackclient|python-swiftclient|
-		|gertty|python-docker|python-pip|python-swiftsc|
-		|git-review|python-fedmsg|python-plotly|python-troveclient|
-		|httpie|python-fedora|python-pycarddav|python-tuskarclient|
-		|lava-dispatcher|python-gcm-client|python-pypump|python-twitter|
-		|linkchecker|python-geopy|python-pysaml2|python-weboob|
-		|mopidy-beets|python-glance|python-pyvmomi|python-x2go|
-		|mopidy-soundcloud|python-glanceclient|python-requestbuilder|python3-responses|
-		|nikola|python-guessit|python-requests-kerberos|radicale|python-social-auth|
-		|pybit-client|python-heat|python-requests-mock|slapos-client|
-		|python-acoustid|python-heatclient|python-requests-oauthlib|ssh-import-id|
-		|python-awsauth|python-influxdb|python-responses|streamtuner2|
-		|python-barbicanclient|python-jenkinsapi|python-saharaclient|syslog-ng-mod-elasticsearch|
-		|python-boto|python-keystoneclient|python-savannaclient|vim-youcompleteme|
-		|python-botocore|python-keystonemiddleware|python-seamicroclient|wapiti|
-		|python-braintree|python-libturpial|python-smstrade|python-catcher|
-		|python-livestreamer||||
 		
 		* Dependencies: 
 
@@ -1412,16 +778,6 @@ Bu dokümanda, Ahtapot Projesinde Sistemlere Kurulan Paketler ve Bağımlılıkl
 		|python:any|python-chardet|python-ndg-httpsclient|python-pyasn1| 
 		
 	* nmap : Portların taranması için kullanılan servisi içeren pakettir.
-		* Reverse Depends:
-
-		|Paket Listesi        |                  |                 |               |
-		|---------------------|------------------|-----------------|---------------| 
-		|ahtapot-portscan|alienvault-dummy-framework|alienvault-dummy-sensor|atheist|
-		|education-common|fusioninventory-agent-task-network|gnome-nettool|ibid|
-		|jffnms|libnmap-parser-perl|lsat|ndiff|
-		|nikto|nmapsi4|ocsinventory-agent|ocsinventory-reports|
-		|ocsinventory-server|openvas-scanner|ossim-agent|ossim-framework|
-		|pbnj|plainbox-provider-checkbox|zenmap||
 		
 		* Dependencies:
 
@@ -1432,14 +788,6 @@ Bu dokümanda, Ahtapot Projesinde Sistemlere Kurulan Paketler ve Bağımlılıkl
 		|ndiff||||
 		
 	* nginx : PortScanner Web Servisi için kurulan pakettir.
-       	* Reverse Depends:
-
-		|Paket Listesi        |                  |                 |               |
-		|---------------------|------------------|-----------------|---------------| 
-		|samizdat|pyblosxom|puppetmaster-common|photofloat|
-		|nginx-light|nginx-full|nginx-extras|nginx-common|
-		|fusiondirectory|fcgiwrap|coquelicot|collectd-core|
-		|cacti||||
 		
 		* Dependencies:
 
@@ -1459,15 +807,6 @@ Bu dokümanda, Ahtapot Projesinde Sistemlere Kurulan Paketler ve Bağımlılıkl
 
 * PWLM rolünde yüklenen paketler, MYS kapsamında yönetilen PWLM görevi verilen tüm makinalara kurulan ortak paketlerdir.
 	* python-sqlite : PWLM uygulmasında kullanılan pakettir.
-		* Reverse Depends:
-
-		|Paket Listesi        |                  |                 |               |
-		|---------------------|------------------|-----------------|---------------| 
-		|python-django|python-sqlobject|python-kaa-base|griffith|
-		|yum|python-sqlite-dbg|python-freevo|dtc-xen|
-		|thuban|python-pysqlite1.1|python-django|datapm|
-		|supybot|python-pycarddav|openlp|bcfg2-web|
-		|python-webpy||||
 
 		* Dependencies:
 
@@ -1485,33 +824,6 @@ Bu dokümanda, Ahtapot Projesinde Sistemlere Kurulan Paketler ve Bağımlılıkl
 		|python|
 		
 	* python-django : PWLM uygulmasında kullanılan pakettir.
-		* Reverse Depends:
-
-		|Paket Listesi        |                  |                 |               |
-		|---------------------|------------------|-----------------|---------------| 
-		|ahtapot-ocs-wb|python-django-braces|python-django-markupfield|python-django-threaded-multihost|
-		|ahtapot-portscan|python-django-captcha|python-django-model-utils|python-django-threadedcomments|
-		|autoradio|python-django-celery|python-django-mptt|python-django-tinymce|
-		|bcfg2-server|python-django-classy-tags|python-django-mumble|python-django-treebeard|
-		|bcfg2-web|python-django-common|python-django-mumble|python-django-uuidfield|
-		|dicoweb|python-django-contact-form|python-django-nose|python-django-websocket|
-		|djagios|python-django-countries|python-django-picklefield|python-django-xmlrpc|
-		|django-testproject|python-django-crispy-forms|python-django-polymorphic|python-djangorestframework|
-		|django-testscenarios|python-django-dajaxice|python-django-pyscss|python-fs-plugin-django|
-		|graphite-web|python-django-debug-toolbar|python-django-ratelimit|python-jingo|
-		|lava-server|python-django-discover-runner|python-django-registration|python-kombu|
-		|mini-buildd|python-django-djapian|python-django-restricted-resource|python-model-mommy|
-		|planet-venus|python-django-extdirect|python-django-reversion|python-mongoengine|
-		|python-ajax-select|python-django-extensions|python-django-rosetta|python-openstack-auth|
-		|python-appconf|python-django-filters|python-django-sekizai|python-pytils|
-		|python-bootstrapform|python-django-floppyforms|python-django-shorturls|python-scrapy|
-		|python-compressor|python-django-formfieldset|python-django-shortuuidfield|python-wtforms|
-		|python-django-adminaudit|python-django-genshi|python-django-sitetree|python3-django-jsonfield|
-		|python-django-app-plugins|python-django-guardian|python-django-south|python3-django-nose|
-		|python-django-auth-ldap|python-django-haystack|python-django-tables2|python3-django-xmlrpc|
-		|python-django-auth-openid|python-django-horizon|python-django-tagging|python-django-tastypie|
-		|python-django-authority|python-django-jsonfield|python-django-taggit|python-django-macaddress|
-		|python-django-bitfield||||
 			
 		* Dependencies:
 
@@ -1525,11 +837,6 @@ Bu dokümanda, Ahtapot Projesinde Sistemlere Kurulan Paketler ve Bağımlılıkl
 		|ipython||||
 		
 	* uwsgi : PWLM uygulmasında kullanılan pakettir.
-       	* Reverse Depends:
-
-		|Paket Listesi        |                  |                                |
-		|---------------------|------------------|--------------------------------| 
-		|libapache2-mod-uwsgi|libapache2-mod-ruwsgi|libapache2-mod-proxy-uwsgi|
 		
 		* Dependencies:
 
@@ -1538,11 +845,6 @@ Bu dokümanda, Ahtapot Projesinde Sistemlere Kurulan Paketler ve Bağımlılıkl
 		|uwsgi-core|lsb-base|initscripts|
         
 	* uwsgi-plugin-python : WLM uygulmasında kullanılan uwsgi paketi için python plug-in pakettir.
-       	* Reverse Depends:
-
-		|Paket Listesi        |                  |                                |
-		|---------------------|------------------|--------------------------------| 
-		|uwsgi-plugin-greenlet-python|uwsgi-app-integration-plugins|python-uwsgidecorators|
         
        	* Dependencies:
 
@@ -1551,32 +853,6 @@ Bu dokümanda, Ahtapot Projesinde Sistemlere Kurulan Paketler ve Bağımlılıkl
 		|libc6|libpython2.7|uwsgi-core|
 		
 	* python-requests : PWLM uygulamasında bulunan Python scriptler için yüklenmiş pakettir.
-		* Reverse Depends: 
-
-		|Paket Listesi        |                  |                 |               |
-		|---------------------|------------------|-----------------|---------------|
-		|beets|python-ceilometer|python-mandrill|python-socketio-client|
-		|cloud-init|python-ceph|python-neutron|python-softlayer|
-		|dosage|python-cinder|python-neutronclient|python-sphinxcontrib.issuetracker|
-		|encuentro|python-cinderclient|python-nova|python-stdeb|
-		|epigrass|python-debiancontributors|python-novaclient|python-subliminal|
-		|euca2ools|python-designateclient|python-openstackclient|python-swiftclient|
-		|gertty|python-docker|python-pip|python-swiftsc|
-		|git-review|python-fedmsg|python-plotly|python-troveclient|
-		|httpie|python-fedora|python-pycarddav|python-tuskarclient|
-		|lava-dispatcher|python-gcm-client|python-pypump|python-twitter|
-		|linkchecker|python-geopy|python-pysaml2|python-weboob|
-		|mopidy-beets|python-glance|python-pyvmomi|python-x2go|
-		|mopidy-soundcloud|python-glanceclient|python-requestbuilder|python3-responses|
-		|nikola|python-guessit|python-requests-kerberos|radicale|python-social-auth|
-		|pybit-client|python-heat|python-requests-mock|slapos-client|
-		|python-acoustid|python-heatclient|python-requests-oauthlib|ssh-import-id|
-		|python-awsauth|python-influxdb|python-responses|streamtuner2|
-		|python-barbicanclient|python-jenkinsapi|python-saharaclient|syslog-ng-mod-elasticsearch|
-		|python-boto|python-keystoneclient|python-savannaclient|vim-youcompleteme|
-		|python-botocore|python-keystonemiddleware|python-seamicroclient|wapiti|
-		|python-braintree|python-libturpial|python-smstrade|python-catcher|
-		|python-livestreamer||||
 			
 		* Dependencies: 
 
@@ -1586,14 +862,6 @@ Bu dokümanda, Ahtapot Projesinde Sistemlere Kurulan Paketler ve Bağımlılıkl
 		|python:any|python-chardet|python-ndg-httpsclient|python-pyasn1| 
 		
 	* nginx : PWLM Web Servisi için kurulan pakettir.
-       	* Reverse Depends:
-
-		|Paket Listesi        |                  |                 |               |
-		|---------------------|------------------|-----------------|---------------| 
-		|samizdat|pyblosxom|puppetmaster-common|photofloat|
-		|nginx-light|nginx-full|nginx-extras|nginx-common|
-		|fusiondirectory|fcgiwrap|coquelicot|collectd-core|
-		|cacti||||
 			
 		* Dependencies:
 
@@ -1602,35 +870,6 @@ Bu dokümanda, Ahtapot Projesinde Sistemlere Kurulan Paketler ve Bağımlılıkl
 		|nginx-full|nginx-light|nginx-extras|
 		
 	* git : PWLM üzerinde yapılan değişikliklerin MYS sistemine entegre edilmesi için kurulmuş pakettir.
-		* Reverse Depends: 
-
-		|Paket Listesi        |                  |                 |               |
-		|---------------------|------------------|-----------------|---------------|
-		|blogofile|git-el|gitweb|phpunit-git|
-		|bugs-everywhere|git-email|grokmirror|pkg-perl-tools|
-		|buildbot|git-extras|guilt|propellor|
-		|bup|git-flow|hg-fast-export|prt|git-dpm|
-		|calypso|git-ftp|hobbit-plugins|python-git|
-		|commit-patch|git-gui|ikiwiki|python-setuptools-git|
-		|dh-make-perl|git-man|ikiwiki-hosting-web|python-vcversioner|
-		|dh-ocaml|git-mediawiki|julia|python3-setuptools-git|
-		|drush|git-notifier|kdesrc-build|python3-vcversioner|
-		|duck|git-reintegrate|kdevplatform8-libs|qgit|
-		|etckeeper|git-remote-bzr|keyringer|qtcreator|
-		|fdroidserver|git-remote-gcrypt|kgb-bot|rebar|
-		|flashbake|git-remote-hg|kup-server|redmine|
-		|fusionforge-plugin-scmgit|git-repair|lava-dev|ruby-git|
-		|giggle|git-review|lava-dispatcher|ruby-grack|
-		|git-all|git-sh|ldap-git-backup|sparkleshare|
-		|git-annex|git-svn|libapp-nopaste-perl|sputnik|
-		|git-arch|git2cl|libgit-repository-perl|stgit|
-		|git-buildpackage|gitg|libgit-wrapper-perl|svn-all-fast-export|
-		|git-core|github-backup|magit|tig|
-		|git-cvs|gitit|myrepos|ui-auto|
-		|git-cvs|gitk|opam|undertaker|
-		|git-daemon-run|gitolite3|pass|vcsh|
-		|git-daemon-sysvinit|gitpkg|pepper|zim|
-		|git-doc|gitstats|php-monolog|zsh-antigen|
 
 		* Dependencies: 
 
@@ -1658,29 +897,6 @@ Bu dokümanda, Ahtapot Projesinde Sistemlere Kurulan Paketler ve Bağımlılıkl
 
 * Rsyslog rolünde yüklenen paketler, MYS kapsamında yönetilen Rsyslog görevi verilen tüm makinalara kurulan ortak paketlerdir. 
 	* logrotate: Logların belirli periyotlar ile arşivlenmesi için gerekli pakettir
-		* Reverse Depends:
-
-		|Paket Listesi        |                  |                 |               |
-		|---------------------|------------------|-----------------|---------------| 
-		|aolserver4-daemon|icecc|prayer|sympa|
-		|apt-cacher-ng|ippl|privoxy|syslog-ng-core|
-		|argus-server|kdm|pyca|tinyproxy|
-		|atftpd|knockd|pygopherd|tor|
-		|bareos-director|ldirectord|quagga|twatch|
-		|bdii|leafnode|rabbitmq-server|uucp|
-		|cacti|libvirt-daemon-system|radosgw|vsftpd|
-		|ceph|libzypp|rsnapshot|xinetd|
-		|clamav-base|liquidsoap|rsyslog|xtel|
-		|clamav-freshclam|logstash|samba|xtide|
-		|clamav-milter|logster|sendmail-base|yaws|
-		|cricket|mailman|sipwitch|yrmcds|
-		|cron|masqmail|sks|zabbix-agent|
-		|ctdb|mgetty|slbackup|zabbix-proxy-mysql|
-		|cubemap|muddleftpd|slony1-2-bin|zabbix-proxy-pgsql|
-		|distributed-net|net-acct|squid3|zabbix-proxy-sqlite3|
-		|dsyslog|ninja|sugarplum|zabbix-server-mysql|
-		|heartbeat|pawserv|super|zabbix-server-pgsql|
-		|heimdal-kdc|postgresql-common|||
 
 		* Dependencies:
 
@@ -1691,11 +907,6 @@ Bu dokümanda, Ahtapot Projesinde Sistemlere Kurulan Paketler ve Bağımlılıkl
 		|libpopt0|anacron|||
 
 	* rsyslog_gnutls: Rsyslog üzerinden TLS ile log gönderimi için kurulan pakettir.
-		* Reverse Depends:
-
-		|Paket Listesi                       |
-		|------------------------------------| 
-		|rsyslog|
 		
 		* Dependencies:
 
@@ -1705,18 +916,6 @@ Bu dokümanda, Ahtapot Projesinde Sistemlere Kurulan Paketler ve Bağımlılıkl
 		|gnutls-bin|
 
 	* rsyslog : Loglama yapılması için yüklenmiş pakettir
-		* Reverse Depends:
-
-		|Paket Listesi        |                  |                 |               |
-		|---------------------|------------------|-----------------|---------------| 
-		|anacron|heartbeat|nullmailer|rsyslog-mongodb|
-		|apparmor|initscripts|prelude-lml|rsyslog-mysql|
-		|approx|ldirectord|psad|rsyslog-pgsql|
-		|arno-iptables-firewall|loganalyzer|request-tracker4|rsyslog-relp|
-		|auth2db|logcheck|rlinetd|sympa|
-		|cloudprint|ltsp-client|rsyslog-elasticsearch|ufw|
-		|education-common|ltsp-client-core|rsyslog-gnutls|xinetd|
-		|fwlogwatch|lyskom-server|rsyslog-gssapi|xwatch|
 		
 		* Dependencies: 
 
@@ -1729,6 +928,7 @@ Bu dokümanda, Ahtapot Projesinde Sistemlere Kurulan Paketler ve Bağımlılıkl
 		|rsyslog-mongodb |initscripts|rsyslog-gnutls |system-log-daemon| 
 		
 	* oracle-java8-installer : İmzalama için kurulan pakettir.
+	
 		* Dependencies:
 
 		|Paket Listesi        |                  |                 |               |
@@ -1749,6 +949,7 @@ Bu dokümanda, Ahtapot Projesinde Sistemlere Kurulan Paketler ve Bağımlılıkl
 		|wget|xulrunner|xulrunner-1.9||
 		
 	* zamaneconsole : KamuSM tarafından geliştirilmiş 5651 Log imzalama uygulamasıdır.
+	
 		* Dependecies:
 
 		|Paket Listesi                       |
@@ -1756,25 +957,6 @@ Bu dokümanda, Ahtapot Projesinde Sistemlere Kurulan Paketler ve Bağımlılıkl
 		|openjdk-7-jre|
 		
 	* rsync : Logların belirli periyotlarda merkez sunucuya gönderilmesi için yüklenmiş pakettir.
-		* Reverse Depends: 
-
-		|Paket Listesi        |                  |                 |               |
-		|---------------------|------------------|-----------------|---------------| 
-		|backintime-common|flexbackup|live-boot|rsnapshot|
-		|backupninja|gadmin-rsync|live-tools|rssh|
-		|backuppc|git|lsb-core|rsyncrypto|
-		|barman|git|lsyncd|simple-cdd|bzrtools|
-		|git-annex|luckybackup|sisu|clamav-unofficial-sigs|
-		|git-remote-gcrypt|lxc|slack|clsync|
-		|git-repair|mrb|subversion-tools|debaux|
-		|gnumed-server|mrs|swift-account|debmirror|
-		|grml2usb|nanoc|swift-container|dirvish|grsync|
-		|opam|swift-object|dms-core|hdup|
-		|openssh-known-hosts|swift-object-expirer|dput|inosync|
-		|python-poker-engine|tailor|duplicity|jailtool|python-tomahawk|
-		|vserver-debiantools|education-common|ksplice|python3-tomahawk|
-		|vzctl|fdroidserver|libfile-rsync-perl|repmgr|
-		|vzdump|flashybrid|libguestfs-rsync|rsbackup|
 		
 		* Dependencies:
 
@@ -1788,12 +970,6 @@ Bu dokümanda, Ahtapot Projesinde Sistemlere Kurulan Paketler ve Bağımlılıkl
 
 * Proxy rolünde yüklenen paketler, MYS kapsamında yönetilen Proxy görevi verilen tüm makinalara kurulan ortak paketlerdir. 
 	* squid3 : Proxy görevini üstlenen uygulamayı barındıran pakettir.
-		* Reverse Depends:
-
-		|Paket Listesi        |                  |                 |               |
-		|---------------------|------------------|-----------------|---------------| 
-		|alienvault-dummy-framework|squidguard|squid3-dbg|squid-deb-proxy|
-		|jesred|education-main-server|calamaris|c-icap|
 			
 		* Dependencies:
 
@@ -1809,14 +985,6 @@ Bu dokümanda, Ahtapot Projesinde Sistemlere Kurulan Paketler ve Bağımlılıkl
 		|ufw|winbindd|||
 		
 	* nginx : Proxy Web Servisi için kurulan pakettir.
-       	* Reverse Depends:
-
-		|Paket Listesi        |                  |                 |               |
-		|---------------------|------------------|-----------------|---------------| 
-		|samizdat|pyblosxom|puppetmaster-common|photofloat|
-		|nginx-light|nginx-full|nginx-extras|nginx-common|
-		|fusiondirectory|fcgiwrap|coquelicot|collectd-core|
-		|cacti||||
 			
 		* Dependencies:
 
@@ -1825,11 +993,6 @@ Bu dokümanda, Ahtapot Projesinde Sistemlere Kurulan Paketler ve Bağımlılıkl
 		|nginx-full|nginx-light|nginx-extras|
 		
 	* dansguardian : Proxy Listeleme yapısını barındıran pakettir.
-		* Reverse Depends:
-
-		|Paket Listesi                      |
-		|-----------------------------------| 
-		|education-services|
 		
 		* Dependencies:
 
@@ -1840,11 +1003,6 @@ Bu dokümanda, Ahtapot Projesinde Sistemlere Kurulan Paketler ve Bağımlılıkl
 		|zlib1g|clamav-freshclam|squid||
 		
 	* sarg : Proxy İstatistik uygumalasını barındıran pakettir.
-		* Reverse Depends:
-
-		|Paket Listesi                       |
-		|------------------------------------| 
-		|education-main-server|
 		
 		* Dependencies:
 
@@ -1858,24 +1016,6 @@ Bu dokümanda, Ahtapot Projesinde Sistemlere Kurulan Paketler ve Bağımlılıkl
 
 * TestFirewall rolünde yüklenen paketler, MYS kapsamında yönetilen TestFirewall görevi verilen tüm makinalara kurulan ortak paketlerdir. 
 	* iptables : Güvenlik Duvarı kuralları için yüklenmiş pakettir.
-		* Reverse Depends: 
-
-		|Paket Listesi        |                  |                 |               |
-		|---------------------|------------------|-----------------|---------------| 
-		|apf-firewall|fwanalog|libxtables10|puppet-module-puppetlabs-firewall|
-		|arno-iptables-firewall|fwknop-server|linux-igd|pyroman|
-		|collectd|fwsnort|miniupnpd|python-netfilter|
-		|collectd-core|heartbeat|mxallowd|shorewall|
-		|concordance-common|ipkungfu|netscript-2.4|shorewall-core|
-		|dtc-xen-firewall|ipset|netscript-ipfilter|shorewall-lite|
-		|ebtables|iptables-dev|network-config|shorewall6|
-		|education-main-server|iptables-dev|network-manager|shorewall6-lite|
-		|education-thin-client-server|iptables-persistent|nova-compute|sshguard|
-		|fail2ban|kvpnc|nova-network|sshuttle|
-		|ferm|libiptables-ipv4-ipqueue-perl|olpc-powerd|ufw|
-		|fiaif|libpam-shield|p3scan|uif|
-		|firehol|libvirt-daemon-system|ppp-gatekeeper|uruk|
-		|firewalld|libxtables10|psad|util-vserver|
 			
 		* Dependencies: 
 
@@ -1884,11 +1024,6 @@ Bu dokümanda, Ahtapot Projesinde Sistemlere Kurulan Paketler ve Bağımlılıkl
 		|libc6|libnfnetlink0|libxtables10|
 		
 	* iptables-persistent : Güvenlik Duvarı kuralları için yüklenmiş pakettir.
-		* Reverse Depends: 
-
-		|Paket Listesi        |                                 |
-		|---------------------|---------------------------------| 
-		|netfilter-persistent|dms-core|
 			
 		* Dependencies: 
 
@@ -1897,26 +1032,6 @@ Bu dokümanda, Ahtapot Projesinde Sistemlere Kurulan Paketler ve Bağımlılıkl
 		|netfilter-persistent|iptables|debconf|debconf-2.0|
 		
 	* rsync : Logların belirli periyotlarda merkez sunucuya gönderilmesi için yüklenmiş pakettir.
-		* Reverse Depends: 
-
-		|Paket Listesi        |                  |                 |               |
-		|---------------------|------------------|-----------------|---------------| 
-		|backintime-common|flexbackup|live-boot|rsnapshot|
-		|backupninja|gadmin-rsync|live-tools|rssh|
-		|backuppc|git|lsb-core|rsyncrypto|
-		|barman|git|lsyncd|simple-cdd|
-		|bzrtools|git-annex|luckybackup|sisu|
-		|clamav-unofficial-sigs|git-remote-gcrypt|lxc|slack|
-		|clsync|git-repair|mrb|subversion-tools|
-		|debaux|gnumed-server|mrs|swift-account|
-		|debmirror|grml2usb|nanoc|swift-container|
-		|dirvish|grsync|opam|swift-object|
-		|dms-core|hdup|openssh-known-hosts|swift-object-expirer|
-		|dput|inosync|python-poker-engine|tailor|
-		|duplicity|jailtool|python-tomahawk|vserver-debiantools|
-		|education-common|ksplice|python3-tomahawk|vzctl|
-		|fdroidserver|libfile-rsync-perl|repmgr|vzdump|
-		|flashybrid|libguestfs-rsync|rsbackup||
 		
 		* Dependencies: 
 
@@ -1927,11 +1042,6 @@ Bu dokümanda, Ahtapot Projesinde Sistemlere Kurulan Paketler ve Bağımlılıkl
 		|duplicity||||
 		
 	* keepalived : Güvenlik Duvarı yedekliliği için yüklenmiş pakettir.
-		* Reverse Depends: 
-
-		|Paket Listesi        |                  |
-		|---------------------|------------------|
-		|yrmcds|ipvsadm|
 		
 		* Dependencies: 
 
@@ -1949,11 +1059,6 @@ Bu dokümanda, Ahtapot Projesinde Sistemlere Kurulan Paketler ve Bağımlılıkl
 		|libc6|libncurses5|libtinfo5|
 		
 	* ifenslave : Güvenlik duvarı arabirim yedekliliği için yüklenmiş pakettir.
-		* Reverse Depends: 
-
-		|Paket Listesi                      |
-		|-----------------------------------| 
-		|ifenslave-2.6|
 		
 		* Dependencies: 
 
