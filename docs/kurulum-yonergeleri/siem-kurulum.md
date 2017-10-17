@@ -659,14 +659,8 @@ ossec:
         enabled: "yes"
     server: "ossimcik01.gdys.local"
 ```
-* Ossec playbook oynatılmadan önce ossimcik makinesine ssh ile bağlanılarak ossec agent kurulumu sırasıdan gerekli anahtar değişimi yapılabilmesi için auto-server.py betiği çalıştırılmalıdır.
-
-```
-/var/ossec/bin/auto-server.py
-```
 * **NOT:** Anahtar alışverişi için gerekli "**auto-server.py**" betiği "**ossec-auto-server**" paketi ile gelmektedir. Ossimcik içerisinde kurulu değil ise ossimcik playbook içerisine eklenmeli "vi /etc/ansible/roles/ossimcik/vars/package.yml" veya manuel olarak "apt-get install ossec-auto-server" kurulmalıdır.
 
-* Betik çalıştırılması ile MYS clientları playbook ile kurulurken gerekli anahtar alışverişı yapılabilcektir.
 * Ansible makinesi içerisinde "**ossec.yml**" çalıştırılarak playbook oynatılır.
 ```
 $ ansible-playbook playbooks/ossec.yml
