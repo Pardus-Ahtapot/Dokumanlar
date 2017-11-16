@@ -6,7 +6,7 @@ Pardus-Ahtapot ISO'su **http://depo.pardus.org.tr/pub/ISO/Ahtapot/pardus-ahtapot
 
 ### CA Sunucusunun Kurulması
 
-Ahtapot kuruacak sistemde CA sunucusu mevcut değil ise Ahtapot kurulumlarına başlanılmadan önce CA Sunucusu Kurulmalıdır. CA sunucusu kurulduktan sonra **CA Kurulumu ve Anahtar Yönetimi** dökümanında anlatılan anajtarların oluşturulması gerekmektedir.
+Ahtapot kuruacak sistemde CA sunucusu mevcut değil ise Ahtapot kurulumlarına başlanılmadan önce CA Sunucusu Kurulmalıdır. CA sunucusu kurulduktan sonra **CA Kurulumu ve Anahtar Yönetimi** dökümanında anlatılan anahtarların oluşturulması gerekmektedir.
 
 ### Kurulum Sırası
 
