@@ -8,18 +8,26 @@ Ahtapot, Pardus Linux üzerine inşa edilen ve bir kurumun ihtiyaç duyacağı t
 
 ## Bileşenler
 
+### Bütünleştirilmesi Tamamlanan Bileşenler
+
 * Merkezi Yönetim Sistemi (MYS)
 * Güvenlik Duvarı Yönetim Sistemi (GDYS)
 * Güvenli İnternet Erişim Sistemi (GİnES)
 * Siber Olay, Açıklık, Risk İzleme ve Yönetim Sistemi
 * Sanal Özel Ağ (VPN) Sistemi
+
+### Bütünleştirilmesi Devam Eden Bileşenler
+
 * Saldırı Tespit / Önleme Sistemi (IDS/IPS)
 * Örün Uygulama Güvenlik Duvarı
-* Ağ Trafiği Yakalama, İzleme ve İnceleme Çözümü
-* Eposta Güvenlik Sistemi
-* Siber Saldırı Erken Uyarı Sistemi (HoneyPot)
-* Ağ Erişim Kontrol Sistemi (NAC)
 * Ağ Cihazları, Sunucu ve İstemci Bilgi Sistemleri İzleme Çözümü
+* Eposta Güvenlik Sistemi)
+* Siber Saldırı Erken Uyarı Sistemi (HoneyPot) 
+
+### Bütünleştirilmesi Planlanan Bileşenler
+
+* Ağ Trafiği Yakalama, İzleme ve İnceleme Çözümü
+* Ağ Erişim Kontrol Sistemi (NAC)
 
 ## Dokümantasyon
 

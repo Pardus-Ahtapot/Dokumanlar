@@ -7,7 +7,7 @@
 Bu dokümanda, Ahtapot projesi kapsamında geliştirilmiş Güvenlik Duvarı Yönetim Sistemi’nin (GDYS) kurulum adımları belirtilmektedir.
 
 
-####GDYS Önemli Uyarılar
+#### GDYS Önemli Uyarılar
 
  1. Bütünleşik yapıya ait GDYS kurulumunun dokümanda belirtilen sıralamaya göre yapılması mecburidir. Bu sıralamanın dışana çıkılması entegrasyonun düzgün **gerçekleşmemesine** neden olacaktır.
  2. Test ortamı amaçlı yapılacak kurulumlarda, TÜBİTAK ULAKBİM tarafından sağlanan anahtarlar kullanılacak ise, oluşturulacak makinalardın domain adreslerinin “gdys.local” olması zaruridir. Aksi durumlarda sistemlerin çalışmasında sorun yaşanabilmektedir.
@@ -15,13 +15,13 @@ Bu dokümanda, Ahtapot projesi kapsamında geliştirilmiş Güvenlik Duvarı Yö
 GDYS sistemi temel olarak, Merkezi Yönetim Sistemi (MYS) ve Merkezi Sürüm Takibi (GitLab) kullanılarak sunucu kurulum ve ilk yapılandırmalarının gerçekleştirilmesi işlemlerini sağlamakta ve merkez ile bağlantısı bulunan uç güvenlik duvarı birimlerinde, kural girişi gibi güvenlik duvarı yönetim işlerinin bir onay mekanizmasına tabii tutularak merkezi ve kontrollü olarak gerçekleştirilmesi işlemlerini yerine getirmektedir.
 
 
-####GDYS Çalışma Prensip Şeması
+#### GDYS Çalışma Prensip Şeması
 GDYS sisteminin ve bağlı merkezi sistem yönetiminin nasıl işlediğini gösterir akış şeması aşağıdaki gibidir.
 
 ![GDYS](../img/gdys1.jpg)
 
 
-####GDYS Çalışma Prensibi Açıklamaları
+#### GDYS Çalışma Prensibi Açıklamaları
 Yukarıdaki şemada gösterildiği üzere GDYS sisteminin çalışma prensibini tanımlayan işleyiş listesi şöyledir:
 
 1. Firewall kuralı ekleme kaldırma gibi yönetimsel işleri yapacak olan personelin istemci bilgisayarından, üzerinde firewall builder kurulu olan ve GDYS’nin ana bileşenlerinden birisi olan Firewall Builder uygulamasının kurulu olduğu sunucuya kısıtlandırılmış SSH anahtar mekanizmasıyla ve SSH x-forwarding ile açılan tünel içerisinden “Güvenlik Duvarı Yönetim Sistemi Kontrol Paneli” uygulamasına kontrollü olarak ulaşılır.
@@ -35,7 +35,7 @@ Yukarıdaki şemada gösterildiği üzere GDYS sisteminin çalışma prensibini 
 5. Ansible makinası tarafından belirlenen aralıklar ile GitLab’ a bağlantı kurarak değişiklik olup olmadığını kontrol edilir. Değişiklik olması durumda değişiklikleri ve hangi uç birim güvenlik duvarlarına uygulanacağı bilgisini alarak, otomatize edilmiş bir şekilde uç sistemlerde uygulanması sağlanır. Bu şekilde Firewall Builder arayüzünden yapılan değişiklikler ilgili uç birim güvenlik duvarlarında öncesinde onaydan geçerek devreye alınır. Değişiklik talepleri onaydan geçememeleri durumunda, reddedilir ve uç birim güvenlik duvarlarında devreye alınmaksızın yok sayılır.
 
 
-###GDYS Kurulum Adımları
+### GDYS Kurulum Adımları
  1. GDYS yapısına ait ana bileşenleri oluşturmak amacı ile “AHTAPOT Pardus Temel ISO Kurulumu” dokümanı kullanılarak GDYS sistemi olarak kullanılacak, Güvenlik Duvarlarının ISO kurulumları yapılır.
 
  2. “AHTAPOT Güvenlik Duvarı Kurulumu” dokümanı takip edilerek, proje kapsamında kullanılacak Güvenlik Duvarı sunucuları kurulur.
@@ -53,7 +53,7 @@ Gereken :
 Pardus Temel ISO’ dan kurulumu tamamlanmış bir sunucu.
 
 
-##Kurulum İşlemleri
+## Kurulum İşlemleri
 
 * **NOT:** Dökümanda yapılması istenilen değişiklikler gitlab arayüzü yerine terminal üzerinden yapılması durumunda playbook oynatılmadan önce yapılan değişiklikler git'e push edilmelidir.
 
@@ -282,7 +282,7 @@ GitLab kurulumu tamamlanmış sunucu
 Firewall Builder kurulumu tamamlanmış sunucu.
 
 
-####Entegrasyon Adımları
+#### Entegrasyon Adımları
 
 *  Firewall Builder makinasından Güvenlik Duvarı Yönetim Sistemi Kontrol Paneli ile GitLab sunucusuna erişmek için, FirewallBuilder makinasına ssh ile bağlanarak, GitLab sunucusunun SSL sertifikası yüklenir. Bu amaç için, Firewall builder makinasına ahtapotops kullanıcısı ile bağlanılarak root kullanıcısına geçilir.
 
@@ -320,7 +320,7 @@ $ sudo su -
 ssh-keygen -Lf id_rsa-cert.pub
 ```
 * Gitlab arayüzüne Firewall Builder makinesinin bağlanabilmesi için yukarıda oluşuturulan ve  "**/home/ahtapotops/.ssh**" dizini içerisinde buşunan "**id_rsa.pub**" public keyi Gitlab Kurulum dosyasında antıldığı gibi ssh key olarak eklenmelidir.
-* AHTAPOT CA Kurulumu ve Anahtar Yönetimi dokümanında tarif edildiği üzere, her kullanıcı için X11 kullanabilecek ve sadece FirewallBuilder uygulamasına erişebilecek  kısıtlı erişime sahip olacak CA anahtarı oluşturulur. Kullanıcılar için anahtar oluşturulması tamamlandıktan sonra SSH x-forwarding ile açılan tünel içerisinden “**Güvenlik Duvarı Yönetim Sistemi Kontrol Paneli**” uygulamasına kontrollü olarak aşağıdaki komut ile ulaşılır.
+* Ahtapot Sertifika Otoritesi Kurulumu ve Anahtar Yönetimi dokümanında tarif edildiği üzere, her kullanıcı için X11 kullanabilecek ve sadece FirewallBuilder uygulamasına erişebilecek kısıtlı erişime sahip olacak Sertifika Otoritesi (CA) anahtarı oluşturulur. Kullanıcılar için anahtar oluşturulması tamamlandıktan sonra SSH x-forwarding ile açılan tünel içerisinden “**Güvenlik Duvarı Yönetim Sistemi Kontrol Paneli**” uygulamasına kontrollü olarak aşağıdaki komut ile ulaşılır.
 
 ```
 $ sudo ssh -X ahtapotops@FirewallBuilder_IP -i /anahtarin/dizini/kullanici01
