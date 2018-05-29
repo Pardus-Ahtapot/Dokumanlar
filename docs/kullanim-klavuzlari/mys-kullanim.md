@@ -1,5 +1,5 @@
 ![ULAKBIM](../img/ulakbim.jpg)
-#Ansible Playbook Kullanımı
+# Ansible Playbook Kullanımı
 ------
 
 Bu dokümanda, AHTAPOT projesi kapsamında, merkezi yönetim uygulaması olarak kullanılan Ansible üzerinde geliştirilen playbooklar’ın temel rolleri ve detayları dokümante edilmektedir.
@@ -20,7 +20,7 @@ Farklı görev üstlenen sunucular için farklı roller tanımlanmış olup her 
 -vars/
 	-main.yml
 -templates/
-	-template1.j2
+	-template1.j2Sertifika Otoritesi
 	-template2.j2
 -meta/
 -README.md
@@ -252,7 +252,7 @@ logger:
     message: "Heartbeat from $(hostname) at $(date) !"
 ```
 
-* “**ssh.yml**” dosyası ile sistemlerde ssh tanım, yapılandırma ve sıkılaştırma işlemleri yapılır. “**conf**” alt fonksiyonu ile “**/etc/ssh/sshd_config**” dosyasının hakları ve erişim yetkileri belirlenir. “**service**” alt fonksiyonunda ssh servisinin değişikliklerden sonra yeniden başlatılması sağlanır. “**TrustedUserCAKeys**” alt fonksiyonu ile sisteme eklenen CA imzalı açık anahtar bilgisi, bu anahtarın hakları ve erişim yetkileri belirlenir. Anahtarın değiştirildiği durumlarda, sistemlere ait imzalanmış public anahtar "**/etc/ansible/roles/base/templates**" dizini altında bulunan "**ahtapot_ca.pub.j2**" dosyasında düzenlenmelidir. "**RevokedKeys**" alt fonksiyonunda  "**/etc/ansible/roles/base/templates**" dizini altında bulunan "**revoked_keys.j2" dosyasına sisteme mevcutta erişimi bulunan fakat gerekli sebepler dolayısı ile erişim yetkisi kaldırılmak istenen kullanıcıların anahtar bilgileri eklenmelidir. “**LocalBanner**” ve “**RemoteBanner**” alt fonksiyonları ile sunuculara  bağlantı kurulduğunda ekrana gelecek uyarı belirtilir. Bu satırlardan sonra gelen satırlarda, ssh yapılandırmasına ait bilgiler bulunup, değişiklik yapıldığı takdirde “**/etc/ssh/sshd_config**” dosyasına bu değişiklikler yansıtılacaktır. Sistemlerde kullanılacak ssh portunu varsayılan “**22**” değeri dışında başka bir değere atanmak istenir ise, “**Port**” satırındaki 22 değeri olması istenen değer ile değiştirilmelidir.
+* “**ssh.yml**” dosyası ile sistemlerde ssh tanım, yapılandırma ve sıkılaştırma işlemleri yapılır. “**conf**” alt fonksiyonu ile “**/etc/ssh/sshd_config**” dosyasının hakları ve erişim yetkileri belirlenir. “**service**” alt fonksiyonunda ssh servisinin değişikliklerden sonra yeniden başlatılması sağlanır. “**TrustedUserCAKeys**” alt fonksiyonu ile sisteme eklenen Sertifika Otoritesi (CA) imzalı açık anahtar bilgisi, bu anahtarın hakları ve erişim yetkileri belirlenir. Anahtarın değiştirildiği durumlarda, sistemlere ait imzalanmış public anahtar "**/etc/ansible/roles/base/templates**" dizini altında bulunan "**ahtapot_ca.pub.j2**" dosyasında düzenlenmelidir. "**RevokedKeys**" alt fonksiyonunda  "**/etc/ansible/roles/base/templates**" dizini altında bulunan "**revoked_keys.j2" dosyasına sisteme mevcutta erişimi bulunan fakat gerekli sebepler dolayısı ile erişim yetkisi kaldırılmak istenen kullanıcıların anahtar bilgileri eklenmelidir. “**LocalBanner**” ve “**RemoteBanner**” alt fonksiyonları ile sunuculara  bağlantı kurulduğunda ekrana gelecek uyarı belirtilir. Bu satırlardan sonra gelen satırlarda, ssh yapılandırmasına ait bilgiler bulunup, değişiklik yapıldığı takdirde “**/etc/ssh/sshd_config**” dosyasına bu değişiklikler yansıtılacaktır. Sistemlerde kullanılacak ssh portunu varsayılan “**22**” değeri dışında başka bir değere atanmak istenir ise, “**Port**” satırındaki 22 değeri olması istenen değer ile değiştirilmelidir.
 
 ```
 # Ssh degiskenlerini iceren dosyadir.
@@ -512,7 +512,7 @@ base_ahtapot_directories:
 #        mode: ""
 #        state: ""
 ```
-####Ansible Rolü Değişkenleri
+#### Ansible Rolü Değişkenleri
 
 Bu rol Ahtapot projesi kapsamındaki Ansible görevini üstlenecek sunucularda çalıştırılan Ansible ayarlamaların yapıldığı roldür.  Bu rolün görevleri:
 
@@ -634,7 +634,7 @@ gkts:
     logseverity: "local5.notice"
 ```
 
-####Gitlab
+#### Gitlab
 
 Ahtapot projesi kapsamında merkezde bulunacak ve sistemlerin ihtiyaç duyduğu dosyaları depolarından bulunduran GitLab sunucusunu kuracak playbook’dur. “**/etc/ansible/playbooks/**” dizini altında bulunan “**gitlab.yml**” dosyasına bakıldığında, “**hosts**” satırında Ansible’ a ait “**/etc/ansible/**” altında bulunan “**hosts**” dosyasında “**[gitlab]**” satırı altına yazılmış tüm sunucularda bu playbookun oynatılacağı belirtilir. “**remote_user**” satırında, sistemler oynatılacak playbookun hangi kullanıcı ile oynatılacağı belirlenir. “**sudo**” satırı ile çalışacak komutların sudo yetkisi ile çalışması belirlenir. “**roles**” satırı altında bulunan satırlarda ise bu playbook çalıştığında “**base**” ve “**gitlab**” rollerinin çalışacağı belirtilmektedir. "**vars_files**" satırı altında gitlab playbookunun değişken dosyalarının bilgisi bulunmaktadır.
 
@@ -668,7 +668,7 @@ $ more /etc/ansible/playbooks/gitlab.yml
   - { role: gitlab }
 ```
 
-####Gitlab Rolü Değişkenleri
+#### Gitlab Rolü Değişkenleri
 
 Bu rol Ahtapot projesi kapsamındaki GitLab rolünü üstlenecek sunucularda ayarlamaların yapıldığı roldür.  Bu rolün görevleri:
 
@@ -855,7 +855,7 @@ gitlab_packages:
 #        state:
 ```
 
-####FirewallBuilder
+#### FirewallBuilder
 
 Ahtapot projesi kapsamında merkezde bulunacak ve güvenlik duvarlarının yönetilmesini sağlayacak playbook’dur. “**/etc/ansible/playbooks/**” dizini altında bulunan “**firewallbuilder.yml**” dosyasına bakıldığında, “**hosts**” satırında Ansible’a ait “**/etc/ansible/**” altında bulunan “**hosts**” dosyasında “**[firewallbuilder]**” satırı altına yazılmış tüm sunucularda bu playbookun oynatılacağı belirtilir. “**remote_user**” satırında, sistemler oynatılacak playbookun hangi kullanıcı ile oynatılacağı belirlenir. “**sudo**” satırı ile çalışacak komutların sudo yetkisi ile çalışması belirlenir. “**roles**” satırı altında bulunan satırlarda ise bu playbook çalıştığında “**base**” ve “**firewallbuilder**” rollerinin çalışacağı belirtilmektedir. "**vars_files**" satırı altında firewallbuilder playbookunun değişken dosyaları belirtilmiştir.
 
@@ -892,7 +892,7 @@ $ more /etc/ansible/playbooks/firewallbuilder.yml
 ```
 
 
-####FirewallBuilder Rolü Değişkenleri
+#### FirewallBuilder Rolü Değişkenleri
 
 Bu rol Ahtapot projesi kapsamındaki FirewallBuilder rolünü üstlenecek sunucularda ayarlamaların yapıldığı roldür.  Bu rolün görevleri:
 
@@ -1002,7 +1002,7 @@ gitrepos:
 #        key_file: ""
 ```
 
-####Rsyslog
+#### Rsyslog
 
 Ahtapot projesi kapsamında merkezde bulunacak ve logların gönderilerek tutulacağı sunucuları oluşturacak playbook’dur. “**/etc/ansible/playbooks/**” dizini altında bulunan “**rsyslog.yml**” dosyasına bakıldığında, “**hosts**” satırında Ansible’a ait “**/etc/ansible/**” altında bulunan “**hosts**” dosyasında “**[rsyslog]**” satırı altına yazılmış tüm sunucularda bu playbookun oynatılacağı belirtilir. “**remote_user**” satırında, sistemler oynatılacak playbookun hangi kullanıcı ile oynatılacağı belirlenir. “**sudo**” satırı ile çalışacak komutların sudo yetkisi ile çalışması belirlenir. "**vars_files**" satırı rsyslog playbookunun değişken dosyalarını belirtmektedir. “**roles**” satırı altında bulunan satırlarda ise bu playbook çalıştığında “**base**” ve “**rsyslog**” rollerinin çalışacağı belirtilmektedir. 
 
@@ -1039,7 +1039,7 @@ $ more /etc/ansible/playbooks/rsyslog.yml
 ```
 
 
-####Rsyslog Rolü Değişkenleri
+#### Rsyslog Rolü Değişkenleri
 
 Bu rol Ahtapot projesi kapsamındaki Rsyslog rolünü üstlenecek sunucularda ayarlamaların yapıldığı roldür.  Bu rolün görevleri:
 
@@ -1140,7 +1140,7 @@ signer:
     logs: "/data/log"
 ```
 
-####TestFirewall
+#### TestFirewall
 
 Ahtapot projesi kapsamında merkezde bulunan güvenlik duvarı yönetim sistemine dahil olan ve girilen kuralların güvenlik duvarlarında oynatılmadan önce imla açısından kontrol edilemsini sağlayacak sunucuyu oluşturan playbook’dur. “**/etc/ansible/playbooks/**” dizini altında bulunan “**testfirewall.yml**” dosyasına bakıldığında, “**hosts**” satırında Ansible’a ait “**/etc/ansible/**” altında bulunan “**hosts**” dosyasında “**[testfirewall]**” satırı altına yazılmış tüm sunucularda bu playbookun oynatılacağı belirtilir. “**remote_user**” satırında, sistemler oynatılacak playbookun hangi kullanıcı ile oynatılacağı belirlenir. “**sudo**” satırı ile çalışacak komutların sudo yetkisi ile çalışması belirlenir. "**vars_files**" satırı altında testfirewall playbookunun değişken dosyaları belirtilmektedir. “**roles**” satırı altında bulunan satırlarda ise bu playbook çalıştığında “**base**” ve “**firewall**” rollerinin çalışacağı belirtilmektedir.
 
@@ -1178,7 +1178,7 @@ $ more /etc/ansible/playbooks/testbuilder.yml
   - { role: testfirewall }
 ```
 
-####TestFirewall Rolü Değişkenleri
+#### TestFirewall Rolü Değişkenleri
 
 * "**group.yml**" dosyası içerisinde "**name**" satırında belirtildiği gibi kontrol isminde ve "**gid**" bilgisine sahip için group oluşturulmaktadır.
 
@@ -1379,9 +1379,9 @@ testfirewall_directories:
 ```
 
 
-####Firewall
+#### Firewall
 
-Ahtapot projesi kapsamında merkezde bulunan güvenlik duvarı sunucusunun kurulumunu sağlayan  playbook’dur. “**/etc/ansible/playbooks/**” dizini altında bulunan “**firewall.yml**” dosyasına bakıldığında, “**hosts**” satırında Ansible’a ait “**/etc/ansible/**” altında bulunan “**hosts**” dosyasında “**[firewall]**” satırı altına yazılmış tüm sunucularda bu playbookun oynatılacağı belirtilir. “**remote_user**” satırında, sistemler oynatılacak playbookun hangi kullanıcı ile oynatılacağı belirlenir. “**sudo**” satırı ile çalışacak komutların sudo yetkisi ile çalışması belirlenir. "**vars_files**" satırı altında firewall playbookunun değişken dosyaları belirtilmektedir. “**roles**” satırı altında bulunan satırlarda ise bu playbook çalıştığında “**base**” ve “**firewall**” rollerinin çalışacağı belirtilmektedir.
+Ahtapot projesi kapsamında merkezde bulunan güvenlik duvarı sunucusunun kurulumunu sağlayan playbook’dur. “**/etc/ansible/playbooks/**” dizini altında bulunan “**firewall.yml**” dosyasına bakıldığında, “**hosts**” satırında Ansible’a ait “**/etc/ansible/**” altında bulunan “**hosts**” dosyasında “**[firewall]**” satırı altına yazılmış tüm sunucularda bu playbookun oynatılacağı belirtilir. “**remote_user**” satırında, sistemler oynatılacak playbookun hangi kullanıcı ile oynatılacağı belirlenir. “**sudo**” satırı ile çalışacak komutların sudo yetkisi ile çalışması belirlenir. "**vars_files**" satırı altında firewall playbookunun değişken dosyaları belirtilmektedir. “**roles**” satırı altında bulunan satırlarda ise bu playbook çalıştığında “**base**” ve “**firewall**” rollerinin çalışacağı belirtilmektedir.
 ```
 $ more /etc/ansible/playbooks/firewall.yml
 # Calistirildiginda Guvenlik Duvari Kurulumu Yapilir
@@ -1418,7 +1418,7 @@ $ more /etc/ansible/playbooks/firewall.yml
   - { role: base }
   - { role: firewall }
 ```
-####Firewall Rolü Değişkenleri
+#### Firewall Rolü Değişkenleri
 
 Bu rol Ahtapot projesi kapsamındaki Firewall rolünü üstlenecek sunucularda ayarlamaların yapıldığı roldür.  Bu rolün görevleri:
 
@@ -1691,7 +1691,7 @@ firewall_directories:
 #        state: ""
 ```
 
-####Maintenance
+#### Maintenance
 
 Ahtapot projesi kapsamında Ansible tarafından yönetilen tüm sunucularda bakım işlemlerinin yapıldığı playbook’dur. “**/etc/ansible/playbooks/**” dizini altında bulunan “**maintenance.yml**” dosyasına bakıldığında tüm sunucularda bu playbookun oynatılacağı belirtilir. “**remote_user**” satırında, sistemler oynatılacak playbookun hangi kullanıcı ile oynatılacağı belirlenir. “**sudo**” satırı ile çalışacak komutların sudo yetkisi ile çalışması belirlenir. “**roles**” satırı altında bulunan satırlarda ise bu playbook çalıştığında “**maintenance**” rolünün çalışacağı belirtilmektedir.
 
@@ -1903,13 +1903,13 @@ $ more /etc/ansible/playbooks/state.yml
   - { role: openvpn }
 ```
 
-####Kullanıcı ve Grup Değiştirme (Daha sonra düzenlenecek)
+#### Kullanıcı ve Grup Değiştirme (Daha sonra düzenlenecek)
 
 
 Bu dokümanda, Ahtapot sistemindeki altyapıyı yöneten kullanıcı ve grubunu değiştirmek için yapılması gerekenler anlatılıyor.
 
 
-####Sunucularda Yeni Kullanıcı ve Grup Oluşturma
+#### Sunucularda Yeni Kullanıcı ve Grup Oluşturma
 
 * Sunuculara yeni kullanıcı ve grup oluşturmak için, Ansible makinesine bağlantı sağlanarak /etc/ansible klasörüne gidilir.
 
@@ -1930,7 +1930,7 @@ presentuser: yeni_kullanıcı_adı
 
 **NOT :** Tüm sunucularda ilgili playbookun oynatıldığından emin olmadan bir sonraki adıma geçmeyiniz.
 
-####Rollerdeki Kullanıcı ve Grup Yapılandırması (Daha sonra düzenlenecek)
+#### Rollerdeki Kullanıcı ve Grup Yapılandırması (Daha sonra düzenlenecek)
 
 * İlk işlemi başarılı bir şekilde yaptıktan sonra eski kullanıcı ve grubun hardcoded yazılmış olduğu yerleri yeni kullanıcı ile değiştiriyoruz.
 * Gitlab sunucusuna bağlantıda kullanılan anahtar dosyasının yeri yeni kullanıcı için oluşturulmuş anahtar dosyasının yeri ile değiştirilir. Dosya içerisinde ilgili parametreye karşılık gelen tüm satırlar aynı şekilde değiştirilir.
@@ -1963,7 +1963,7 @@ keyfile:/home/yeni_kullanıcı_adı/.ssh/id_rsa
 **NOT: Tüm sunucularda ilgili playbookun oynatıldığından emin olmadan bir sonraki adıma geçmeyiniz.**
 
 
-####Playbooklarda Çalışan Kullanıcının Değiştirilmesi
+#### Playbooklarda Çalışan Kullanıcının Değiştirilmesi
 
 * İlk iki işlemi başarılı bir şekilde yaptıktan sonra ansible makinesinin başarılı olarak bağlanabilmesi için playbooklarda tanımlı remote_user ‘a yeni geçerli kullanıcı adının girilmesi gerekmektedir.
 * Aşağıda belirtilen tüm “**vi**” komutları sırası ile çalıştırılarak “**remote_user:**” satırındaki ahtapotops kullanıcısı yerine yeni oluşturulan kullanıcı bilgisi yazılır.
@@ -1986,7 +1986,7 @@ remote_user: yeni_kullanıcı_adı
 
 
 
-####Eski Kullanıcı ve Grup’ un Kaldırılması
+#### Eski Kullanıcı ve Grup’ un Kaldırılması
 
 * İşlemler başarılı bir şekilde yaptıktan sonra önceden tanımlı olan kullanıcı ve grubun kaldırılması işlemleri yapılır.
 * Aşağıda belirtilen dosya içerisinde ki “**revokedgroup**” ve “**revokeduser**” satırlarına kaldırılmak istenen kullanıcı ve grup bilgisi girilir.
