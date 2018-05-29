@@ -1,14 +1,14 @@
 ![ULAKBIM](../img/ulakbim.jpg)
-#Siber Olay, Açıklık, Risk İzleme ve Yönetim Sistemi Kullanımı
+# Siber Olay, Açıklık, Risk İzleme ve Yönetim Sistemi Kullanımı
 ------
 
 [TOC]
 
-####OSSIM Üzerinde İstemci Tanımlama
-####Linux İşletim Sistemli İstemci Tanımlama
+### OSSIM Üzerinde İstemci Tanımlama
+#### Linux İşletim Sistemli İstemci Tanımlama
 
 * Tasarımı yapılan yapı itibari ile, Linux istemcilerde loglar “**Rsyslog**” kullanılarak **OSSIM** sunucularına gönderilir.
-* İlgili yapılandırma yapılmadan önce CA Sunucusu üzerinde oluşturulmuş, “**rootCA.pem**”, “**ansible01.crt**” ve “**ansible01.key**” dosyaları “**/etc/ssl/rsyslog**” klasörü altına kopyalanır.
+* İlgili yapılandırma yapılmadan önce Sertifika Otoritesi (CA) Sunucusu üzerinde oluşturulmuş, “**rootCA.pem**”, “**ansible01.crt**” ve “**ansible01.key**” dosyaları “**/etc/ssl/rsyslog**” klasörü altına kopyalanır.
 * Linux istemcilerde Rsyslog yapılandırması için Pardus Git reposunda bulunan Rsyslog yapılandırmasını içeren “**linuxclient-nxlog.conf**” (https://git.pardus.org.tr/ahtapot/SOLARIS/blob/development/AhtapotSIEM/Rsyslog-nxlog_config/linuxclient-nxlog.conf) dosyası “**/etc/rsyslog.d**” dizini içerisine koplayanır.
 * “**/etc/rsyslog.d**” dizinine yerleştirilen “**linuxclient-nxlog.conf**” dosyasında son satırda bulunan “**@@ossimcik01.gdys.local:514**” satırına logların ulaştırılacağı OSSIM sunucusunun FQDN bilgisi yazılır.
 ```
@@ -33,14 +33,14 @@ $ActionSendStreamDriverAuthMode anon
 ```
 linuxclient:~root$ /etc/init.d/rsyslog restart
 ```
-####Windows İşletim Sistemli İstemci Tanımlama
+#### Windows İşletim Sistemli İstemci Tanımlama
 * Tasarımı yapılan yapı itibari ile, Windows istemcilerde olay kayıtları “**Nxlog**” kullanılarak **OSSIM** sunucularına gönderilir. Windows istemcilerden logların alınması için öncelikle nxlog uygulaması makine üzerine kurulur ve konfigurasyonu ayarlanır.
 * Windows işletim sistemli istemciler için kullanılacak **nxlog-ce.msi** dosyası https://nxlog.org/products/nxlog-community-edition/download adresinden indirilir.
 * Indirilen nxlog-ce.msi dosyası ilgili istemciye kopylanarak kurulum başlatılarak aşağıdaki adımlar izlenir.
 ![SIEM](../img/siem1.jpg)
 ![SIEM](../img/siem2.jpg)
 ![SIEM](../img/siem3.jpg)
-* İlgili yapılandırma yapılmadan önce CA Sunucusu üzerinde oluşturulmuş, “**rootCA.pem**”, “**WIN-IUUCNN7B5MG.crt**” ve “**WIN-IUUCNN7B5MG.key**” dosyaları “**%ROOT%\keys\**” klasörü altına kopyalanır.
+* İlgili yapılandırma yapılmadan önce Sertifika Otoritesi Sunucusu üzerinde oluşturulmuş, “**rootCA.pem**”, “**WIN-IUUCNN7B5MG.crt**” ve “**WIN-IUUCNN7B5MG.key**” dosyaları “**%ROOT%\keys\**” klasörü altına kopyalanır.
 * Windows istemcilerde nxlog yapılandırması için Pardus Git reposunda bulunan Rsyslog yapılandırmasını içeren “**windowsclient-nxlog.conf**” (https://git.pardus.org.tr/ahtapot/SOLARIS/blob/development/AhtapotSIEM/Rsyslog-nxlog_config/windowsclient-nxlog.conf) dosyası “**C:\Program Files\nxlog\conf**” dizini içerisinde bulunan “**nxlog.conf**” dosyasına koplayanır. 
 
 ```
@@ -101,7 +101,8 @@ LogFile %ROOT%\data\nxlog.log
 ![SIEM](../img/siem4.jpg)
 * OSSIM Server ile bağlantı sağlanmaması ve ya bir hata olması durumunda “**C:\Program Files\nxlog\data**” dizini içerisinde “**nxlog.log**” dosyası incelenek tespit edilebilir.
 
-####Tanımlanan İstemcilerden Gelen Logların Gözlemlenmesi
+#### Tanımlanan İstemcilerden Gelen Logların Gözlemlenmesi
+
 * Windows istemcilerde oluşan hatalı giriş loglarının ossim üzerinde incelenmesi için bir kaç defa kullanıcı şifresi yanlış girilerek olay kayıtları oluşturulur. 
 * Ossim web arayüzüne “**https://ossim_sunucu_fqdn**” adresinden bağlanılır.
 * “**Analysis**” altında bulunan “**Security** **Events**” sekmesi açılır ve “**search**” kısmına Windows sunucunun ip adresi girilerek sunucudan gelen hatalı giriş kayıtları gözlemlenir. Ossim içerisinde hatalı giriş kayıtları aşağıdaki gibidir.
@@ -116,7 +117,8 @@ AlienVault HIDS: Logon Failure - Unknown user or bad password. Eventinin Datasou
 
 ![SIEM](../img/siem7.jpg)
 
-####OSSIM Kolerasyon Kuralı Oluşturulması
+#### OSSIM Kolerasyon Kuralı Oluşturulması
+
 * OSSIM içerisinde korelasyon kuralı oluşturulması için menü üzerinde “**Configuration** => **Threat** **Intelligence** => **Directives**” sekmesi açılr.
 * Korelasyon kuralları OSSIM içerisinde oluşan olayları birbiri ile ilişkilendirerek ve kural oluşturulurken kurala verilen **priority**, **realibility** ve kuralın tetiklendiği **asset** **değeri** (default olarak 2) birbiri ile çarpılarak ve çarpım sonucunun 25’e bölümünden sonuç **1** değerinin üzerinde ise alarm oluşturulur.
 * OSSIM içerisinde oluşan eventler olayı oluşturulan **datasource** **id** ve **event** **id** gibi değerlere sahiptirler. Kurallar oluşturulurken eventleri seçmekte yardımcı bilgilerdir.
@@ -368,9 +370,9 @@ root@testclient:~# /var/ossec/bin/ossec-control restart
 * Eventler arasında “**AlienVault HIDS: Integrity checksum changed.**” Eventi syscheck ile etc/host dosyasındaki değişikliklerin tespit edilmesiyle oluşan eventtir. Event tıklanması ile eventin ayrıntı bilgilerini gösteren sayfa açılmaktadır. Açılan sayfasını alt kısımlarına gelinmesi ile hangi dosyada değişiklik olduğu, alınan eski ve yeni hash değerlerinin bilgilerine ulaşılabilinmektedir.
 ![SIEM](../img/siem105.jpg)
 
-####Dosya Değişikliklerinde Alarm Üretilmesi
+#### Dosya Değişikliklerinde Alarm Üretilmesi
 
-* Ossec agent tar.gz dosyası wget ile istenilen client içerisine indirilir. Aşağıdaki komutlar çalıştırılarak agent kurulumu başlatılır ve kurulum sırasında sorulan sorular aşağıdaki gibi yanıtlanır.
+* Ossec ajan yazılımı wget ile istenilen client içerisine indirilir. Aşağıdaki komutlar çalıştırılarak agent kurulumu başlatılır ve kurulum sırasında sorulan sorular aşağıdaki gibi yanıtlanır.
 ```
 ahtapotops@testclient:~$ wget https://bintray.com/artifact/download/ossec/ossec-hids/ossec-hids-2.8.3.tar.gz
 ahtapotops@testclient:~$ sudo su
@@ -533,8 +535,9 @@ root@testclient:~# /var/ossec/bin/ossec-control restart
 * Açılan yeni sayfa üzerinde tarama tarama işlemleri gözlemlenebilmektedir.
 ![SIEM](../img/siem39.jpg)
 
-####Yazılım Envanter Bilgilerinin Çıkartılması
-* Ossim içerisinde bulunan “**OCS-NG**” kullanılarak yazılım envanter bilgileri kayıt altında tutulmaktadır.
+#### Yazılım Envanter Bilgilerinin Çıkartılması
+
+* OSSIM içerisinde bulunan “**OCS-NG**” ajan yazılımı kullanılarak yazılım envanter bilgileri kayıt altında tutulmaktadır.
 * Linux sunucularda Ocs-ng **ssl** ile çalıştığından dolayı ssl sertifika agent makineler içerisine güvenilir sertifikalar içerine yerleştirilir. Server olarak kullanılacak ocs-ng serverın bulunduğu ossim ssl sertifikası alınarak linux makine içerisine kopyalanır.
 ```
 alienvault:~# cat /etc/ssl/Ahtapot-ossim-keys/certificate.crt
@@ -654,7 +657,7 @@ Ocs-Inventory öntanımlı kullanıcı “**admin**” parola ise “**admin**�
 
 ![SIEM](../img/siem128.jpg)
 
-####Risk Analizi ve Yönetiminin Kullanılması
+#### Risk Analizi ve Yönetiminin Kullanılması
 
 * Sürekli olarak giderilemeyen açıklıklar için risk analizi ve yönetimi yapılmasına simple risk kullanılarak  sağlanmıştır. 
 * OSSIM menü içerisinde “**Environtment**” altında “**Simple** **Risk**” sekmesi tıklanılarak simple risk arayüzüne ulaşılmaktadır. 
@@ -670,7 +673,7 @@ Ocs-Inventory öntanımlı kullanıcı “**admin**” parola ise “**admin**�
 * “**Reporting**” sekmesinin sol menüsünde “**All** **open** **Risks** **Needing** **a** **Review**” seçilerek açılmış risk bilgilerine ulaşılabilmektedir.
 ![SIEM](../img/siem63.jpg)
 
-####OSSIM Üzerinde Bulunan Konu Takip Sisteminin Kullanımı
+#### OSSIM Üzerinde Bulunan Konu Takip Sisteminin Kullanımı
 
 * Ossim içerisinde bulunan konu takip sistemi ile oluşan **anormalliklere**, **eventlere**, **alarmlara** ve **zafiyetlere** özel ticket açılabilir. Açılan ticket durumu ilerleme süresinde değiştirilebilir içerisine **notlar**, **açıklamalar** ve **eklentiler** eklenebilir.
 * OSSIM menüsü içerisinde “**Analysis**” seçeneği altında bulunan “**Tickets**” sekmesi içerisinde konu takip sistemine ait menü bulunmaktadır.
@@ -854,7 +857,7 @@ IF EXIST "C:\Program Files (x86)\ossec-agent\ossec-agent.exe" (
 
 **NOT:** Tüm kurulum ve yapıladırmalar tamamlandıktan sonra nxlog ve ossec-agent için konfigurasyon dosyalarının değişiminin yapıldığı GPO unlink yapılması gerekmektedir. Unlink işlemi yapılmassa konfigurasyon dosyalarında daha sonra bir değşiklik yapıldığında GPO konfigurasyon dosyasında yapılan değişiklikleri ezer.
 
-###Ossim Yeni Kullanıcı Oluşturma
+### OSSIM Yeni Kullanıcı Oluşturma
 
 * Ossim Web Arayüzü içerisinde yeni kullanıcı oluşturma admin yetkisine sahip kullanıcılar tarafından yapılabilmektedir.
 * Ossim arayüzünden admin olarak giriş yapılır. 
