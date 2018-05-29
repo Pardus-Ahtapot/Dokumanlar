@@ -4,21 +4,21 @@
 
 [TOC]
 
-Bu yönerge dokümanından hareketle yapılan kurulum sonrasında, birbirleri ile entegre şekilde çalışan ve Ansible, GitLab, Rsyslog, FWbuilder ve CA ana bileşenlerinden oluşan bir sistem inşa edilmiş olacaktır. 
+Bu yönerge dokümanından hareketle yapılan kurulum sonrasında, birbirleri ile entegre şekilde çalışan ve Ansible, GitLab, Rsyslog, FWbuilder ve Sertifika Otoritesi (CA) ana bileşenlerinden oluşan bir sistem inşa edilmiş olacaktır. 
 
-####MYS Sunucu Gereksinimleri
-| Sunucu Rolü         | RAM | CPU        | Disk |       Network |
+#### MYS Sunucu Gereksinimleri
+| Sunucu Rolü                  | RAM | CPU        | Disk |       Network |
 |-|-----|--|----:|
-| Ahtapot - Ansible   | 8GB | 4 x 2.0GHz | 200G | 1 x 1Gbit/sec |
-| Ahtapot - GitLab    | 8GB | 4 x 2.0GHz | 100G | 1 x 1Gbit/sec |
-| Ahtapot - CA        | 2GB | 1 x 2.0GHz | 100G | 1 x 1Gbit/sec |
-| Ahtapot - FWBuilder | 8GB | 4 x 2.0GHz | 100G | 1 x 1Gbit/sec |
-| Ahtapot - FWtest    | 1GB | 1 x 2.0GHz | 70G  | 1 x 1Gbit/sec |
+| Ahtapot - Ansible             | 8GB | 4 x 2.0GHz | 200G | 1 x 1Gbit/sec |
+| Ahtapot - GitLab              | 8GB | 4 x 2.0GHz | 100G | 1 x 1Gbit/sec |
+| Ahtapot - Sertifika Otoritesi | 2GB | 1 x 2.0GHz | 100G | 1 x 1Gbit/sec |
+| Ahtapot - FWBuilder           | 8GB | 4 x 2.0GHz | 100G | 1 x 1Gbit/sec |
+| Ahtapot - FWtest              | 1GB | 1 x 2.0GHz | 70G  | 1 x 1Gbit/sec |
 
 
-####MYS Yalın Kurulum Adımları 
- 1. GDYS yapısına ait ana bileşenleri oluşturmak amacı ile “AHTAPOT Pardus Temel ISO Kurulumu” dokümanı kullanılarak GDYS Sunucu Gereksinimleri’ nde belirtilmiş olan CA, Ansible, GitLab, FirewallBuilder ve Uç Birim Test Sunucusu ihtiyaçlarını karşılayan toplamda sekiz adet olmak üzere, Ansible,GitLab ve FirewallBuilder sunucularından yedeklilik için ikişer adet kurulur.
- 2. “AHTAPOT CA Kurulumu” dokümanı takip edilerek, proje dahilindeki kullanıcıların açık anahtarlarını oluşturmak için kullanılacak CA sunucusu oluşturulur.
+#### MYS Yalın Kurulum Adımları 
+ 1. GDYS yapısına ait ana bileşenleri oluşturmak amacı ile “AHTAPOT Pardus Temel ISO Kurulumu” dokümanı kullanılarak GDYS Sunucu Gereksinimleri'nde belirtilmiş olan Sertifika Otoritesi, Ansible, GitLab, FirewallBuilder ve Uç Birim Test Sunucusu ihtiyaçlarını karşılayan toplamda sekiz adet olmak üzere, Ansible,GitLab ve FirewallBuilder sunucularından yedeklilik için ikişer adet kurulur.
+ 2. “AHTAPOT Sertifika Otoritesi Kurulumu” dokümanı takip edilerek, proje dahilindeki kullanıcıların açık anahtarlarını oluşturmak için kullanılacak Sertifika Otoritesi sunucusu oluşturulur.
  3. “AHTAPOT Ansible Kurulumu” dokümanı takip edilerek, proje kapsamında kullanılacak Merkezi Yönetim Sistemi sunucusu oluşturulur.
  4. “AHTAPOT GitLab Kurulumu” dokümanı takip edilerek, proje kapsamında kullanılacak Onay Mekanizması ve Merkezi Sürüm Takip Sistemini barındıracak sunucu oluşturulur.
  5. “AHTAPOT FirewallBuilder Kurulumu” dokümanı takip edilerek, Firewall Builder  arayüzü ve bu arayüzün onay mekanizması ile bağlantısını sağlayan Güvenlik Duvarı Yönetim Sistemi Kontrol Paneli’nin kurulduğu sunucu oluşturulur.
@@ -27,7 +27,7 @@ Bu yönerge dokümanından hareketle yapılan kurulum sonrasında, birbirleri il
 
 Yukarıdaki adımların tamamlanması ile, uç birim olarak kullanılacak sunucuların kurulum ve yönetimi yapılabilir sistem ayağa kalkmış olacaktır. Bu aşamadan sonra kurulmak istenen her uç birim için, GDYS Sunucu Gereksinimleri başlığı altında bulunun uç birim gerekliliklerini karşılayan sunucu üzerine AHTAPOT Pardus Temel ISO Kurulumu dokümanı takip edilerek, Yalın Pardus işletim sistemi kurulur. Ardından AHTAPOT Güvenlik Duvarı Kurulumu dokümanı takip edilerek sunucuya güvenlik duvarı rolü yüklenir.
 
-#Ansible Kurulumu Yönergesi
+# Ansible Kurulumu Yönergesi
 ------
 
 Bu dokümanda, Ahtapot bütünleşik güvenlik yönetim sisteminde kullanılan merkezi yönetim sunucusunun kurulması prosedürü anlatılıyor.
@@ -35,7 +35,7 @@ Bu dokümanda, Ahtapot bütünleşik güvenlik yönetim sisteminde kullanılan m
 Gereken : 
 Pardus Temel ISO’ dan kurulumu tamamlanmış bir sunucu.
 
-####Kurulum İşlemleri
+#### Kurulum İşlemleri
 
 **NOT:** Kurulacak sistem, SIEM yapısına dahil edilmek isteniyorsa, kurulum sonrasında Siber Olay, Açıklık, Risk İzleme ve Yönetim Sistemi Kurulumu sayfasında bulunan [LMYS Clientlarında Ossec Agent Dağıtımı](siem-kurulum.md) başlığı incelenmelidir.
 
@@ -72,7 +72,7 @@ deb http://depo.pardus.org.tr/ahtapot yenikusak main
 ```
 # chown ahtapotops:ahtapotops -R /var/log/ahtapot
 ```
-* Bir sonraki adımda yer alan sıkılaştırma ve kurulum işlemlerinin akabinde sistemde bulunan diğer sunucular ile iletişimin kurulmasını sağlamak adına ahtapotops kullanıcısına ait AHTAPOT CA KURULUM dokümanına uygun bir şekilde oluşturulmuş anahtalar, sunucu üzerinde ilgili yerlere kopyalama işlemi yapılmalıdır. Bu işlem için gerekli adımlar aşağıdaki gibidir;
+* Bir sonraki adımda yer alan sıkılaştırma ve kurulum işlemlerinin akabinde sistemde bulunan diğer sunucular ile iletişimin kurulmasını sağlamak adına ahtapotops kullanıcısına ait AHTAPOT SERTİFİKA OTORİTESİ KURULUM dokümanına uygun bir şekilde oluşturulmuş anahtalar, sunucu üzerinde ilgili yerlere kopyalama işlemi yapılmalıdır. Bu işlem için gerekli adımlar aşağıdaki gibidir;
 "**ahtapotops**" kullanıcısı için oluşturulmuş anahtarları, sunucu üzerinde "**/home/ahtapotops**" dizinine belirlenen yöntem ile kopyalanır.
   * Anahtarların kopyalanması gereken ilgili dizine gidilir.
 
@@ -206,7 +206,7 @@ base_ossimcik_servers:
 #            client01:
 #                fqdn: "ansible_fqdn"
 ```
-* **NOT:** Log gönderici client makinelerine rsyslog icin gerekli anahtarlar konulmalıdır. **NOT:** Anahtar oluşturulması için CA Kurulumu ve Anahtar Yönetimi dökümanındaki [Log Yönetimi Anahtar Oluşturma](ca-kurulum.md) başlığı incelenmelidir. Oluşturulan anahtarlar client makineler içerisinde aşağıdaki dizinlere konulmalıdır. "**client_fqdn**" yerine client makinenin fqdn bilgisi girilmelidir.
+* **NOT:** Log gönderici client makinelerine rsyslog icin gerekli anahtarlar konulmalıdır. **NOT:** Anahtar oluşturulması için Sertifika Otoritesi Kurulumu ve Anahtar Yönetimi dökümanındaki [Log Yönetimi Anahtar Oluşturma](ca-kurulum.md) başlığı incelenmelidir. Oluşturulan anahtarlar client makineler içerisinde aşağıdaki dizinlere konulmalıdır. "**client_fqdn**" yerine client makinenin fqdn bilgisi girilmelidir.
 
 ```
 /etc/ssl/certs/rootCA.pem
@@ -584,7 +584,7 @@ gitlab:
 $ ansible-playbook playbooks/gitlab.yml --connection=local
 ```
 
-  * Git kurulumdan sonra parolasız git işemlerini yapabilmek için git kullanıcısına ait anahtar bilgileri AHTAPOT CA KURULUM dokümanına uygun bir şekilde oluşturulmuş anahtalar, sunucu üzerinde ilgili yerlere kopyalama işlemi yapılmalıdır. Bu işlem için gerekli adımlar aşağıdaki gibidir;
+  * Git kurulumdan sonra parolasız git işemlerini yapabilmek için git kullanıcısına ait anahtar bilgileri AHTAPOT SERTİFİKA OTORİTESİ KURULUM dokümanına uygun bir şekilde oluşturulmuş anahtalar, sunucu üzerinde ilgili yerlere kopyalama işlemi yapılmalıdır. Bu işlem için gerekli adımlar aşağıdaki gibidir;
     * git kullanıcısı için oluşturulmuş anahtarları, sunucu üzerinde "**/home/ahtapotops**" dizinine belirlenen yöntem ile kopyalanır.
       * Kopyalanan anahtarlar aşağıdaki şekilde ilgili dizinlere taşınır.
 
@@ -865,7 +865,7 @@ deb http://depo.pardus.org.tr/ahtapot yenikusak main
 ```
 # chown ahtapotops:ahtapotops -R /var/log/ahtapot
 ```
-  * Bir sonraki adımda yer alan sıkılaştırma ve kurulum işlemlerinin akabinde sistemde bulunan diğer sunucular ile iletişimin kurulmasını sağlamak adına ahtapotops kullanıcısına ait AHTAPOT CA KURULUM dokümanına uygun bir şekilde oluşturulmuş anahtalar, sunucu üzerinde ilgili yerlere kopyalama işlemi yapılmalıdır. Bu işlem için gerekli adımlar aşağıdaki gibidir;
+  * Bir sonraki adımda yer alan sıkılaştırma ve kurulum işlemlerinin akabinde sistemde bulunan diğer sunucular ile iletişimin kurulmasını sağlamak adına ahtapotops kullanıcısına ait AHTAPOT SERTİFİKA OTORİTESİ KURULUM dokümanına uygun bir şekilde oluşturulmuş anahtalar, sunucu üzerinde ilgili yerlere kopyalama işlemi yapılmalıdır. Bu işlem için gerekli adımlar aşağıdaki gibidir;
 "**ahtapotops**" kullanıcısı için oluşturulmuş anahtarları, sunucu üzerinde "**/home/ahtapotops**" dizinine belirlenen yöntem ile kopyalanır.
   * Anahtarların kopyalanması gereken ilgili dizine gidilir.
 
