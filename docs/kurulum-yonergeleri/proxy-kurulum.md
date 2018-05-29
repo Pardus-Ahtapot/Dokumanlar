@@ -8,7 +8,7 @@
 
 Bu dokümanda, Ahtapot projesi, Güvenli İnternet ve Güvenli İnternet Erişimine ait bir bileşen olarak kullanılmak üzere bir Web Proxy sunucusu kurulumu ve ilgili proxy sunucusunun merkezi yönetim sisteminin ihtiyaçlarına cevap verecek şekilde yapılandırılması anlatılmaktadır.
 
-###Web Proxy İzin İsteme Sistemi Kurulum İşlemleri
+### Web Proxy İzin İsteme Sistemi Kurulum İşlemleri
 
 * **NOT:** Dökümanda yapılması istenilen değişiklikler gitlab arayüzü yerine terminal üzerinden yapılması durumunda playbook oynatılmadan önce yapılan değişiklikler git'e push edilmelidir.
 
@@ -98,12 +98,12 @@ nginx:
         mode: "755"
         state: "directory"
 ```
-* AHTAPOT CA Kurulumu ve Anahtar Yönetimi dokümanında tarif edildiği üzere, pwlm makinesinin gitlab arayüzüne erişebilmesi key oluşturulur. Daha sonra oluşan public key Gitlab Kurulum dosyasında anlatıldığı gibi ssh key olarak eklenmelidir.
+* Ahtapot Sertifika Otoritesi Kurulumu ve Anahtar Yönetimi dokümanında tarif edildiği üzere, pwlm makinesinin gitlab arayüzüne erişebilmesi key oluşturulur. Daha sonra oluşan public key Gitlab Kurulum dosyasında anlatıldığı gibi ssh key olarak eklenmelidir.
 * Eklenen keyler home dizinindeki “.ssh” dizini içine kopyalanması gerekir. Kopyalanacak dosya isimleri “id_rsa” olarak değiştirilmelidir. 
 * Gitlab arayüzünde tüm değişikler gerçekleştirildikten sonra değişikliklerin master branch yetkisine sahip bir kullanıcı tarafından onaylanması için “**Merge Request**” oluşturulması gerekir. Sol tarafta bulunan “**Merge Request**” sekmesine tıklanır ve “**CREATE MERGE REQUEST**” butonuna basılarak yapılan commit’lerin onaylanması için istek oluşturulur.
 * Master branch yetkisine sahip bir kullanıcı tarafından oluşturulan merge request onaylandığı takdirde playbook oynayacak ve pwlm sistemi istenilen sunucuya kurulmuş olacaktır.
 
-###Web Proxy Kurulumu
+### Web Proxy Kurulumu
 
 Bu doküman izlenerek yapılan işlemlerin sonucunda, kurulum ve yapılandırma otomatizasyonu için ansible kurulacak ve bağlı olarak temel sunucu sıkılaştırma işlemleri ile web proxy kurulumu otomatik olarak yapılacaktır. Kurulumların ardından yapılandırma işlemleri olarak squid proxy’nin konfigürasyon dosyası üzerinde durulacaktır. Yukarıda özeti verilen ve adımları aşağıda maddelendirilmiş olan tüm işlemler için gerekli olan ek dokümantasyonlara erişim bilgileri ilgili başlıklarda NOT olarak ifade edilmiştir.
 
@@ -684,9 +684,10 @@ nginx:
 ![Proxy](../img/proxy11.png)
 * Açılan Bağlantı ayarları sayfasında İnternete erişmek için vekil sunucuları yapılandır menüsü altında bulunan "**Vekil sunucuyu elle ayarla**" seçeneği seçilir ve "**HTTP vekil sunucusu**" kısmına proxy sunucunun ip'si yazılır. "**İletişim noktası**" kısmına ise proxy sunucunun portu olan "**8080**" bilgisi girilmelidir. Daha sonra ise "**Tüm iletişim kuralları için bu vekil sunucuyu kullan**" seçeneği seçilmelidir. Tüm ayarlamalar yapıldıktan sonra "**Tamam**" butonuna tıklanır. Daha sonrasında tarayıcıyı kapatıp açtığımızda tarayıcıda vekil sunucu kullanılabilir hale gelmiş olacaktır.
 ![Proxy](../img/proxy12.png)
-###Web Proxy ve DHCP kurulumu
 
-* * Gitlab arayüzünden mys reposuna erişilerek burada bulunan “**hosts**" dosyasına DHCP sunucusunun FQDN bilgisi aşağıdaki gibi girilir. Sunucu sadece DHCP rolü yüklenecek ise, "**[dhcp]**" rolü altına, hem proxy hem dhcp görevi yüklenecek ise "**[proxy-dhcp]**" rolü altına yazılmalıdır.
+### Web Proxy ve DHCP'nin Birlikte kurulumu
+
+* Gitlab arayüzünden mys reposuna erişilerek burada bulunan “**hosts**" dosyasına DHCP sunucusunun FQDN bilgisi aşağıdaki gibi girilir. Sunucu sadece DHCP rolü yüklenecek ise, "**[dhcp]**" rolü altına, hem proxy hem dhcp görevi yüklenecek ise "**[proxy-dhcp]**" rolü altına yazılmalıdır.
 **NOT**: proxy-dhcp rolü altına yazıldığı durumlarda, proxy yapılandırması üst başlıkta belirtildiği gibi yapıldıktan sonra, dhcp rolü yapılandırılmalıdır.
 ```
 [dhcp]
@@ -761,7 +762,7 @@ dhcpd_servers:
 ansible-playbook playbooks/dhcp.yml
 ansible-playbook playbooks/proxydhcp.yml
 ```
-###İki Web Proxy' nin Yüksek Erişebilirlik ile Çalışması
+### İki Web Proxy'nin Yüksek Erişebilirlik ile Çalışması
 
 * İki Web Proxy'nin Yüksek Erişebilir olarak çalışması için istemci tarafında "**PAC**" dosyası veya “**Proxy Auto-Configuration**” dosyası ile yapılmaktadır. Tarayıcının bir adrese istek gönderdiğinde hangi proxy’i kullanacağını belirleyen konfigürasyondur. 
 * "**.pac**" uzantılı bir dosya oluşturularak, aşağıda bulunan konfigurasyon dosyasına yazılır. (Örnek olarak ilgili dosyanın adı proxy.pac olarak verilmiştir.) Ortamda bulunan proxy sayısına uygun olarak içeriği geliştirilebilen bu dosyada her proxy bilgisi "**PROXY ProxyIPAdress:ProxyPort**" satırı yenilenerek girilir. "**ProxyIPAdress**" bölüme istemcinin ilk olarak bağlantığı sağlanması istenen proxy sunucusu bilgisi girilir. "**ProxyPort**" bölümüne ise, ilgili proxy sunucusunun port bilgisi girilir. PAC dosyası içerisinde belirtilen sıra ile proxy sunucusuna bağlantı denenir ve erişim sağlanabilen proxy üzerinden istemci bağlantı kurabilir.
@@ -775,6 +776,5 @@ function FindProxyForURL(url, host)
 ![Proxy](../img/proxy8.jpg)
 * PROXY 1 makinesine erişimi kapatılarak Proxy PAC dosyası eklenen istemci tarafında aynı web sayfasına gitmek istendiğinde, tarayıcı pac dosyasını okuyarak PROXY2 makinesinde kurulu olan proxy’e yönlendirecektir.
 ![Proxy](../img/proxy9.jpg)
-
 
 **Sayfanın PDF versiyonuna erişmek için [buraya](proxy-kurulum.pdf) tıklayınız.**
