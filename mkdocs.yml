@@ -25,6 +25,7 @@ pages:
     - 'MYS Yapısında Test Sistemi Oluşturulması ve Kullanımı' : 'kullanim-klavuzlari/test-sistem.md'
     - 'MYS Yapısında Kurulmayan Sistemler İçin Yapılması Gereken Değişiklikler' : 'kullanim-klavuzlari/kurulmayan-sistemler.md'
     - 'Ahtapot Hata Ayıklama Rehberi' : 'kullanim-klavuzlari/hataayiklama.md'
+    - 'IDS/IPS Kullanımı' : 'kullanim-klavuzlari/ids-ips.yml'
 - "DIZAYN":
     - 'Merkezi Yönetim Sistemi': 'dizayn/merkezi-yonetim-sistemi.md'
     - 'Merkezi Güvenlik Duvarı Yönetim Sistemi Kontrol Paneli': 'dizayn/merkezi-guvenlik-duvari-yonetim-sistemi-kontrol-paneli.md'
