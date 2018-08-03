@@ -9,6 +9,8 @@ pages:
     - 'Sanal Özel Ağ Sistemi (VPN) Kurulumu': 'kurulum-yonergeleri/vpn-kurulum.md'
     - 'Güvenli Internet Erişim Sistemi (PROXY) Kurulumu': 'kurulum-yonergeleri/proxy-kurulum.md'
     - 'Siber Olay, Açıklık, Risk İzleme ve Yönetim Sistemi Kurulumu': 'kurulum-yonergeleri/siem-kurulum.md'
+    - 'Antispam Sistemi Kurulumu': 'kurulum-yonergeleri/antispam-kurulum.md'
+    - 'SKS Sistemi Kurulumu': 'kurulum-yonergeleri/sks-kurulum.md'
 - "KULLANIM KLAVUZLARI": 
     - 'Güvenlik Duvarı Yönetim Sistemi Kullanımı': 'kullanim-klavuzlari/gdys-kullanim.md'
     - 'Geçici Kural Tanımlama Sistemi Kullanımı': 'kullanim-klavuzlari/gkts-kullanim.md'
