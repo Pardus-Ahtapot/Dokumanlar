@@ -11,6 +11,7 @@ pages:
     - 'Siber Olay, Açıklık, Risk İzleme ve Yönetim Sistemi Kurulumu': 'kurulum-yonergeleri/siem-kurulum.md'
     - 'Antispam Sistemi Kurulumu': 'kurulum-yonergeleri/antispam-kurulum.md'
     - 'SKS Sistemi Kurulumu': 'kurulum-yonergeleri/sks-kurulum.md'
+    - 'Freshclam-Mirror Sistemi Kurulumu': 'kurulum-yonergeleri/freshclam-mirror-kurulum.md'
 - "KULLANIM KLAVUZLARI": 
     - 'Güvenlik Duvarı Yönetim Sistemi Kullanımı': 'kullanim-klavuzlari/gdys-kullanim.md'
     - 'Geçici Kural Tanımlama Sistemi Kullanımı': 'kullanim-klavuzlari/gkts-kullanim.md'
@@ -30,6 +31,7 @@ pages:
     - 'IDS/IPS Kullanımı' : 'kullanim-klavuzlari/ids-ips.md'
     - 'Antispam Kullanımı' : 'kullanim-klavuzlari/antispam.md'
     - 'SKS Kullanımı' : 'kullanim-klavuzlari/sks.md'
+    - 'Freshclam-Mirror Sistemi Kullanımı': 'kurulum-yonergeleri/freshclam-mirror-kullanim.md'
 
 - "DIZAYN":
     - 'Merkezi Yönetim Sistemi': 'dizayn/merkezi-yonetim-sistemi.md'
