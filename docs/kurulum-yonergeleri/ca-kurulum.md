@@ -1,26 +1,26 @@
 ![ULAKBIM](../img/ulakbim.jpg)
-# CA Kurulumu ve Anahtar Yönetimi
+# Sertifika Otoritesi Kurulumu ve Anahtar Yönetimi
 ------
 
 [TOC]
 
 ------
 
-Bu dokümanda, Ahtapot bütünleşik güvenlik yönetim sisteminde kullanılan SSH anahtarlarını yöneten CA (Certificate Authority) sisteminin kurulması ve anahtar imzalama prosedürü anlatılmaktadır.
+Bu dokümanda, Ahtapot bütünleşik güvenlik yönetim sisteminde kullanılan SSH anahtarlarını yöneten Sertifika Otoritesi (CA-Certificate Authority) sisteminin kurulması ve anahtar imzalama prosedürü anlatılmaktadır.
 
 Gereken : 
 Pardus Temel ISO’ dan kurulumu tamamlanmış bir sunucu.
 
 ####Önemli Uyarılar
   1. Kurulacak sunucu, PKI (Public Key Infrastructure) yapısının omurgasını teşkil edeceğinden yüksek düzeyli korunacak sistemler arasında yer almalıdır.
-  2. Pardus Temel ISO ile birlikte, lab ve demo ortamlarında kurulumu kolaylaştırmak için sisteme ilk erişimi sağlamak üzere kurulumla birlikte bir CA (ahtapot.ca) dosyası dağıtılıyor. Canlı sistemde kullanılacak CA dosyası, canlı ortamın kurulumunda bu dokümanda tarif edilen yöntemlerle oluşturulmalı ve ilk adımlarla birlikte geçici ve güvensiz olan dosyanın yerine yerleştirilmeli.
+  2. Pardus Temel ISO ile birlikte, lab ve demo ortamlarında kurulumu kolaylaştırmak için sisteme ilk erişimi sağlamak üzere kurulumla birlikte bir Sertifika Otoritesi (ahtapot.ca) dosyası dağıtılıyor. Canlı sistemde kullanılacak Sertifika Otoritesi dosyası, canlı ortamın kurulumunda bu dokümanda tarif edilen yöntemlerle oluşturulmalı ve ilk adımlarla birlikte geçici ve güvensiz olan dosyanın yerine yerleştirilmeli.
 
 
-####CA Temel Anahtarı Oluşturma
+####Sertifika Otoritesi Temel Anahtarı Oluşturma
 
-**UYARI :** Aşağıdaki adımların çalıştırılacağı sistem "**Ahtapot CA Sunucusu**" olmalıdır.
+**UYARI :** Aşağıdaki adımların çalıştırılacağı sistem "**Ahtapot Sertifika Otoritesi Sunucusu**" olmalıdır.
 
-  * Pardus Temel ISO’ dan Pardus kurulumu tamamlandıktan sonra sistemde tanımlı bir kullanıcı ile (tercihen root) Ahtapot CA olacak sunucu sistemine bağlantı sağlanır. ssh-keygen kullanılarak standart bir SSH anahtarı oluşturulur. Bu anahtar dosya ismi olarak "**ahpapot_ca**" ön eki ile oluşturulur. SSH anahtarı oluşturulurken kullanılan şifrenin özenle saklanması gerekmektedir.
+  * Pardus Temel ISO’ dan Pardus kurulumu tamamlandıktan sonra sistemde tanımlı bir kullanıcı ile (tercihen root) Ahtapot Sertifika Otoritesi olacak sunucu sistemine bağlantı sağlanır. ssh-keygen kullanılarak standart bir SSH anahtarı oluşturulur. Bu anahtar dosya ismi olarak "**ahpapot_ca**" ön eki ile oluşturulur. SSH anahtarı oluşturulurken kullanılan şifrenin özenle saklanması gerekmektedir.
 
 ``` 
 ahtapotops@ahtapot:~/ahtapot/lab> ssh-keygen -f ahtapot_ca
@@ -102,7 +102,7 @@ drwxr-xr-x 1 ahtapotops users  274 Oct 29 10:34 ..
 -rw-r--r-- 1 ahtapotops users  405 Oct 29 10:45 kaptan.pub
 ```
 
-  * Yukarıda hazırlanılan "**kaptan.pub**" anahtar dosyası korunması gerekmez, yerel ağda rahatlıkla kopyalanabilir durumdadır. Öte yandan gizli anahtar olan "**kaptan**" dosyası oluşturulduğu makinadan hiç bir şekilde dışarıya **çıkarılmaması** gerekir. Rahatlıkla kopyalanabilecek olan "**kaptan.pub**" dosyasını Ahtapot CA ve ya USB ve ya network üzerinden SCP ile kopyalanabilir. Önerilen yöntem Ahtapot CA makinasının yalıtılmış (AIR GAP) bir sunucu şeklinde korunması olacağından dolayı imzalanması gereken anahtarların USB gibi bir taşıma yöntemiyle  Ahtapot CA sunucusuna getirilmesi gerekir.
+  * Yukarıda hazırlanılan "**kaptan.pub**" anahtar dosyası korunması gerekmez, yerel ağda rahatlıkla kopyalanabilir durumdadır. Öte yandan gizli anahtar olan "**kaptan**" dosyası oluşturulduğu makinadan hiç bir şekilde dışarıya **çıkarılmaması** gerekir. Rahatlıkla kopyalanabilecek olan "**kaptan.pub**" dosyasını Ahtapot Sertifika Otoritesi ve ya USB ve ya network üzerinden SCP ile kopyalanabilir. Önerilen yöntem Ahtapot Sertifika Otoritesi makinasının yalıtılmış (AIR GAP) bir sunucu şeklinde korunması olacağından dolayı imzalanması gereken anahtarların USB gibi bir taşıma yöntemiyle  Ahtapot Sertifika Otoritesi sunucusuna getirilmesi gerekir.
 
 
 **NOT :** Bu yöntem kullanılarak aşağıdaki kullanıcı listesi için farklı anahtarlar oluşturulmalıdır.
@@ -118,7 +118,7 @@ drwxr-xr-x 1 ahtapotops users  274 Oct 29 10:34 ..
 
 **UYARI :** Aşağıdaki adımların çalıştırılacağı sistem "**Ahtapot CA**" sunucusudur.
 
-  * Kullanıcı anahtarının Ahtapot CA sunucusunda imzalama anahtarıyla aynı dizine taşınmasından sonra şu şekilde imzalama işlemi gerçekleştirilir.
+  * Kullanıcı anahtarının Ahtapot Sertifika Otoritesi sunucusunda imzalama anahtarıyla aynı dizine taşınmasından sonra şu şekilde imzalama işlemi gerçekleştirilir.
 
 ```
 ahtapotops@ahtapot:~/ahtapot/lab> ssh-keygen -s ahtapot_ca -I ahtapotops@kaptan.ahtapot.lab -n ahtapotops -O source-address=10.0.7.0/24 -O no-agent-forwarding -O no-port-forwarding -O no-x11-forwarding kaptan.pub
@@ -173,8 +173,8 @@ mkdir .ssh
 
 **UYARI :** Aşağıdaki adımların çalıştırılacağı sistem "**Ahtapot CA**" sunucusudur.
 
-  * “**İmzalanacak Kullanıcı Anahtarı Oluşturma**” başlığında anlatıldığı adımlar kullanılarak, FWbuilder yönetme yetkisi verilecek kullanıcı için bir anahtar oluşturulur. Bu kullanıcının açık (Public) anahtarı Ahtapot CA makinasında imzalama anahtarının bulundugu dizine getirilir. Tercihen USB /CD gibi bir yöntem kullanarak, ağ kullanılmadan getirilmesi önerilir.
-  * Kullanıcı anahtarının Ahtapot CA sunucusunda imzalama anahtarıyla aynı dizine taşınmasından sonra şu şekilde imzalama işlemi gerçekleştirilir. Aşağıda "**kaptan.pub**" dosyası içindeki kullanıcı açık anahtarı için kısıtlandırılmalı imzalama gerçekleştirilir.
+  * “**İmzalanacak Kullanıcı Anahtarı Oluşturma**” başlığında anlatıldığı adımlar kullanılarak, FWbuilder yönetme yetkisi verilecek kullanıcı için bir anahtar oluşturulur. Bu kullanıcının açık (Public) anahtarı Ahtapot Sertifika Otoritesi makinasında imzalama anahtarının bulundugu dizine getirilir. Tercihen USB /CD gibi bir yöntem kullanarak, ağ kullanılmadan getirilmesi önerilir.
+  * Kullanıcı anahtarının Ahtapot Sertifika Otoritesi sunucusunda imzalama anahtarıyla aynı dizine taşınmasından sonra şu şekilde imzalama işlemi gerçekleştirilir. Aşağıda "**kaptan.pub**" dosyası içindeki kullanıcı açık anahtarı için kısıtlandırılmalı imzalama gerçekleştirilir.
 
 ```
 ahtapotops@ahtapot:~/ahtapot/ahtapot-gereksinimler/keys$ ssh-keygen -s ahtapot_ca -I ahtapotops@ahtapot.ahtapot.lab -n ahtapotops -O permit-port-forwarding -O permit-x11-forwarding -O force-command="/var/opt/gdysgui/gdys-gui.py" kaptan.pub 
@@ -276,7 +276,7 @@ openssl req -new -key client_fqdn.key -out client_fqdn.csr
 openssl x509 -req -in client_fqdn.csr -CA rootCA.pem -CAkey rootCA.key -CAcreateserial -out client_fqdn.crt -days 3650 -sha256
 ```
 
-**NOT:** İstenilen durumlarda her makine için tek veya ayrı anahtarlar oluşturularak CA sunucunda imzalanılabilir. Her makinede aynı anahtar kullanılacak ise, makinelere taşınırken ilgili "**crt**" ve "**key**" dosyasının adı ilgili makinaının FQDN' i ile değiştirilmelidir.
+**NOT:** İstenilen durumlarda her makine için tek veya ayrı anahtarlar oluşturularak Sertifika Otoritesi sunucunda imzalanılabilir. Her makinede aynı anahtar kullanılacak ise, makinelere taşınırken ilgili "**crt**" ve "**key**" dosyasının adı ilgili makinaının FQDN' i ile değiştirilmelidir.
 
 
 **Sayfanın PDF versiyonuna erişmek için [buraya](ca-kurulum.pdf) tıklayınız.**
