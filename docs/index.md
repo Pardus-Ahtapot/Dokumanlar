@@ -2,7 +2,7 @@
 
 Proje Ana Sayfası: [ahtapot.org.tr](http://ahtapot.org.tr)
 
-Ulakbim önderliğinde gerçekleştirilmekte olan Ahtapot, tüm kamu ve özel sektor kuruluşlarında kullanılmak üzere dizayn edilen tam teşekküllü bir Açık Kaynak Kodlu Bütünleşik Siber Güvenlik Sistemi projesinin ismidir.
+ULAKBİM önderliğinde gerçekleştirilmekte olan Ahtapot, tüm kamu ve özel sektor kuruluşlarında kullanılmak üzere dizayn edilen tam teşekküllü bir Açık Kaynak Kodlu Bütünleşik Siber Güvenlik Sistemi projesinin ismidir.
 
 Ahtapot, Pardus Linux üzerine inşa edilen ve bir kurumun ihtiyaç duyacağı tüm siber güvenlik bileşenlerini birbirleri ile entegre ve merkezi yönetilebilir bir şeklinde sunmaktadır.
 
@@ -12,22 +12,23 @@ Ahtapot, Pardus Linux üzerine inşa edilen ve bir kurumun ihtiyaç duyacağı t
 
 * Merkezi Yönetim Sistemi (MYS)
 * Güvenlik Duvarı Yönetim Sistemi (GDYS)
+* Sanal Özel Ağ (VPN) Sistemi
 * Güvenli İnternet Erişim Sistemi (GİnES)
 * Siber Olay, Açıklık, Risk İzleme ve Yönetim Sistemi
-* Sanal Özel Ağ (VPN) Sistemi
+* Ağ Cihazları, Sunucu ve İstemci Bilgi Sistemleri İzleme Çözümü
+* Saldırı Tespit / Önleme Sistemi (IDS/IPS)
+* Eposta Güvenlik Sistemi
 
 ### Bütünleştirilmesi Devam Eden Bileşenler
 
-* Saldırı Tespit / Önleme Sistemi (IDS/IPS)
 * Örün Uygulama Güvenlik Duvarı
-* Ağ Cihazları, Sunucu ve İstemci Bilgi Sistemleri İzleme Çözümü
-* Eposta Güvenlik Sistemi)
 * Siber Saldırı Erken Uyarı Sistemi (HoneyPot) 
 
 ### Bütünleştirilmesi Planlanan Bileşenler
 
-* Ağ Trafiği Yakalama, İzleme ve İnceleme Çözümü
+* Alan Adı Güvenlik Duvarı (DNS Firewall)
 * Ağ Erişim Kontrol Sistemi (NAC)
+* Ağ Trafiği Yakalama, İzleme ve İnceleme Çözümü
 
 ## Dokümantasyon
 
