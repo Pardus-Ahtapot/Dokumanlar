@@ -52,6 +52,7 @@ login_definitions:
         PASS_WARN_AGE: "7"
 ```
 **password_setting:** Bu değişken şifrelerin karakterini belirler. Varsayılan ayarlar aşağıdaki gibidir.
+
 * **retry=3** - Sifreyi 3 kere denemeye izin ver.
 * **minlen=14** - şifre en az 14 karakter olmalı
 * **dcredit=-1** - en az bir rakam içermeli
@@ -60,11 +61,17 @@ login_definitions:
 * **lcredit=-1** - en az 1 küçük harf içermeli 
 
 **password_reuse_policy:** Şifre tekrar kullanma politikasını belirler. Varsayılan olarak son 5 şifrenin kullanılması engellenmiştir.
+
 **login_setting:** Yanlış şifre denemesi sonrası uygulanıcak politikayı belirler. Varsayılan olarak 5 yanlış deneme sonrası 900 saniye bloklanma uygulanmıştır. 
+
 **su_setting**: Bu parametre ile **su** komutunun kullanımı kısıtlanır. Kullanıcı sudo komutu kullanmak zorundadır. 
+
 **lock_inactive_user_account:** Bu süre boyunca inaktif olan kullanıcıları inaktif eder. Varsayılan değer 90 gündür. 
+
 **PASS_MAX_DAYS:** Kullanıcı şifrelerinin maximum kullanılma süresini belirtir. Bu süre doldugunda şifrelerini yenilemek zorundadırlar. Varsayılan değer 90 gündür.
+
 **PASS_MIN_DAYS:** Kullanıcı şifre değişikliği arasındaki minimum süreyi belirtir. Varsayılan değer 7 gündür.
+
 **PASS_WARN_AGE:** Şifre değiştirme uyarısının kaç gün önceden başlaması gerektiğini belirtir. Varsayılan değer 7 gündür. 
 
 Aşağıdaki komut ile kullanıcıların aktivite bilgileri görüntülenebilir. 
