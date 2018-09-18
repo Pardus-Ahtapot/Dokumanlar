@@ -6,76 +6,55 @@
 
 Bu dokümanda, Ahtapot bütünleşik güvenlik yönetim sisteminde kullanılan merkezi yönetim sunucusu ile gerekli tüm sistemlerin kurulması prosedürü anlatılıyor.
 
-Gereken : Pardus Temel ISO’ dan kurulumu tamamlanmış sunucular.
+Gereken : Pardus Temel ISO’ dan kurulumu tamamlanmış sunucular. Pardus Temel ISO dosyasından Pardus kurulumu adımları için  [Pardus Temel ISO Kurulumu](merkezi-yonetim-sistemi-ile-ahtapot-kurulumlari-yapilmasi.md) dokümanına bakınız.
 
+###MYS KURULUMU
 
 ####Ansible Kurulum İşlemleri
 
-* **NOT:** Dökümanda yapılması istenilen değişiklikler gitlab arayüzü yerine terminal üzerinden yapılması durumunda playbook oynatılmadan önce yapılan değişiklikler git'e push edilmelidir.
-
-```
-$ cd /etc/ansible
-git status komutu ile yapılan değişiklikler gözlemlenir.
-$ git status  
-$ git add --all
-$ git commit -m "yapılan değişiklik commiti yazılır"
-$ git push origin master
-```
-**NOT:** Kurulacak sistem, SIEM yapısına dahil edilmek isteniyorsa, kurulum sonrasında Siber Olay, Açıklık, Risk İzleme ve Yönetim Sistemi Kurulumu sayfasında bulunan [MYS Clientlarında Ossec Agent Dağıtımı](siem-kurulum.md) başlığı incelenmelidir.
-
 * Pardus Temel ISO dosyasından Pardus kurulumu tamamlandıktan sonra sisteme “**ahtapotops**” kullanıcı ile giriş yapılır. ahtapotops kullanıcısının parolası “**LA123!!**” olarak öntanımlıdır.
 
-**NOT :** Pardus Temel ISO dosyasından Pardus kurulumu adımları için “AHTAPOT Pardus Temel ISO Kurulumu” dokümanına bakınız.
-
-* Sisteme giriş sağlandıktan sonra, aşağıdaki komut ile root kullanıcısına geçiş yapılır. root kullanıcısı için parola Pardus Temel ISO kurulumda belirlenmiş olan paroladır.
-
-```
-$ sudo su -
-```
 * Sisteme root kullanıcısı ile bağlantı sağlandıktan sonra tercih ettiğiniz bir metin düzenleyicisini kullanarak "**/etc/apt/source.list**" dosyasını açın ve Pardus depolarını kullanıyorsanız aşağıdaki satırları içerdiğinden emin olun.
 
 ```
-deb http://depo.pardus.org.tr/ahtapot yenikusak main
-deb http://193.140.98.199/pardus-yenikusak yenikusak main non-free contrib
+deb [trusted=yes] http://depo.pardus.org.tr/ahtapot yenikusak main
+deb [trusted=yes] http://193.140.98.199/pardus-yenikusak yenikusak main non-free contrib
 ```
 
 * Aşağıdaki komutu çalıştırarak yerelinizdeki paket listesini güncelleyin.
 
 ```
-# apt-get update
+$ sudo apt-get update
 ```
 
 * Aşağıdaki komut ile ansible ve git kurulumları yapılır.
 
 ```
-# apt-get install -y ansible
-# apt-get install -y git
+$ sudo apt-get install -y ansible
+$ sudo apt-get install -y git
 ```
 
-**NOT :** Ansible makinası yedekli kurulacak ise, yedek olacak makinanın üzerinde bu adım el ile yapılmalıdır.
-
-
-* Bu adımda kurulum, sıkılaştırma vb. gibi işleri otomatize etmeyi sağlayan ansible playbook’ları Pardus Ahtapot reposundan indirilir. 
+* Kurulum, sıkılaştırma vb. gibi işleri otomatize etmeyi sağlayan ansible playbook’ları Pardus Ahtapot reposundan indirilir veya Github'tan Ahtapot projesi indirilerek, son güncel ahtapotmys kullanılabilir. 
 
 ```
-# apt-get install -y ahtapot-mys
-# cp -rf /ahtapotmys/* /etc/ansible/
+$ sudo apt-get install -y ahtapot-mys
+$ sudo cp -rf /ahtapotmys/* /etc/ansible/
+$ sudo chown ahtapotops:ahtapotops -R /etc/ansible/
 ``` 
 
 * Ahtapot projesi kapsamında oluşacak tüm loglar “**/var/log/ahtapot/**” dizinine yazılmaktadır. Bu dizinin sahipliğini “**ahtapotops**” kullanıcısına vermek için aşağıdaki komut çalıştırılır.
 
 ```
-# chown ahtapotops:ahtapotops -R /var/log/ahtapot
+$ chown ahtapotops:ahtapotops -R /var/log/ahtapot
 ```
 
 **NOT :** Ansible makinası yedekli kurulacak ise, yedek olacak makinanın üzerinde bu adım el ile yapılmalıdır.
 
-* Bir sonraki adımda yer alan sıkılaştırma ve kurulum işlemlerinin akabinde sistemde bulunan diğer sunucular ile iletişimin kurulmasını sağlamak adına ahtapotops kullanıcısına ait AHTAPOT CA KURULUM dokümanına uygun bir şekilde oluşturulmuş anahtalar, sunucu üzerinde ilgili yerlere kopyalama işlemi yapılmalıdır. Bu işlem için gerekli adımlar aşağıdaki gibidir;
+* Bir sonraki adımda yer alan sıkılaştırma ve kurulum işlemlerinin akabinde sistemde bulunan diğer sunucular ile iletişimin kurulmasını sağlamak adına ahtapotops kullanıcısına ait [CA Kurulumu ve Anahtar Yönetimi](ca-kurulum.md) dokümanına uygun bir şekilde oluşturulmuş anahtarlar, sunucu üzerinde ilgili yerlere kopyalama işlemi yapılmalıdır. Bu işlem için gerekli adımlar aşağıdaki gibidir;
 
-  * ahtapotops kullanıcısı için oluşturulmuş anahtarları, sunucu üzerinde /home/ahtapotops dizinine belirlenen yöntem ile kopyalanır.
+* Ahtapotops kullanıcısı için oluşturulmuş anahtarlar **ahtapotops, ahtapotops.pub, ahtapotops-cert.pub** ve **ahtapot_ca.pub** anahtarı mys sunucusunda **/home/ahtapotops** dizinine kopyalanarak aşağıdaki işlemler yapılır.
 
 ```
-# su - ahtapotops
 $ mkdir ~/.ssh && chmod 700 ~/.ssh
 ```
 
@@ -86,19 +65,85 @@ $ cp /home/ahtapotops/ahtapotops /home/ahtapotops/.ssh/id_rsa  && chmod 600 /hom
 $ cp /home/ahtapotops/ahtapotops-cert.pub /home/ahtapotops/.ssh/id_rsa-cert.pub
 $ cp /home/ahtapotops/ahtapotops.pub /home/ahtapotops/.ssh/id_rsa.pub
 ```
-**NOT :** Ansible makinası yedekli kurulacak ise, yedek olacak makinanın üzerinde bu adım el ile yapılmalıdır.
 
-* Tercih ettiğimiz metin düzenleyicisini kullanarak hosts dosyasını düzenliyoruz. Aşağıdaki örnekte vi kullanılır. Açılan dosyada [ansible] kısmı altına ansible makinesinin tam ismi (FQDN) girilir.
+* **ahtapot_ca.pub** dosyası **/etc/ssh** dizini altına kopyalanır
+```
+$ sudo cp /home/ahtapotops/ahtapot_ca.pub /etc/ssh/ahtapot_ca.pub
+```
 
+* ahtapot_ca.pub dosyasının ansible playbook'lar ile tüm sunuculara dağıtılabilmesi için ilgili playbooktaki **ahtapot_ca.pub.j2** dosyasının içeriği **ahtapot_ca.pub** dosyasının içeriği ile aynı olmalıdır.
 
 ```
+$ cp /home/ahtapotops/ahtapot_ca.pub /etc/ansible/roles/base/templates/ahtapot_ca.pub.j2
+```
+
+* Kullanılacak repo adreslerini eklemek için **roles/base/vars/repo.yml** dosyası aşağıdaki gibi düzenlenmelidir.
+
+```
+$ sudo vi roles/base/vars/repo.yml
+# Depo degiskenlerini iceren dosyadir.
+# Yorum satiri ile gosterilen sablon doldurularak istenilen kadar repo eklenebilir.
+base_repositories:
+    repo01:
+        url: 'deb http://depo.pardus.org.tr/ahtapot yenikusak main'
+        updatecache: yes 
+        state: present
+    repo02:
+        url: 'deb http://193.140.98.199/pardus-yenikusak yenikusak main non-free contrib'
+        updathaecache: yes
+        state: present
+    repo03:
+        url: 'deb http://depo.pardus.org.tr/ahtapot-siem yenikusak main'
+        updatecache: yes 
+        state: present
+#    repoXX:
+#        url: 
+#        updatecache:
+#        state:
+```
+
+
+**NOT :** Ahtapot projesi kapsamında kurmak istediğimiz bileşenlerin (ansible, firewall, firewall builder,test firewall, rsyslog, ntp, vb.) bilgileri **/etc/ansible/hosts** ve **/etc/ansible/roles/base/vars/host.yml** dosyalarına yazılması gerekir.  -SELIN
+
+* Ansible’ın yöneteceği makineleri uygulamaya belirtmek adına, "**/etc/ansible**" klasörü altında bulunan "**hosts**" dosyası düzenlenir. Dosya düzenlenirken dikkat edilmesi gereken nokta, sunucuya hangi rol yüklenecek ise “**[rol_adı]**” satırının altına ilgili sunucusunun “**FQDN**” bilgileri girilmelidir.
+
+```
+
 $ cd /etc/ansible/
 $ sudo vi hosts
 [ansible]
-ansible.alan.adi
+ansible.domain_adı
+
+[gitlab]
+gitlab.domain_adı
+
+[firewall]
+firewall.domain_adı
+
+[firewallbuilder]
+fwbuilder.domain_adı
+
+[testfirewall]
+testfirewall.domain_adı
+
+[rsyslog]
+rsyslog.domain_adı
+
+[gkts]
+gkts.domain_adı
+
+[ntp]
+ntp.domain_adı
+
+[server]
+server.domain._adı
+
+-SELIN
+
 ```
 
-**NOT :** Ansible makinası yedekli kurulacak ise, yedek olacak makinanın FQDN bilgiside “**[ansible]**” bölümünün altına yazılmalıdır.
+**NOT :** Sistemler yedekli kurulacak ise, yedek sistemlerin FQDN bilgileri de ilgili başlık altına yazılmalıdır.
+
 
 * Ansible makinesinin erişmesi gereken tüm makinelerin hosts dosyasını düzenlemek adına, "**roles/base/vars/host.yml**" dosyası içerisine tüm makine bilgileri yazılır.
 
@@ -127,10 +172,39 @@ base_host_servers:
         hostname: "gitlab"
     server03:
         ip: "X.X.X.X"
+        fqdn: "firewall.gdys.local"
+        hostname: "firewall"
+    server04:
+        ip: "X.X.X.X"
+        fqdn: "testfirewall.gdys.local"
+        hostname: "testfirewall"
+    server05:
+        ip: "X.X.X.X"
         fqdn: "fwbuilder.gdys.local"
         hostname: "fwbuilder"
+    server06:
+        ip: "X.X.X.X"
+        fqdn: "rsyslog.gdys.local"
+        hostname: "rsyslog"
+    server07:
+        ip: "X.X.X.X"
+        fqdn: "gkts.gdys.local"
+        hostname: "gkts"
+    server08:
+        ip: "X.X.X.X"
+        fqdn: "ntp.gdys.local"
+        hostname: "ntp"
+
+#    serverX:
+#        ip: "X.X.X.X"
+#        fqdn: "server.gdys.local"
+#        hostname: "server"
+-SELIN
+
+
 ```
-* “**Ansible Playbookları**” dokümanında detaylı anlatımı bulunan, sunucu üzerinde gerekli sıkılaştırma işlemleri ve ansible kurulumu yapacak olan “**ansible.yml**” playbook’u çalıştırılır.
+
+* Sunucu üzerinde gerekli sıkılaştırma işlemleri ve ansible kurulumu yapacak olan “**ansible.yml**” playbook’u çalıştırılır.
 
 ```
 $ ansible-playbook playbooks/ansible.yml --connection=local --skip-tags=git
@@ -141,50 +215,18 @@ $ ansible-playbook playbooks/ansible.yml --connection=local --skip-tags=git
 
 ####Ansible Playbookların Kurulum İşlemleri İçin Hazırlanması
 
-* Ansible sunucusunun kuruluması akabinde, Pardus Temel ISO kurulumu tamamlanmış sunucuların rollerin yüklenebilmesi için Ansible sunucusu tarafından yapılacak kurulumlar öncesinde, playbooklarda tanımlanması gereken değişkenler bu başlık altında belirtilmektedir.
+* Ansible sunucusu tarafından yapılacak kurulumlar öncesinde, playbooklarda tanımlanması gereken değişkenler bu başlık altında belirtilmektedir. Kurulumlar için Pardus Temel ISO kurumuş gitlab, firewall, firewall builder, test firewall, rsyslog, ntp sunucu değişkenlerinin düzenlemeleri belirtilmektedir.
 
 **NOT :** Sistemlerin yedekli kurulması durumunda, bu işlemlerin yedek Ansible makinası üzerinde yapılmasına gerek yoktur.
 
-* Ansible playbookları çalışmadan önce sunucuların birbirlerinin “**known_host**” dosyasında kayıtlarının olması için “**root**” ve “**ahtapotops**” kullanıcıları ile karşılıklı ssh bağlantısı sağlanması gerekmektedir. Bunun için aşağıdaki komutlar ansible makinesinden diğer makinelere doğru çalıştırılmalı ve sunucu anahtarlarının kabul edilmesi sorusu sorulduğunda “**yes**” yazılmalıdır.
+* Ansible playbookları çalışmadan önce sunucuların birbirlerinin “**known_host**” dosyasında kayıtlarının olması için “**ahtapotops**” kullanıcısı ile ssh bağlantısı sağlanması gerekmektedir. Bunun için aşağıdaki komutlar ansible makinesinden diğer makinelere doğru çalıştırılmalı ve sunucu anahtarlarının kabul edilmesi sorusu sorulduğunda “**yes**” yazılmalıdır. Bağlantıda sorun ile karşılaşılması durumunda anahtarların doğruluğu kontrol edilmelidir.  -SELIN
 
 ```
 
 $ ssh FQDN_SUNUCU_ADI
-$ sudo su -
-# ssh ahtapotops@FQDN_SUNUCU_ADI -i /home/ahtapotops/.ssh/id_rsa
-# exit
+$ exit
 
 ```
-
-* Ansible’ın yöneteceği makineleri uygulamaya belirtmek adına, “**/etc/ansible**” klasörü altında bulunan “**hosts**” dosyası düzenlenir. Dosya düzenlenirken dikkat edilmesi gereken nokta, sunucuya hangi rol yüklenecek ise “**[rol_adı]**” satırının altına ilgili sunucusunun “**FQDN**” bilgileri girilmelidir.
-
-```
-
-$ cd /etc/ansible/
-$ sudo vi hosts
-[firewallbuilder]
-firewallbuilder.domain_adı
-
-[ansible]
-ansible.domain_adı
-
-[gitlab]
-gitlab.domain_adı
-
-[firewall]
-firewall.domain_adı
-
-[testfirewall]
-testfirewall.domain_adı
-
-[rsyslog]
-rsyslog.domain_adı
-
-[gkts]
-gkts.domain_adı
-```
-
-**NOT :** Sistemler yedekli kurulacak ise, yedek sistemlerin FQDN bilgileri de ilgili başlık altına yazılmalıdır.
 
 * “**roles/base/vars**” klasörü altında ntp değişkenlerinin barındıran “**ntp.yml**” dosyası içerisine "**base_ntp_servers**" fonksiyonu altında bulunan "**server1**" ve "**server2**" satırları altına NTP sunucularının FQDN bilgileri girilmelidir. Sistemde bir NTP sunucusu olduğu durumda "**server2**" satırları silinebilir yada istenildiği kadar NTP sunucusu eklenebilir. 
 
@@ -200,7 +242,7 @@ ntp:
         owner: "root"
         group: "root"
         mode: "0644"
-    service:
+   service:
         name: "ntp"
         state: "started"
         enabled: "yes"
@@ -260,7 +302,8 @@ base_ossimcik_servers:
 #                fqdn:
 ```
 
-* **NOT:** Log gönderici client makinelerine rsyslog icin gerekli anahtarlar konulmalıdır. **NOT:** Anahtar oluşturulması için CA Kurulumu ve Anahtar Yönetimi dökümanındaki [Log Yönetimi Anahtar Oluşturma](ca-kurulum.md) başlığı incelenmelidir. Oluşturulan anahtarlar client makineler içerisinde aşağıdaki dizinlere konulmalıdır. "**client_fqdn**" yerine client makinenin FQDN bilgisi girilmelidir.
+* **NOT:** Log gönderici client makinelerine rsyslog icin gerekli anahtarlar konulmalıdır.
+* **NOT:** Anahtar oluşturulması için CA Kurulumu ve Anahtar Yönetimi dökümanındaki [SSL Anahtar Oluşturma](ca-kurulum.md) başlığı incelenmelidir. Oluşturulan anahtarlar client makineler içerisinde aşağıdaki dizinlere konulmalıdır. "**client_fqdn**" yerine client makinenin FQDN bilgisi girilmelidir.
 
 ```
 /etc/ssl/certs/rootCA.pem
@@ -269,6 +312,7 @@ base_ossimcik_servers:
 ```
 
 * "**roles/base/vars**” klasörü altında ssh değişkenlerinin barındıran “**ssh.yml**” dosyası içerisinde bulunan "**Port**" değişkenine istenen yeni değer yazılmalıdır.
+* ISO’dan kurulumu yapılmış her makinenin ilk planda ssh portları “22” olarak belirlendiğinden dolayı, ansible ilk kurulumu yaparken her makineye 22. Porttan bağlanacaktır. Bu sebep ile “ansible.cfg” dosyasında bulunan “remote_port” parametresinin “22” olduğu teyit edilmelidir.  -SELIN
 
 ```
 $ cd roles/base/vars/
@@ -309,7 +353,7 @@ ssh:
         owner: "root"
         group: "root"
         mode: "0644"
-    Port: "4444" 
+    Port: "22" 
     Protocol: "2"
     ListenAddressv4: "0.0.0.0"
     ListenAddressv6: "::"
@@ -436,7 +480,7 @@ gitlab:
         gitlab_email_display_name: GdysGitlab 
         gitlab_email_reply_to: no-reply@Domain_Adi
         gitlab_default_theme: 2
-        gitlab_shell_ssh_port: 4444
+        gitlab_shell_ssh_port: 22
         smtp_enable: "true" 
         smtp_address: smtp_sunucu_adı
         smtp_port: 25 
@@ -447,13 +491,13 @@ gitlab:
         redirect_http_to_https: "true"
     backup:
         Server: gitlab.domain_adi
-        Port: 4444
+        Port: 22
     ansible:
         Server: ansible.domain_adi
-        Port: 4444
+        Port: 22
 ```
 
-* GitLab yedekli kurulmayacak ise, Ansible playbook üzerinde bulunan yedek gitlab için yapılacak işlemler gitlab rolünden kaldırılır. “**/etc/ansible/roles/gitlab/templates/**” dizini altında bulunan “**post-receive-gdys.sh.j2**” dosyasında, gdys reposunun güncellenmesini sağlayan ilk komut bırakılarak, backup/restore işlemini tetikleyen diğer satırların başına “**#**” işareti konularak, komut satırı haline dönüştürülür. 
+* GitLab yedekli kurulmayacak ise, Ansible playbook üzerinde bulunan yedek GitLab için yapılacak işlemler gitlab rolünden kaldırılır. “**/etc/ansible/roles/gitlab/templates/**” dizini altında bulunan “**post-receive-gdys.sh.j2**” dosyasında, gdys reposunun güncellenmesini sağlayan ilk komut bırakılarak, backup/restore işlemini tetikleyen diğer satırların başına “**#**” işareti konularak, komut satırı haline dönüştürülür. 
 
 
 ```
@@ -553,7 +597,7 @@ gitlab:
         gitlab_email_display_name: GdysGitlab 
         gitlab_email_reply_to: no-reply@gdys.local
         gitlab_default_theme: 2
-        gitlab_shell_ssh_port: 4444
+        gitlab_shell_ssh_port: 22
         smtp_enable: "true" 
         smtp_address: ldap01.gdys.local
         smtp_port: 25 
@@ -564,10 +608,10 @@ gitlab:
         redirect_http_to_https: "true"
     backup:
         Server: yerel.gitlab.fqdn
-        Port: 4444
+        Port: 22
     ansible:
         Server: ansible01.gdys.local
-        Port: 4444
+        Port: 22
 ```
 * “**roles/firewall/vars**” klasörü altında iptables değişkenlerini barındıran “**iptables.yml**” dosyası üzerinde “**deploy**” fonksiyonu altındaki “**dest_port**" bölümüne yerine Merkezi Yönetim Sistemi kapsamında kurulacak Git sunucusunun ssh portu girilmelidir.
 
@@ -603,7 +647,7 @@ gkts:
             group: ahtapotops
             mode: 755
         server: ansible01.gdys.local
-        port: 4444
+        port: 22
 
 ```
 
@@ -710,14 +754,14 @@ $ cd /etc/ansible/
 $ ansible-playbook playbooks/gitlab.yml
 ```
 
-* Git kurulumdan sonra parolasız git işemlerini yapabilmek için git kullanıcısına ait anahtar bilgileri AHTAPOT CA KURULUM dokümanına uygun bir şekilde oluşturulmuş anahtalar, sunucu üzerinde ilgili yerlere kopyalama işlemi yapılmalıdır. Bu adımlar hem gitlab sunucusunda hem de yedek gitlab sunucusunda yapılmalıdır.
+* Git kurulumdan sonra parolasız git işlemlerini yapabilmek için AHTAPOT CA KURULUM dokümanına uygun bir şekilde oluşturulmuş git kullanıcısına ait anahtalar, GitLab sunucu üzerinde ilgili yerlere kopyalama işlemi yapılmalıdır. Bu adımlar hem GitLab sunucusunda hem de yedek GitLab sunucusunda yapılmalıdır.
 
 ```
 
 $ ssh ahtapotops@gitlabsunucusu -i /home/ahtapotops/.ssh/id_rsa
 
 ```
-* git kullanıcısı için oluşturulmuş anahtarları, sunucu üzerinde "**/home/ahtapotops**" dizinine belirlenen yöntem ile kopyalanır.
+* git kullanıcısı için oluşturulmuş anahtarları, GitLab sunucu üzerinde "**/home/ahtapotops**" dizinine kopyalanır. -SELIN
 * Kopyalanan anahtarlar aşağıdaki şekilde ilgili dizinlere taşınır.
 
 ``` 
@@ -902,7 +946,6 @@ $ sudo chown -R ahtapotops:ahtapotops *
   * “**mys**” klasörüne kopyalanmış playbookların kopyalandığı teyit edildikten sonra, GitLab arayüzüne gönderilir.
 
 ```
-
 $ git add --all
 $ git config --global user.email “ansible@test.com”
 $ git config --global user.name “Ansible Makinesi”
@@ -942,7 +985,6 @@ $ sudo chown ahtapotops:ahtapotops /etc/ansible/*
 ```
 
 * **NOT:** Gitlab arayüz yapılandırması tamamlanması ile dökümanda yapılması istenilen değişiklikler gitlab arayüzü yerine terminal üzerinden yapılması durumunda playbook oynatılmadan önce yapılan değişiklikler git'e push edilmelidir.
-
 ```
 $ cd /etc/ansible
 git status komutu ile yapılan değişiklikler gözlemlenir.
@@ -954,19 +996,10 @@ $ git push origin master
 
 ####Ansible Playbook ile FirewallBuilder Kurulumu
 
-* **NOT:** Dökümanda yapılması istenilen değişiklikler gitlab arayüzü yerine terminal üzerinden yapılması durumunda playbook oynatılmadan önce yapılan değişiklikler git'e push edilmelidir.
-
-```
-$ cd /etc/ansible
-git status komutu ile yapılan değişiklikler gözlemlenir.
-$ git status  
-$ git add --all
-$ git commit -m "yapılan değişiklik commiti yazılır"
-$ git push origin master
-```
 **NOT:** Kurulacak sistem, SIEM yapısına dahil edilmek isteniyorsa, kurulum sonrasında Siber Olay, Açıklık, Risk İzleme ve Yönetim Sistemi Kurulumu sayfasında bulunan [MYS Clientlarında Ossec Agent Dağıtımı](siem-kurulum.md) başlığı incelenmelidir.
 
 * FirewallBuilder rolüne sahip sunucusu GitLab sunucusuna bağlanacağı için ssh bağlantısında kullanacağı ssh anahtarları ilgili yerlere yerleştirilmelidir. Bunun için ahtapotops kullanıcısı için oluşturulmuş ssh anahtarları sunucuya kopyalanır ve gerekli düzenlemeler aşağıdaki gibi yapılır.
+-SELIN KONTROL EDILECEK ANAHTARLARIN TASINMASI
 
 ```
 $ cd /home/ahtapotops/.ssh/
@@ -974,6 +1007,7 @@ $ mv ahtapotops id_rsa
 $ mv ahtaporops-cert.pub id_rsa-cert.pub
 $ mv ahtapotops.pub id_rsa.pub
 $ chmod 600 id_rsa
+
 ```
 
 * “**Ansible Playbookları**” dokümanında detaylı anlatımı bulunan, sunucu üzerinde gerekli sıkılaştırma işlemleri ve FirewallBuilder kurulumu yapacak olan “**firewallbuilder.yml**” playbook’u Ansible makinesinden aşağıdaki komut ile çalıştırılır.
@@ -994,16 +1028,6 @@ $ sudo chown -R ahtapotops:ahtapotops /var/opt/gdysgui/*
 
 ####Ansible Playbook ile Rsyslog Kurulumu
 
-* **NOT:** Dökümanda yapılması istenilen değişiklikler gitlab arayüzü yerine terminal üzerinden yapılması durumunda playbook oynatılmadan önce yapılan değişiklikler git'e push edilmelidir.
-
-```
-$ cd /etc/ansible
-git status komutu ile yapılan değişiklikler gözlemlenir.
-$ git status  
-$ git add --all
-$ git commit -m "yapılan değişiklik commiti yazılır"
-$ git push origin master
-```
 **NOT:** Kurulacak sistem, SIEM yapısına dahil edilmek isteniyorsa, kurulum sonrasında Siber Olay, Açıklık, Risk İzleme ve Yönetim Sistemi Kurulumu sayfasında bulunan [MYS Clientlarında Ossec Agent Dağıtımı](siem-kurulum.md) başlığı incelenmelidir.
 
 * “**Ansible Playbookları**” dokümanında detaylı anlatımı bulunan, sunucu üzerinde gerekli sıkılaştırma işlemleri ve Rsyslog kurulumu yapacak olan “**rsyslog.yml**” playbook’u çalıştırılır.
@@ -1013,26 +1037,15 @@ $ cd /etc/ansible/
 $ ansible-playbook playbooks/rsyslog.yml
 ```
 
-
 ####Ansible Playbook ile Test Firewall Kurulumu
 
-* **NOT:** Dökümanda yapılması istenilen değişiklikler gitlab arayüzü yerine terminal üzerinden yapılması durumunda playbook oynatılmadan önce yapılan değişiklikler git'e push edilmelidir.
-
-```
-$ cd /etc/ansible
-git status komutu ile yapılan değişiklikler gözlemlenir.
-$ git status  
-$ git add --all
-$ git commit -m "yapılan değişiklik commiti yazılır"
-$ git push origin master
-```
 **NOT:** Kurulacak sistem, SIEM yapısına dahil edilmek isteniyorsa, kurulum sonrasında Siber Olay, Açıklık, Risk İzleme ve Yönetim Sistemi Kurulumu sayfasında bulunan [MYS Clientlarında Ossec Agent Dağıtımı](siem-kurulum.md) başlığı incelenmelidir.
 
-* “**Ansible Playbookları**” dokümanında detaylı anlatımı bulunan, sunucu üzerinde gerekli sıkılaştırma işlemleri ve Test Firewall kurulumu yapacak olan “**testbuilder.yml**” playbook’u çalıştırılır.
+* “**Ansible Playbookları**” dokümanında detaylı anlatımı bulunan, sunucu üzerinde gerekli sıkılaştırma işlemleri ve Test Firewall kurulumu yapacak olan “**testfirewall.yml**” playbook’u çalıştırılır.
 
 ```
 $ cd /etc/ansible/
-$ ansible-playbook playbooks/testbuilder.yml
+$ ansible-playbook playbooks/testfirewall.yml
 ```
 ####Merkezi Yönetim Sistemi Entegrasyon Adımları
 
@@ -1050,16 +1063,22 @@ ansible.alan.adi
 gitlab.alan.adi
 
 [firewall]
-fw01.alan.adi
+firewall.alan.adi
 
 [testfirewall]
-fwtest.alan.adi
+testfirewall.alan.adi
 
 [rsyslog]
 rsyslog.alan.adi
 
 [gkts]
 gkts.alan.adi
+
+[ntp]
+ntp.alan.adi
+
+[server]
+server.alan.adi
 ```
 * Gitlab arayüzünden mys reposundaki “**roles/base/vars**” klasörü altında ntp değişkenlerinin barındıran “**ntp.yml**” dosyası içerisine "**base_ntp_servers**" fonksiyonu altında bulunan "**server1**" ve "**server2**" satırları altına NTP sunucularının FQDN bilgileri girilmelidir. Sistemde bir NTP sunucusu olduğu durumda "**server2**" satırları silinebilir yada istenildiği kadar NTP sunucusu eklenebilir. 
 
@@ -1130,7 +1149,7 @@ base_ossimcik_servers:
 #   
 ```
 
-* **NOT:** Log gönderici client makinelerine rsyslog icin gerekli anahtarlar konulmalıdır. **NOT:** Anahtar oluşturulması için CA Kurulumu ve Anahtar Yönetimi dökümanındaki [Log Yönetimi Anahtar Oluşturma](ca-kurulum.md) başlığı incelenmelidir. Oluşturulan anahtarlar client makineler içerisinde aşağıdaki dizinlere konulmalıdır. "**client_fqdn**" yerine client makinenin FQDN bilgisi girilmelidir.
+* **NOT:** Log gönderici client makinelerine rsyslog icin gerekli anahtarlar konulmalıdır. **NOT:** Anahtar oluşturulması için CA Kurulumu ve Anahtar Yönetimi dökümanındaki [SSL Anahtar Oluşturma](ca-kurulum.md) başlığı incelenmelidir. Oluşturulan anahtarlar client makineler içerisinde aşağıdaki dizinlere konulmalıdır. "**client_fqdn**" yerine client makinenin FQDN bilgisi girilmelidir.
 
 ```
 /etc/ssl/certs/rootCA.pem
@@ -1177,7 +1196,7 @@ ssh:
         owner: "root"
         group: "root"
         mode: "0644"
-    Port: "4444" 
+    Port: "22" 
     Protocol: "2"
     ListenAddressv4: "0.0.0.0"
     ListenAddressv6: "::"
@@ -1250,7 +1269,7 @@ gkts:
             group: ahtapotops
             mode: 755
         server: ansible.domain.adi
-        port: 4444
+        port: 22
 
 ```
 
@@ -1370,7 +1389,7 @@ gitlab:
         gitlab_email_display_name: GdysGitlab 
         gitlab_email_reply_to: no-reply@Domain_Adi
         gitlab_default_theme: 2
-        gitlab_shell_ssh_port: 4444
+        gitlab_shell_ssh_port: 22
         smtp_enable: "true" 
         smtp_address: smtp_sunucu_adı
         smtp_port: 25 
@@ -1381,10 +1400,10 @@ gitlab:
         redirect_http_to_https: "true"
     backup:
         Server: gitlab.domain_adi
-        Port: 4444
+        Port: 22
     ansible:
         Server: ansible.domain_adi
-        Port: 4444
+        Port: 22
 ```
 * Gitlab arayüzünden mys reposundaki  “**roles/firewall/vars**” klasörü altında iptables değişkenlerini barındıran “**iptables.yml**” dosyası üzerinde “**deploy**” fonksiyonu altındaki “**dest_port**" bölümüne yerine Merkezi Yönetim Sistemi kapsamında kurulacak Git sunucusunun ssh portu girilmelidir.
 
@@ -1462,6 +1481,8 @@ base_host_servers:
         hostname: "fwbuilder"
     server04:
         ip: "X.X.X.X"
+	fqdn: "xxx.xxx.xxx"
+	hostname: "xxx"
 ```
 * Playbooklar üzerinde ilgili değişiklik tamamlandıktan sonra, yapılan değişikliklerin git reposunda güncellenmesi için aşağıdaki komutlar çalıştırılır.
 
@@ -1496,16 +1517,6 @@ MAILTO=“”
 
 ####Ansible Playbook ile Firewall Kurulumu
 
-* **NOT:** Dökümanda yapılması istenilen değişiklikler gitlab arayüzü yerine terminal üzerinden yapılması durumunda playbook oynatılmadan önce yapılan değişiklikler git'e push edilmelidir.
-
-```
-$ cd /etc/ansible
-git status komutu ile yapılan değişiklikler gözlemlenir.
-$ git status  
-$ git add --all
-$ git commit -m "yapılan değişiklik commiti yazılır"
-$ git push origin master
-```
 **NOT:** Kurulacak sistem, SIEM yapısına dahil edilmek isteniyorsa, kurulum sonrasında Siber Olay, Açıklık, Risk İzleme ve Yönetim Sistemi Kurulumu sayfasında bulunan [MYS Clientlarında Ossec Agent Dağıtımı](siem-kurulum.md) başlığı incelenmelidir.
 
 * “**Ansible Playbookları**” dokümanında detaylı anlatımı bulunan, sunucu üzerinde gerekli sıkılaştırma işlemleri ve Firewall kurulumu yapacak olan “**firewall.yml**” playbook’u çalıştırılır.
@@ -1517,16 +1528,6 @@ $ ansible-playbook playbooks/firewall.yml --skip-tag=deploy
 
 ####Ansible Playbook ile Geçici Kural Tanımlama Sistemi Kurulumu
 
-* **NOT:** Dökümanda yapılması istenilen değişiklikler gitlab arayüzü yerine terminal üzerinden yapılması durumunda playbook oynatılmadan önce yapılan değişiklikler git'e push edilmelidir.
-
-```
-$ cd /etc/ansible
-git status komutu ile yapılan değişiklikler gözlemlenir.
-$ git status  
-$ git add --all
-$ git commit -m "yapılan değişiklik commiti yazılır"
-$ git push origin master
-```
 **NOT:** Kurulacak sistem, SIEM yapısına dahil edilmek isteniyorsa, kurulum sonrasında Siber Olay, Açıklık, Risk İzleme ve Yönetim Sistemi Kurulumu sayfasında bulunan [MYS Clientlarında Ossec Agent Dağıtımı](siem-kurulum.md) başlığı incelenmelidir.
 
 * “**Ansible Playbookları**” dokümanında detaylı anlatımı bulunan, sunucu üzerinde gerekli sıkılaştırma işlemleri ve GKTS kurulumu yapacak olan “**gkts.yml**” playbook’u çalıştırılır.
@@ -1535,9 +1536,10 @@ $ git push origin master
 $ ansible-playbook playbooks/gkts.yml --connection=local --skip-tags=hook
 ```
 
-###Güvenlik Duvarı Yönetim Sistemi Entegrasyon Adımları
+####Güvenlik Duvarı Yönetim Sistemi Entegrasyon Adımları
 
-*  Firewall Builder makinesinden Güvenlik Duvarı Yönetim Sistemi Kontrol Paneli ile GitLab sunucusuna erişmek için, FirewallBuilder makinesine ssh ile bağlanarak, GitLab sunucusunun SSL sertifikası yüklenir. Bu amaç için, Firewall builder makinesine ahtapotops kullanıcısı ile bağlanılarak root kullanıcısına geçilir.
+*  Firewall Builder makinesinden Güvenlik Duvarı Yönetim Sistemi Kontrol Paneli ile GitLab sunucusuna erişmek için, FirewallBuilder makinesine ssh ile bağlanarak, GitLab sunucusunun SSL sertifikası yüklenir. Bu amaç için, Firewall builder makinesine ahtapotops kullanıcısı ile bağlanılarak root kullanıcısına geçilir. 
+* SSL sertifika oluşturma için [SSL Anahtar Oluşturma](ca-kurulum.md) incelenmelidir.
 
 
 ```
@@ -1562,7 +1564,7 @@ $ sudo su -
 
 ![Guvenlik-Duvari](../img/entegrasyon3.jpg)
 
-* Bir sonraki ekranda “**bilgio.crt**” dosyası seçilerek “**Ok**” butonuna basılır. Ve böylelikle sertifika yükleme işlemi tamamlanmış olur.
+* Bir sonraki ekranda sertifika dosyası seçilerek “**Ok**” butonuna basılır. Ve böylelikle sertifika yükleme işlemi tamamlanmış olur.
 
 ![Guvenlik-Duvari](../img/entegrasyon4.png)
 
