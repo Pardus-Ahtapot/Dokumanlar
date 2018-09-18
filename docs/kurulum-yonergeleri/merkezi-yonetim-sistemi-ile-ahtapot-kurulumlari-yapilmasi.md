@@ -103,7 +103,7 @@ base_repositories:
 ```
 
 
-**NOT :** Ahtapot projesi kapsamında kurmak istediğimiz bileşenlerin (ansible, firewall, firewall builder,test firewall, rsyslog, ntp, vb.) bilgileri **/etc/ansible/hosts** ve **/etc/ansible/roles/base/vars/host.yml** dosyalarına yazılması gerekir.  -SELIN
+**NOT :** Ahtapot projesi kapsamında kurmak istediğimiz bileşenlerin (ansible, firewall, firewall builder,test firewall, rsyslog, ntp, vb.) bilgileri **/etc/ansible/hosts** ve **/etc/ansible/roles/base/vars/host.yml** dosyalarına yazılması gerekir.
 
 * Ansible’ın yöneteceği makineleri uygulamaya belirtmek adına, "**/etc/ansible**" klasörü altında bulunan "**hosts**" dosyası düzenlenir. Dosya düzenlenirken dikkat edilmesi gereken nokta, sunucuya hangi rol yüklenecek ise “**[rol_adı]**” satırının altına ilgili sunucusunun “**FQDN**” bilgileri girilmelidir.
 
@@ -137,8 +137,6 @@ ntp.domain_adı
 
 [server]
 server.domain._adı
-
--SELIN
 
 ```
 
@@ -199,8 +197,6 @@ base_host_servers:
 #        ip: "X.X.X.X"
 #        fqdn: "server.gdys.local"
 #        hostname: "server"
--SELIN
-
 
 ```
 
@@ -219,7 +215,7 @@ $ ansible-playbook playbooks/ansible.yml --connection=local --skip-tags=git
 
 **NOT :** Sistemlerin yedekli kurulması durumunda, bu işlemlerin yedek Ansible makinası üzerinde yapılmasına gerek yoktur.
 
-* Ansible playbookları çalışmadan önce sunucuların birbirlerinin “**known_host**” dosyasında kayıtlarının olması için “**ahtapotops**” kullanıcısı ile ssh bağlantısı sağlanması gerekmektedir. Bunun için aşağıdaki komutlar ansible makinesinden diğer makinelere doğru çalıştırılmalı ve sunucu anahtarlarının kabul edilmesi sorusu sorulduğunda “**yes**” yazılmalıdır. Bağlantıda sorun ile karşılaşılması durumunda anahtarların doğruluğu kontrol edilmelidir.  -SELIN
+* Ansible playbookları çalışmadan önce sunucuların birbirlerinin “**known_host**” dosyasında kayıtlarının olması için “**ahtapotops**” kullanıcısı ile ssh bağlantısı sağlanması gerekmektedir. Bunun için aşağıdaki komutlar ansible makinesinden diğer makinelere doğru çalıştırılmalı ve sunucu anahtarlarının kabul edilmesi sorusu sorulduğunda “**yes**” yazılmalıdır. Bağlantıda sorun ile karşılaşılması durumunda anahtarların doğruluğu kontrol edilmelidir. 
 
 ```
 
@@ -312,7 +308,7 @@ base_ossimcik_servers:
 ```
 
 * "**roles/base/vars**” klasörü altında ssh değişkenlerinin barındıran “**ssh.yml**” dosyası içerisinde bulunan "**Port**" değişkenine istenen yeni değer yazılmalıdır.
-* ISO’dan kurulumu yapılmış her makinenin ilk planda ssh portları “22” olarak belirlendiğinden dolayı, ansible ilk kurulumu yaparken her makineye 22. Porttan bağlanacaktır. Bu sebep ile “ansible.cfg” dosyasında bulunan “remote_port” parametresinin “22” olduğu teyit edilmelidir.  -SELIN
+* ISO’dan kurulumu yapılmış her makinenin ilk planda ssh portları “22” olarak belirlendiğinden dolayı, ansible ilk kurulumu yaparken her makineye 22. Porttan bağlanacaktır. Bu sebep ile “ansible.cfg” dosyasında bulunan “remote_port” parametresinin “22” olduğu teyit edilmelidir. Kurulumlar tamamlandıktan sosnra shh portlarını değiştirebilirsiniz. 
 
 ```
 $ cd roles/base/vars/
@@ -761,7 +757,7 @@ $ ansible-playbook playbooks/gitlab.yml
 $ ssh ahtapotops@gitlabsunucusu -i /home/ahtapotops/.ssh/id_rsa
 
 ```
-* git kullanıcısı için oluşturulmuş anahtarları, GitLab sunucu üzerinde "**/home/ahtapotops**" dizinine kopyalanır. -SELIN
+* git kullanıcısı için oluşturulmuş anahtarları, GitLab sunucu üzerinde "**/home/ahtapotops**" dizinine kopyalanır.
 * Kopyalanan anahtarlar aşağıdaki şekilde ilgili dizinlere taşınır.
 
 ``` 
@@ -999,7 +995,7 @@ $ git push origin master
 **NOT:** Kurulacak sistem, SIEM yapısına dahil edilmek isteniyorsa, kurulum sonrasında Siber Olay, Açıklık, Risk İzleme ve Yönetim Sistemi Kurulumu sayfasında bulunan [MYS Clientlarında Ossec Agent Dağıtımı](siem-kurulum.md) başlığı incelenmelidir.
 
 * FirewallBuilder rolüne sahip sunucusu GitLab sunucusuna bağlanacağı için ssh bağlantısında kullanacağı ssh anahtarları ilgili yerlere yerleştirilmelidir. Bunun için ahtapotops kullanıcısı için oluşturulmuş ssh anahtarları sunucuya kopyalanır ve gerekli düzenlemeler aşağıdaki gibi yapılır.
--SELIN KONTROL EDILECEK ANAHTARLARIN TASINMASI
+
 
 ```
 $ cd /home/ahtapotops/.ssh/
