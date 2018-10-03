@@ -26,7 +26,6 @@ Ahtapot, Pardus Linux üzerine inşa edilen ve bir kurumun ihtiyaç duyacağı t
 
 ### Bütünleştirilmesi Planlanan Bileşenler
 
-* Alan Adı Güvenlik Duvarı (DNS Firewall)
 * Ağ Erişim Kontrol Sistemi (NAC)
 * Ağ Trafiği Yakalama, İzleme ve İnceleme Çözümü
 
