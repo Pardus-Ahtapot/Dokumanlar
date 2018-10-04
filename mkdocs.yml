@@ -4,7 +4,7 @@ pages:
 - "KURULUM YÖNERGELERİ":
     - 'Kuruluma Başlamadan Önce': 'kurulum-yonergeleri/kurulum-oncesi.md'
     - 'Pardus Temel ISO Kurulumu': 'kurulum-yonergeleri/pardus-temel-iso-kurulumu.md'
-    - 'CA Kurulumu ve Anahtar Yönetimi': 'kurulum-yonergeleri/ca-kurulum.md'
+    - 'Sertifika Otoritesi Kurulumu ve Anahtar Yönetimi': 'kurulum-yonergeleri/ca-kurulum.md'
     - 'Merkezi Yönetim Sistemi ve Güvenlik Duvarı Kurulumları': 'kurulum-yonergeleri/merkezi-yonetim-sistemi-ile-ahtapot-kurulumlari-yapilmasi.md'
     - 'Sanal Özel Ağ Sistemi (VPN) Kurulumu': 'kurulum-yonergeleri/vpn-kurulum.md'
     - 'Güvenli Internet Erişim Sistemi (PROXY) Kurulumu': 'kurulum-yonergeleri/proxy-kurulum.md'
