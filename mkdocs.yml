@@ -9,6 +9,10 @@ pages:
     - 'Sanal Özel Ağ Sistemi (VPN) Kurulumu': 'kurulum-yonergeleri/vpn-kurulum.md'
     - 'Güvenli Internet Erişim Sistemi (PROXY) Kurulumu': 'kurulum-yonergeleri/proxy-kurulum.md'
     - 'Siber Olay, Açıklık, Risk İzleme ve Yönetim Sistemi Kurulumu': 'kurulum-yonergeleri/siem-kurulum.md'
+    - 'Antispam Sistemi Kurulumu': 'kurulum-yonergeleri/antispam-kurulum.md'
+    - 'SKS Sistemi Kurulumu': 'kurulum-yonergeleri/sks-kurulum.md'
+    - 'Freshclam-Mirror Sistemi Kurulumu': 'kurulum-yonergeleri/freshclam-mirror-kurulum.md'
+    - 'E-posta Karantina Kurulumu': 'kurulum-yonergeleri/eposta-karantina-kurulum.md'
 - "KULLANIM KLAVUZLARI": 
     - 'Güvenlik Duvarı Yönetim Sistemi Kullanımı': 'kullanim-klavuzlari/gdys-kullanim.md'
     - 'Geçici Kural Tanımlama Sistemi Kullanımı': 'kullanim-klavuzlari/gkts-kullanim.md'
@@ -25,6 +29,11 @@ pages:
     - 'MYS Yapısında Test Sistemi Oluşturulması ve Kullanımı' : 'kullanim-klavuzlari/test-sistem.md'
     - 'MYS Yapısında Kurulmayan Sistemler İçin Yapılması Gereken Değişiklikler' : 'kullanim-klavuzlari/kurulmayan-sistemler.md'
     - 'Ahtapot Hata Ayıklama Rehberi' : 'kullanim-klavuzlari/hataayiklama.md'
+    - 'IDS/IPS Kullanımı' : 'kullanim-klavuzlari/ids-ips.md'
+    - 'Antispam Kullanımı' : 'kullanim-klavuzlari/antispam.md'
+    - 'SKS Kullanımı' : 'kullanim-klavuzlari/sks.md'
+    - 'Freshclam-Mirror Sistemi Kullanımı': 'kullanim-klavuzlari/freshclam-mirror-kullanim.md'
+    - 'E-posta Karantina Sistemi Kullanımı': 'kullanim-klavuzlari/eposta-karantina.md'
 - "DIZAYN":
     - 'Merkezi Yönetim Sistemi': 'dizayn/merkezi-yonetim-sistemi.md'
     - 'Merkezi Güvenlik Duvarı Yönetim Sistemi Kontrol Paneli': 'dizayn/merkezi-guvenlik-duvari-yonetim-sistemi-kontrol-paneli.md'

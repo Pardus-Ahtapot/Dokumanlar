@@ -6,7 +6,7 @@ Pardus-Ahtapot ISO'su **http://depo.pardus.org.tr/pub/ISO/Ahtapot/pardus-ahtapot
 
 ### Sertifika Otoritesi Sunucusunun Kurulması
 
-Ahtapot kuruacak sistemde Sertifika Otoritesi (CA) sunucusu mevcut değil ise Ahtapot kurulumlarına başlanılmadan önce Merkezi Yönetim Sisteminin diğer tüm sistemleri güvenilir şekilde yönetmesini sağlayacak olan sertifikaların oluşturulmasını sağlayacak olan Sertifika OtoritesiSunucusu Kurulmalıdır. Sertifika Otoritesi sunucusu kurulduktan sonra **Sertifika Otoritesi Kurulumu ve Anahtar Yönetimi** dökümanında belirtilen şekilde yönetim anahtarlarının oluşturulması gerekmektedir.
+Ahtapot kuruacak sistemde CA sunucusu mevcut değil ise Ahtapot kurulumlarına başlanılmadan önce CA Sunucusu Kurulmalıdır. CA sunucusu kurulduktan sonra **CA Kurulumu ve Anahtar Yönetimi** dökümanında anlatılan anahtarların oluşturulması gerekmektedir.
 
 ### Kurulum Sırasındaki Önceliklendirmeler
 
