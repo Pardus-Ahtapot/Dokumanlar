@@ -385,4 +385,10 @@ wordpot_conf:
 ansible-playbook /etc/ansible/playbooks/honeypot.yml
 ```
 
+Honeypot sisteminin ips tarafından engellenmemesi için "**/etc/ansible/roles/ips/vars/main.yml**" dosyasinda bulunan "**suricata_home_net**" ve "**suricata_external_net**" degiskenlerine "**!HONEYPOT_IP_ADDRESS**" seklinde honeypot IP adresi eklenir. Örneğin 192.168.0.4 IP adresine sahip bir sistemi ips dışında tutmak için şu şekilde bir değişiklik yapılır:
+
+```
+suricata_home_net: "[192.168.0.0/16,10.0.0.0/8,172.16.0.0/12,!192.168.0.4]"
+suricata_external_net: "[!$HOME_NET,!192.168.0.4]"
+```
 
