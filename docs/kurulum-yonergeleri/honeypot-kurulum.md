@@ -354,13 +354,14 @@ dionaea_conf:
 ```
 
 - “**glastopf.yml**” dosyası ile glastopf balküpü sistemlerinin ortak yapılandırmaları yapılır. Bu dosyada bulunan değişkenler şu şekildedir.  
-"**register_check_file**" glastopf balküpünün Mhn'e başarılı bir şekilde kayıt olduktan sonra oluşturduğu dosyanın yoludur.  
+"**listen_ip**" glastopf balküpünün servis vereceği IP ağıdır. "**listen_port**" glastopf balküpünün servis vereceği portu belirtir. "**register_check_file**" glastopf balküpünün Mhn'e başarılı bir şekilde kayıt olduktan sonra oluşturduğu dosyanın yoludur.  
 
 ```  
 ---
 glastopf_conf:
+  listen_ip: 0.0.0.0
+  listen_port: 80
   register_check_file: /etc/glastopf_registered
-
 ```
 
 - “**p0f.yml**” dosyası ile p0f balküpü sistemlerinin ortak yapılandırmaları yapılır. Bu dosyada bulunan değişkenler şu şekildedir.  
