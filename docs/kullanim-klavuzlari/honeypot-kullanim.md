@@ -1,4 +1,5 @@
 
+
 # Balküpü
 Ahtapot projesi kapsamında balküpü işlevinin kurulumunu ve yönetimini sağlayan playbook’dur. “**/etc/ansible/playbooks/**” dizini altında bulunan “**honeypot.yml**” dosyasına bakıldığında, “**hosts**” satırında Ansible’a ait “**/etc/ansible/**” altında bulunan “**hosts**” dosyasında “**[honeypot]**” satırı altına yazılmış tüm sunucularda bu playbookun oynatılacağı belirtilir. “**sudo**” satırı ile çalışacak komutların sudo yetkisi ile çalışması belirlenir. “**vars_files**” satırı antispam playbookunun değişken dosyalarını belirtmektedir. “**roles**” satırı altında bulunan satırlarda ise bu playbook çalıştığında “**base**” ve “**honeypot**”rollerinin çalışacağı belirtilmektedir.
 
@@ -38,6 +39,7 @@ Ahtapot projesi kapsamında balküpü işlevinin kurulumunu ve yönetimini sağl
   - /etc/ansible/roles/honeypot/vars/amun.yml
   - /etc/ansible/roles/honeypot/vars/suricata.yml
   - /etc/ansible/roles/honeypot/vars/elastichoney.yml
+  - /etc/ansible/roles/honeypot/vars/conpot.yml
 
   roles:
     - role: base
@@ -55,7 +57,7 @@ Bu roldeki değişkenler “**/etc/ansible/roles/honeypot/vars/**” dizini alt�
 "**network_link**" containerların erişeceği bridge ağ bacağının ismidir. Bu isimle bir bridge arabirim otomatik olarak yaratılacaktır.
 "**network_hwaddr**" containerlar için türetilecek MAC adresinin ilk üç segmentinin belirtildiği değişkendir. Son üç segment xx:xx:xx olarak yazılır.
 "**netowrk_link_bridge_slave**" yaratılacak bridge arabirime bağlanacak ağ arabiriminin belirtildiği değişkendir.
-"**containers**" değişkeni altına "/etc/ansible/hosts" dosyasında [honeypot] altına tanımlanan sunucu fqdn adresleri girilir. Bu sayede farklı sunucular için farklı ayarlar yapılma imkanı olur. Her sunucu değişkeni altında kurulması istenen balküpü sistemlerinin tanımlarından oluşan bir liste bulunur. Bu sistemlerin tipi şunlardan biri olmak zorundadır: "amun dionaea ftp pop3 smtp wordpot cowrie elastichoney glastopf p0f shockpot suricata"
+"**containers**" değişkeni altına "/etc/ansible/hosts" dosyasında [honeypot] altına tanımlanan sunucu fqdn adresleri girilir. Bu sayede farklı sunucular için farklı ayarlar yapılma imkanı olur. Her sunucu değişkeni altında kurulması istenen balküpü sistemlerinin tanımlarından oluşan bir liste bulunur. Bu sistemlerin tipi şunlardan biri olmak zorundadır: "amun dionaea ftp pop3 smtp conpot cowrie elastichoney glastopf p0f shockpot suricata"
 "**type**" değişkeni yukarıda belirtilen balküpü tiplerinden biri olabilir.
 "**start_auto**" değişkeni eğer 1 yapılırsa sunucu yeniden başlatıldığında bu balküpü otomatik olarak başlatılır, 0 yapılırsa başlatılmaz.
 "**start_delay**" değişkeni ile container başlatılmadan önce kaç saniye bekleneceği belirtilir.
@@ -76,7 +78,7 @@ lxc:
     network_hwaddr: 00:16:3e:xx:xx:xx
     netowrk_link_bridge_slave: enp0s3
 containers:
-# amun dionaea ftp pop3 smtp wordpot cowrie elastichoney glastopf p0f shockpot suricata
+# amun dionaea ftp pop3 smtp wordpot cowrie elastichoney conpot glastopf p0f shockpot suricata
   pardus.ahtapot:
   - type: "cowrie"
     start_auto: 1
@@ -234,6 +236,19 @@ containers:
       network: 169.254.1.0
       broadcast: 169.254.1.255
       gateway: 169.254.1.9
+  - type: "conpot"
+    start_auto: 1
+    start_delay: 0
+    start_order: 0
+    force_register: false
+    interfaces:
+    - name: eth0
+      type: static
+      address: 169.254.1.113
+      netmask: 255.255.255.0
+      network: 169.254.1.0
+      broadcast: 169.254.1.255
+      gateway: 169.254.1.9
 
 ```
 
@@ -387,6 +402,13 @@ wordpot_conf:
   register_check_file: /etc/wordpot_registered
   listen_ip: 0.0.0.0
   listen_port: 80
+```
+- “**conpot.yml**” dosyası ile conpıt balküpü sistemlerinin ortak yapılandırmaları yapılır. Bu dosyada bulunan değişkenler şu şekildedir.  "**register_check_file**" wordpot balküpünün Mhn'e başarılı bir şekilde kayıt olduktan sonra oluşturduğu dosyanın yoludur.  
+
+```  
+---
+conpot_conf:
+  register_check_file: /etc/conpot_registered
 ```
 
 İlgili değişkenler ayarlandıktan sonra aşağıdaki komut ile balküpü sistemleri yapılandırılır.

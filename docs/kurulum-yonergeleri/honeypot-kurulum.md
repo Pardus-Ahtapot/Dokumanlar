@@ -1,3 +1,4 @@
+
 # Balküpü Kurulum Yönergesi
 
 Bu dokümanda, Ahtapot projesi kapsamında balküpü sunucusunun merkezi yönetim sisteminin ihtiyaçlarına cevap verecek şekilde nasıl kurulacağı anlatılmaktadır.
@@ -45,7 +46,7 @@ Bu roldeki değişkenler “**/etc/ansible/roles/honeypot/vars/**” dizini alt�
 "**network_link**" containerların erişeceği bridge ağ bacağının ismidir. Bu isimle bir bridge arabirim otomatik olarak yaratılacaktır.
 "**network_hwaddr**" containerlar için türetilecek MAC adresinin ilk üç segmentinin belirtildiği değişkendir. Son üç segment xx:xx:xx olarak yazılır.
 "**netowrk_link_bridge_slave**" yaratılacak bridge arabirime bağlanacak ağ arabiriminin belirtildiği değişkendir.
-"**containers**" değişkeni altına "/etc/ansible/hosts" dosyasında [honeypot] altına tanımlanan sunucu fqdn adresleri girilir. Bu sayede farklı sunucular için farklı ayarlar yapılma imkanı olur. Her sunucu değişkeni altında kurulması istenen balküpü sistemlerinin tanımlarından oluşan bir liste bulunur. Bu sistemlerin tipi şunlardan biri olmak zorundadır: "amun dionaea ftp pop3 smtp wordpot cowrie elastichoney glastopf p0f shockpot suricata"
+"**containers**" değişkeni altına "/etc/ansible/hosts" dosyasında [honeypot] altına tanımlanan sunucu fqdn adresleri girilir. Bu sayede farklı sunucular için farklı ayarlar yapılma imkanı olur. Her sunucu değişkeni altında kurulması istenen balküpü sistemlerinin tanımlarından oluşan bir liste bulunur. Bu sistemlerin tipi şunlardan biri olmak zorundadır: "amun dionaea ftp pop3 smtp wordpot cowrie elastichoney glastopf p0f shockpot suricata conpot"
 "**type**" değişkeni yukarıda belirtilen balküpü tiplerinden biri olabilir.
 "**start_auto**" değişkeni eğer 1 yapılırsa sunucu yeniden başlatıldığında bu balküpü otomatik olarak başlatılır, 0 yapılırsa başlatılmaz.
 "**start_delay**" değişkeni ile container başlatılmadan önce kaç saniye bekleneceği belirtilir.
@@ -66,7 +67,7 @@ lxc:
     network_hwaddr: 00:16:3e:xx:xx:xx
     netowrk_link_bridge_slave: enp0s3
 containers:
-# amun dionaea ftp pop3 smtp wordpot cowrie elastichoney glastopf p0f shockpot suricata
+# amun dionaea ftp pop3 smtp wordpot cowrie elastichoney conpot glastopf p0f shockpot suricata
   pardus.ahtapot:
   - type: "cowrie"
     start_auto: 1
@@ -224,6 +225,20 @@ containers:
       network: 169.254.1.0
       broadcast: 169.254.1.255
       gateway: 169.254.1.9
+- type: "conpot"
+    start_auto: 1
+    start_delay: 0
+    start_order: 0
+    force_register: false
+    interfaces:
+    - name: eth0
+      type: static
+      address: 169.254.1.113
+      netmask: 255.255.255.0
+      network: 169.254.1.0
+      broadcast: 169.254.1.255
+      gateway: 169.254.1.9
+
 
 ```
 
@@ -339,13 +354,14 @@ dionaea_conf:
 ```
 
 - “**glastopf.yml**” dosyası ile glastopf balküpü sistemlerinin ortak yapılandırmaları yapılır. Bu dosyada bulunan değişkenler şu şekildedir.  
-"**register_check_file**" glastopf balküpünün Mhn'e başarılı bir şekilde kayıt olduktan sonra oluşturduğu dosyanın yoludur.  
+"**listen_ip**" glastopf balküpünün servis vereceği IP ağıdır. "**listen_port**" glastopf balküpünün servis vereceği portu belirtir. "**register_check_file**" glastopf balküpünün Mhn'e başarılı bir şekilde kayıt olduktan sonra oluşturduğu dosyanın yoludur.  
 
 ```  
 ---
 glastopf_conf:
+  listen_ip: 0.0.0.0
+  listen_port: 80
   register_check_file: /etc/glastopf_registered
-
 ```
 
 - “**p0f.yml**” dosyası ile p0f balküpü sistemlerinin ortak yapılandırmaları yapılır. Bu dosyada bulunan değişkenler şu şekildedir.  
@@ -378,6 +394,13 @@ wordpot_conf:
   listen_ip: 0.0.0.0
   listen_port: 80
 ```
+- “**conpot.yml**” dosyası ile conpıt balküpü sistemlerinin ortak yapılandırmaları yapılır. Bu dosyada bulunan değişkenler şu şekildedir.  "**register_check_file**" wordpot balküpünün Mhn'e başarılı bir şekilde kayıt olduktan sonra oluşturduğu dosyanın yoludur.  
+
+```  
+---
+conpot_conf:
+  register_check_file: /etc/conpot_registered
+```
 
 İlgili değişkenler ayarlandıktan sonra aşağıdaki komut ile balküpü sistemleri kurulur.
 
@@ -385,4 +408,10 @@ wordpot_conf:
 ansible-playbook /etc/ansible/playbooks/honeypot.yml
 ```
 
+Honeypot sisteminin ips tarafından engellenmemesi için "**/etc/ansible/roles/ips/vars/main.yml**" dosyasinda bulunan "**suricata_home_net**" ve "**suricata_external_net**" degiskenlerine "**!HONEYPOT_IP_ADDRESS**" seklinde honeypot IP adresi eklenir. Örneğin 192.168.0.4 IP adresine sahip bir sistemi ips dışında tutmak için şu şekilde bir değişiklik yapılır:
+
+```
+suricata_home_net: "[192.168.0.0/16,10.0.0.0/8,172.16.0.0/12,!192.168.0.4]"
+suricata_external_net: "[!$HOME_NET,!192.168.0.4]"
+```
 
