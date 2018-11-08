@@ -15,7 +15,7 @@ $ git push origin master
 
 * Gitlab adresine  bir web tarayıcı vasıtası ile girilerek Gitlab web arayüzüne “**https://gitlabsunucuadresi**” ile erişilir. 
 
-* Gitlab arayüzünden mys resposundaki “**hosts**” dosyasında “**[standalone]**” fonksiyonu altına balküpü sunucusunun FQDN bilgisi girilir.
+* Gitlab arayüzünden mys resposundaki “**hosts**” dosyasında “**[standalone]**” fonksiyonu altına standalone sunucusunun FQDN bilgisi girilir.
 
 ```
 [standalone]
@@ -31,6 +31,44 @@ serverN:
         fqdn: "standalone.gdys.local"
         hostname: "standalone"
 ```
+
+* Uç cihazın git makinasından yapılandırmaları çekebilmesi için ssh key'inin git sunucusuna gönderilmesi gerekmektedir. **ssh-keygen** komutu ile key yaratılır.
+```
+$ ssh-keygen
+Generating public/private rsa key pair.
+Enter file in which to save the key (/root/.ssh/id_rsa): 
+Enter passphrase (empty for no passphrase): 
+Enter same passphrase again: 
+Your identification has been saved in /root/.ssh/id_rsa.
+Your public key has been saved in /root/.ssh/id_rsa.pub.
+The key fingerprint is:
+SHA256:HlKd8jITJhVZ2zfu6DNbocrBLFkzli3ealfl0CRe8CM root@pardus
+The key's randomart image is:
++---[RSA 2048]----+
+|        o+.   .. |
+|       ... +  ..o|
+|      . = + .Eo*.|
+|       + + o o+.+|
+|      . S O . o+ |
+|       o % = +...|
+|        + = +.o  |
+|         o.=+.   |
+|         .+.o+   |
++----[SHA256]-----+
+```
+* Daha sonra **ssh-copy-id** komutu ile key sunucuya atılır.
+```
+$ ssh-copy-id kullanici@gitlabsunucuadresi
+/usr/bin/ssh-copy-id: INFO: Source of key(s) to be installed: "/root/.ssh/id_rsa.pub"
+/usr/bin/ssh-copy-id: INFO: attempting to log in with the new key(s), to filter out any that are already installed
+/usr/bin/ssh-copy-id: INFO: 1 key(s) remain to be installed -- if you are prompted now it is to install the new keys
+kullanici@gitlabsunucuadresi's password: 
+
+Number of key(s) added: 1
+
+Now try logging into the machine, with:   "ssh 'kullanici@gitlabsunucuadresi'"
+and check to make sure that only the key(s) you wanted were added.
+``` 
 
 Ardından standalone sistemi ile ilgili aşağıda tanımlanmış değişkenler açıklamalarda belirtilen şekilde uygun değerlerle doldurulur.
 
