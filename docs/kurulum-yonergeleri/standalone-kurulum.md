@@ -72,12 +72,21 @@ and check to make sure that only the key(s) you wanted were added.
 
 Ardından standalone sistemi ile ilgili aşağıda tanımlanmış değişkenler açıklamalarda belirtilen şekilde uygun değerlerle doldurulur.
 
+#### Uç Sistemlere Değişen Yapılandırmaların Otomatik Olarak Yollaması
+* Her bir commit sonrası değişen yapılandırmalar uç sistemlere merkezden aktarılmak isteniyorsa aşağıdaki komut MYS makinasında **.git/hooks/post-commit** dosyasına eklenerek her commit sonrası otomatik bir şekilde çağırılır.
+```
+/usr/sbin/ahtapot_standalone.py --push
+```
+* Her push sonrası standalone hostlarının yapılandırmalarını çekmesi isteniyorsa aşağıdaki gibi bir alias eklenerek bu işlem yapılabilmektedir. 
+```
+$ git config alias.xpush '!git push $1 $2 && ansible-playbook/etc/ansible/playbooks/standalone.yml'
+```
+Daha sonra push yapılmak istendiğinde **git push** yerine **git xpush** çağırılarak sistemler uyarılır ve yapılandırmaları çekerler. 
 
 #### Standalone Rolü Değişkenleri
 Bu roldeki değişkenler “**/etc/ansible/roles/standalone/vars/**” dizini altında bulunan **standalone.yml** dosyasında belirtilmiştir. Değişken bilgileri aşağıdaki gibidir;
 
 - "**ansible_git_url**" değişkeni uç birimin pull ediceği repoyu belirtir. Uç birim ile git reposu arasında ssh yapılandırılması yapılmalıdır. "**branch**" değişkeni hangi git branch'ının kullanılacağını belirtir. "**directory**" değişkeni ansible resosunun nereye kaydedilmesi gerektiğini belirtir. Bu klasörun MYS cihazındaki ile aynı olması gerektiğine dikkat ediniz. "**cron_file**" cron yapılandırmalarının kaydedileceği dosyayı belirtir. "**cron_minute**" cron dakika yapılandırması, "**cron_hour**" cron saat yapılandırması, "**cron_day**" cron gün yapılandırmasıdır. 
-"**hosts**" değişkeninin altında standalone hostlar yapılandırılır. "**host_fqdn**" cihazın fqdn'idir. "**role_dir**" değişkeni bu hostun rölüne ait klasördür. Bu değişken klasör adı olmalıdır çünkü playbook değişikliği bu değişken ile kontrol edilmektedir. "**playbook**" değişkeni bu hostta calıştırılacak playbooku belirtir. 
 
 ```
 ---  
@@ -89,12 +98,6 @@ standalone:
   cron_minute: "0"  
   cron_hour: "*/4"  
   cron_day: "*"  
-  
-  hosts:  
-#   hostX:  
-#     host_fqdn: myhost  
-#     role_dir: ntp  
-#     playbook: ntp.yml
 ```
 
 İlgili değişkenler ayarlandıktan sonra aşağıdaki komut ile standalone yapılandırması aktarılır.
