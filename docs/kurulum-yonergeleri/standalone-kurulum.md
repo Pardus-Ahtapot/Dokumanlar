@@ -79,7 +79,7 @@ Ardından standalone sistemi ile ilgili aşağıda tanımlanmış değişkenler 
 ```
 * Her push sonrası standalone hostlarının yapılandırmalarını çekmesi isteniyorsa aşağıdaki gibi bir alias eklenerek bu işlem yapılabilmektedir. 
 ```
-$ git config alias.xpush '!git push $1 $2 && ansible-playbook/etc/ansible/playbooks/standalone.yml'
+$ git config alias.xpush '!git push $1 $2 && ansible-playbook /etc/ansible/playbooks/standalone.yml'
 ```
 Daha sonra push yapılmak istendiğinde **git push** yerine **git xpush** çağırılarak sistemler uyarılır ve yapılandırmaları çekerler. 
 
