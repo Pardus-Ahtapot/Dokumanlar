@@ -16,6 +16,7 @@ pages:
     - 'MHN Kurulumu': 'kurulum-yonergeleri/mhn-kurulum.md'
     - 'Balküpü Kurulumu': 'kurulum-yonergeleri/honeypot-kurulum.md'
     - 'Sadece Gerekli Durumlarda Playbookların Çalışmasını Sağlama Kurulum': 'kurulum-yonergeleri/standalone-kurulum.md'
+    - 'Ossim Plugin Yazılması ve Siem Entegrasyonu': 'kurulum-yonergeleri/ossim-siem-plugin-kurulum-yapilandirmasi.md'
 - "KULLANIM KLAVUZLARI": 
     - 'Güvenlik Duvarı Yönetim Sistemi Kullanımı': 'kullanim-klavuzlari/gdys-kullanim.md'
     - 'Geçici Kural Tanımlama Sistemi Kullanımı': 'kullanim-klavuzlari/gkts-kullanim.md'
@@ -50,6 +51,7 @@ pages:
     - 'Geçici Kural Tanımlama Sistemi' : 'dizayn/gecici-kural-tanimlama-sistemi.md'
     - 'Güvenli İnternet Erişim Sistemi' : 'dizayn/guvenli-internet-erisim-sistemi.md'
     - 'Ahtapot Projesinde Sistemlere Kurulan Paketler ve Bağımlılıkları' : 'dizayn/paketler.md'
+    - 'Sistem Bütünlüğü' : 'dizayn/paketler.md'
 - "GEREKLİ DOSYALAR":
     - 'Firewall Builder Konfigürasyon Dosyası': 'dosyalar/gdys-fwb.md'
 - "HAKKINDA": hakkinda.md
