@@ -51,7 +51,7 @@ pages:
     - 'Geçici Kural Tanımlama Sistemi' : 'dizayn/gecici-kural-tanimlama-sistemi.md'
     - 'Güvenli İnternet Erişim Sistemi' : 'dizayn/guvenli-internet-erisim-sistemi.md'
     - 'Ahtapot Projesinde Sistemlere Kurulan Paketler ve Bağımlılıkları' : 'dizayn/paketler.md'
-    - 'Sistem Bütünlüğü' : 'dizayn/paketler.md'
+    - 'Sistem Bütünlüğü' : 'dizayn/sistem-butunlugu.md'
 - "GEREKLİ DOSYALAR":
     - 'Firewall Builder Konfigürasyon Dosyası': 'dosyalar/gdys-fwb.md'
 - "HAKKINDA": hakkinda.md
