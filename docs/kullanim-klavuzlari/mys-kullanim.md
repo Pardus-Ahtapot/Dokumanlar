@@ -940,7 +940,7 @@ firewallbuilder_packages:
 #        state:
 ```
 
-* "**fwbuilder.yml**" dosyası içerisindeki “**fix**” fonksiyonu, FirewallBuilder tarafında  oluşan xlock problemini çözmek üzere oluşturulmuş fonksiyondur. "**bash**" fonksiyonu ise "**/etc/ansible/roles/firewallbuilder/templates**" dizini altında bulunan "**fwbuilder-ahtapot.sh.j2**" scripti "**/etc/profile.d/**" dizini altına yerleştirir ve  “**owner**”, “**group**” ve “**mode**” ile bu dosyanın sahibi olan kullanıcı, grup ve hakları belirlenir.
+* "**fwbuilder.yml**" dosyası içerisindeki “**fix**” fonksiyonu, FirewallBuilder tarafında  oluşan xlock problemini çözmek üzere oluşturulmuş fonksiyondur. "**bash**" fonksiyonu ise "**/etc/ansible/roles/firewallbuilder/templates**" dizini altında bulunan "**fwbuilder-ahtapot.sh.j2**" scripti "**/etc/profile.d/**" dizini altına yerleştirir ve  “**owner**”, “**group**” ve “**mode**” ile bu dosyanın sahibi olan kullanıcı, grup ve hakları belirlenir. "**fwb_editable_objects**" değişkeni ise, hangi firewallbuilder kurulumunun hangi güvenlik duvarlarını düzenleyebileceğinin belirtildiği değişkendir. "**/etc/ansible/hosts**" dosyasında bulunan her firewallbuilder tanımı için burada da bir girdi bulunmak zorundadır. Aşağıdaki örnek dosyada "**FWB.DOMAIN**" ismine sahip firewallbuilder sunucusu, sadece "**FW.DOMAIN**" isimli güvenlik duvarı için yazma yetkisine sahiptir. "**FWB2.DOMAIN**" ismine sahip firewallbuilder sunucusu ise tüm güvenlik duvarları için yazma yetkisine sahiptir (Altında herhangi bir objects tanımı olmayan bunun gibi sunucular tüm güvenlik duvarlarını düzenleme yetkisine sahip olmaktadır).
 
 ```
 # Guvenlik Duvari Kurucusunun degiskenlerini iceren dosyadir.
@@ -959,6 +959,11 @@ firewallbuilder:
             owner: "root"
             group: "root"
             mode: "0755"
+    fwb_editable_objects:
+        FWB.DOMAIN:
+            - objects:
+                - FW.DOMAIN
+        FWB2.DOMAIN:
 ```
 
 * “**directory.yml**” dosyası içerisinde FirewallBuilder sunucusu üzerinde oluşturulacak dizinler ve bu dizinlerin hakları ve erişim yetkileri belirtilmektedir. "**directory02**" onay mekanizmasina gitmeden test scriptlerinin konumlandırıldığı dizini belirtmektedir.
