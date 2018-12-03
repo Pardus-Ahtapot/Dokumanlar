@@ -1,3 +1,4 @@
+
 ![ULAKBIM](../img/ulakbim.jpg)
 # Güvenli İnternet Erişim Sistemi (PROXY) Kurulum Yönergesi
 ------
@@ -139,261 +140,275 @@ serverN:
 
 
 ```
-## Bu dosya ansible tarafindan yonetilmektedir!
-## Burada yapilan degisikliklerin uzerine yazilir!!
-{{ ansible_managed }}
-
-# Network definitions
-#acl localnet src 192.168.0.0/16 # RFC1918 possible internal network
-
-# Ldap Authentication
-{% if squid['ldap']['enabled'] == "yes" %} 
-auth_param basic program /usr/lib/squid3/basic_ldap_auth -R -b "{{ squid['ldap']['domain'] }}" -D "{{ squid['ldap']['workgroup'] }}\\{{ squid['ldap']['user'] }}" -w "{{ squid['ldap']['password'] }}" -f "{{ squid['ldap']['option'] }}" -h {{ squid['ldap']['host'] }}
-auth_param basic children 5
-auth_param basic realm Web-Proxy
-auth_param basic credentialsttl 8 hours
-acl ldap-auth proxy_auth REQUIRED
-{% endif %}
-
-# Port definitions
-acl Safe_ports port 80      # http
-acl Safe_ports port 443     # https
-
-# Blocks file upload
-acl blockfile req_mime_type -i ^.*multipart/form-data.*
-http_access deny blockfile
-
-{% if squid['ldap']['enabled'] == "yes" %} 
-http_access allow ldap-auth
-{% endif %}
-http_access deny all
-http_port {{ squid['http_port'] }}
-
-# Cache Section
-coredump_dir /var/spool/squid3
-refresh_pattern ^ftp:           1440    20%     10080
-refresh_pattern ^gopher:        1440    0%      1440
-refresh_pattern -i (/cgi-bin/|\?) 0     0%      0
-refresh_pattern .               0       20%     4320
-cache_dir ufs /var/spool/squid3 100 16 256
+## Bu dosya ansible tarafindan yonetilmektedir!  
+## Burada yapilan degisikliklerin uzerine yazilir!!  
+{{ ansible_managed }}  
+  
+# Network definitions  
+#acl localnet src 192.168.0.0/16 # RFC1918 possible internal network  
+  
+# Ldap Authentication  
+{% if squid['ldap']['enabled'] == "yes" %}   
+auth_param basic program /usr/lib/squid/basic_ldap_auth -R -b "{{ squid['ldap']['domain'] }}" -D "{{ squid['ldap']['workgroup'] }}\\{{ squid['ldap']['user'] }}" -w "{{ squid['ldap']['password'] }}" -f "{{ squid['ldap']['option'] }}" -h {{ squid['ldap']['host'] }}  
+auth_param basic children 5  
+auth_param basic realm Web-Proxy  
+auth_param basic credentialsttl 8 hours  
+acl ldap-auth proxy_auth REQUIRED  
+{% endif %}  
+  
+# NTLM Authentication  
+{% if ad.enabled == "yes" and squid['ldap']['enabled'] != "yes" %}  
+auth_param ntlm program /usr/bin/ntlm_auth --helper-protocol=squid-2.5-ntlmssp  
+auth_param ntlm children 30  
+auth_param ntlm keep_alive on  
+  
+acl AuthenticateUser proxy_auth REQUIRED  
+http_access allow AuthenticateUser  
+{% endif %}  
+  
+# Port definitions  
+acl Safe_ports port 80      # http  
+acl Safe_ports port 443     # https  
+  
+# Blocks file upload  
+acl blockfile req_mime_type -i ^.*multipart/form-data.*  
+http_access deny blockfile  
+  
+{% if squid['ldap']['enabled'] == "yes" %}   
+http_access allow ldap-auth  
+{% endif %}  
+http_access deny all  
+http_port {{ squid['http_port'] }}  
+  
+  
+# Cache Section  
+coredump_dir /var/spool/squid  
+refresh_pattern ^ftp:           1440    20%     10080  
+refresh_pattern ^gopher:        1440    0%      1440  
+refresh_pattern -i (/cgi-bin/|\?) 0     0%      0  
+refresh_pattern .               0       20%     4320  
+cache_dir ufs /var/spool/squid 100 16 256
 ```
 
 * Squid proxy üzerinde çalışacak dansguardian’ının konfigürasyon dosyası için Gitlab arayüzünden mys reposuna erişilerek “**roles/squid/templates/dansguardian/configuration**" dizini altında “**squid.fqdn_bilgisi.conf.j2**" formatında squid makinesinin FQDN bilgisinin yer aldığı bir dosya oluşturulmalıdır. Bu dosyanın içeriği aşğıdaki gibi olmalıdır.
 
 ```
-## Bu dosya ansible tarafindan yonetilmektedir!
-## Burada yapilan degisikliklerin uzerine yazilir!!
-{{ ansible_managed }}
-
-# DansGuardian config file for version 2.10.1.1
-# **NOTE** as of version 2.7.5 most of the list files are now in dansguardianf1.conf
-
-reportinglevel = 3
-
-languagedir = '/etc/dansguardian/languages'
-language = 'ukenglish'
-
-loglevel = 2
-logexceptionhits = 2
-
-# Log File Format
-# 1 = DansGuardian format (space delimited)
-# 2 = CSV-style format
-# 3 = Squid Log File Format
-# 4 = Tab delimited
-logfileformat = 1
-
-# truncate large items in log lines
-#maxlogitemlength = 400
-
-anonymizelogs = {{ dansguardian['anonymizelogs'] }}
-
-# Syslog logging
-#
-# Use syslog for access logging instead of logging to the file
-# at the defined or built-in "loglocation"
-#syslog = on
-
-loglocation = '{{ dansguardian['loglocation'] }}'
-statlocation = '{{ dansguardian['loglocation'] }}'
-
-# Network Settings
-
-filterip =
-filterport = {{ dansguardian['filterport'] }} 
-
-proxyip = {{ dansguardian['proxyip'] }}
-proxyport = {{ dansguardian['proxyport'] }}
-
-accessdeniedaddress = '{{ dansguardian['accessdeniedaddress'] }}'
-nonstandarddelimiter = on
-
-usecustombannedimage = on
-custombannedimagefile = '{{ dansguardian['custombannedimagefile'] }}'
-
-# Filter groups options
-# filtergroups sets the number of filter groups. A filter group is a set of content
-# filtering options you can apply to a group of users.  The value must be 1 or more.
-# DansGuardian will automatically look for dansguardianfN.conf where N is the filter
-# group.  To assign users to groups use the filtergroupslist option.  All users default
-# to filter group 1.  You must have some sort of authentication to be able to map users
-# to a group.  The more filter groups the more copies of the lists will be in RAM so
-# use as few as possible.
-filtergroups = 1
-filtergroupslist = '/etc/dansguardian/lists/filtergroupslist'
-
-# Authentication files location
-bannediplist = '{{ dansguardian['bannediplist'] }}'
-exceptioniplist = '{{ dansguardian['exceptioniplist'] }}'
-
-# Weighted phrases 
-showweightedfound = on
-weightedphrasemode = 2
-
-# Caching for URLs
-urlcachenumber = 1000
-urlcacheage = 900
-scancleancache = on
-
-# Phrase filter section
-phrasefiltermode = 2
-preservecase = 0
-
-# Hex decoding options
-hexdecodecontent = off
-
-# Force Quick Search rather than DFA search algorithm
-forcequicksearch = off
-
-# Reverse lookups
-reverseaddresslookups = off
-reverseclientiplookups = off
-logclienthostnames = off
-
-# Build bannedsitelist and bannedurllist cache files.
-createlistcachefiles = on
-
-# POST protection (web upload and forms)
-maxuploadsize = {{ dansguardian['maxuploadsize'] }}
-
-# Content section
-maxcontentfiltersize = 256
-maxcontentramcachescansize = 2000
-maxcontentfilecachescansize = 20000
-
-# File cache dir
-filecachedir = '/tmp'
-deletedownloadedtempfiles = on
-
-# Trickle delay
-initialtrickledelay = 20
-trickledelay = 10
-
-# Download Managers
-downloadmanager = '/etc/dansguardian/downloadmanagers/fancy.conf'
-#downloadmanager = '/etc/dansguardian/downloadmanagers/trickle.conf'
-downloadmanager = '/etc/dansguardian/downloadmanagers/default.conf'
-
-# Content Scanners (Also known as AV scanners)
-#
-# Some of the scanner(s) require 3rd party software and libraries eg clamav.
-# See the individual plugin conf file for more options (if any).
-#
-#contentscanner = '/etc/dansguardian/contentscanners/clamav.conf'
-#contentscanner = '/etc/dansguardian/contentscanners/clamdscan.conf'
-#!! Unimplemented !! contentscanner = '/etc/dansguardian/contentscanners/kavav.conf'
-#!! Not compiled !! contentscanner = '/etc/dansguardian/contentscanners/kavdscan.conf'
-#contentscanner = '/etc/dansguardian/contentscanners/icapscan.conf'
-#contentscanner = '/etc/dansguardian/contentscanners/commandlinescan.conf'
-
-# Content scanner timeout
-contentscannertimeout = 60
-contentscanexceptions = off
-
-# Auth plugins
-# These replace the usernameidmethod* options in previous versions. They
-# handle the extraction of client usernames from various sources, such as
-# Proxy-Authorisation headers and ident servers, enabling requests to be
-# handled according to the settings of the user's filter group.
-# Multiple plugins can be specified, and will be queried in order until one
-# of them either finds a username or throws an error. For example, if Squid
-# is configured with both NTLM and Basic auth enabled, and both the 'proxy-basic'
-# and 'proxy-ntlm' auth plugins are enabled here, then clients which do not support
-# NTLM can fall back to Basic without sacrificing access rights.
-#
-# If you do not use multiple filter groups, you need not specify this option.
-#
-authplugin = '/etc/dansguardian/authplugins/proxy-basic.conf'
-#authplugin = '/etc/dansguardian/authplugins/proxy-digest.conf'
-#authplugin = '/etc/dansguardian/authplugins/proxy-ntlm.conf'
-#authplugin = '/etc/dansguardian/authplugins/ident.conf'
-#authplugin = '/etc/dansguardian/authplugins/ip.conf'
-
-# Re-check replaced URLs
-# As a matter of course, URLs undergo regular expression search/replace (urlregexplist)
-# *after* checking the exception site/URL/regexpURL lists, but *before* checking against
-# the banned site/URL lists, allowing certain requests that would be matched against the
-# latter in their original state to effectively be converted into grey requests.
-# With this option enabled, the exception site/URL/regexpURL lists are also re-checked
-# after replacement, making it possible for URL replacement to trigger exceptions based
-# on them.
-# Defaults to off.
-recheckreplacedurls = off
-
-# Misc settings
-
-forwardedfor = on
-usexforwardedfor = off
-logconnectionhandlingerrors = on
-logchildprocesshandling = off
-
-# Children Options
-maxchildren = {{ dansguardian['maxchildren'] }}
-minchildren = {{ dansguardian['minchildren'] }}
-maxsparechildren = {{ dansguardian['maxsparechildren'] }}
-minsparechildren = {{ dansguardian['minsparechildren'] }}
-preforkchildren = {{ dansguardian['preforkchildren'] }}
-maxagechildren = {{ dansguardian['maxagechildren'] }}
-
-maxips = 0
-
-# Process options
-# (Change these only if you really know what you are doing).
-# These options allow you to run multiple instances of DansGuardian on a single machine.
-# Remember to edit the log file path above also if that is your intention.
-
-# IPC filename
-ipcfilename = '/tmp/.dguardianipc'
-
-# URL list IPC filename
-urlipcfilename = '/tmp/.dguardianurlipc'
-
-# IP list IPC filename
-ipipcfilename = '/tmp/.dguardianipipc'
-
-# PID filename
-#pidfilename = '/var/run/dansguardian.pid'
-
-# Disable daemoning
-nodaemon = off
-
-# Disable logging process
-nologger = off
-
-# Enable logging of "ADs" category blocks
-logadblocks = off
-
-# Enable logging of client User-Agent
-loguseragent = off
-
-# Daemon runas user and group
-#daemonuser = 'dansguardian'
-#daemongroup = 'dansguardian'
-
-# Soft restart
-softrestart = off
-
-# Mail program
+## Bu dosya ansible tarafindan yonetilmektedir!  
+## Burada yapilan degisikliklerin uzerine yazilir!!  
+{{ ansible_managed }}  
+  
+# DansGuardian config file for version 2.10.1.1  
+# **NOTE** as of version 2.7.5 most of the list files are now in dansguardianf1.conf  
+  
+reportinglevel = 3  
+  
+languagedir = '/etc/dansguardian/languages'  
+language = 'ukenglish'  
+  
+loglevel = 2  
+logexceptionhits = 2  
+  
+# Log File Format  
+# 1 = DansGuardian format (space delimited)  
+# 2 = CSV-style format  
+# 3 = Squid Log File Format  
+# 4 = Tab delimited  
+logfileformat = 1  
+  
+# truncate large items in log lines  
+#maxlogitemlength = 400  
+  
+anonymizelogs = {{ dansguardian['anonymizelogs'] }}  
+  
+# Syslog logging  
+#  
+# Use syslog for access logging instead of logging to the file  
+# at the defined or built-in "loglocation"  
+#syslog = on  
+  
+loglocation = '{{ dansguardian['loglocation'] }}'  
+statlocation = '{{ dansguardian['loglocation'] }}'  
+  
+# Network Settings  
+  
+filterip =  
+filterport = {{ dansguardian['filterport'] }}   
+  
+proxyip = {{ dansguardian['proxyip'] }}  
+proxyport = {{ dansguardian['proxyport'] }}  
+  
+accessdeniedaddress = '{{ dansguardian['accessdeniedaddress'] }}'  
+nonstandarddelimiter = on  
+  
+usecustombannedimage = on  
+custombannedimagefile = '{{ dansguardian['custombannedimagefile'] }}'  
+  
+# Filter groups options  
+# filtergroups sets the number of filter groups. A filter group is a set of content  
+# filtering options you can apply to a group of users.  The value must be 1 or more.  
+# DansGuardian will automatically look for dansguardianfN.conf where N is the filter  
+# group.  To assign users to groups use the filtergroupslist option.  All users default  
+# to filter group 1.  You must have some sort of authentication to be able to map users  
+# to a group.  The more filter groups the more copies of the lists will be in RAM so  
+# use as few as possible.  
+filtergroups = 1  
+filtergroupslist = '/etc/dansguardian/lists/filtergroupslist'  
+  
+# Authentication files location  
+bannediplist = '{{ dansguardian['bannediplist'] }}'  
+exceptioniplist = '{{ dansguardian['exceptioniplist'] }}'  
+  
+# Weighted phrases   
+showweightedfound = on  
+weightedphrasemode = 2  
+  
+# Caching for URLs  
+urlcachenumber = 1000  
+urlcacheage = 900  
+scancleancache = on  
+  
+# Phrase filter section  
+phrasefiltermode = 2  
+preservecase = 0  
+  
+# Hex decoding options  
+hexdecodecontent = off  
+  
+# Force Quick Search rather than DFA search algorithm  
+forcequicksearch = off  
+  
+# Reverse lookups  
+reverseaddresslookups = off  
+reverseclientiplookups = off  
+logclienthostnames = off  
+  
+# Build bannedsitelist and bannedurllist cache files.  
+createlistcachefiles = on  
+  
+# POST protection (web upload and forms)  
+maxuploadsize = {{ dansguardian['maxuploadsize'] }}  
+  
+# Content section  
+maxcontentfiltersize = 256  
+maxcontentramcachescansize = 2000  
+maxcontentfilecachescansize = 20000  
+  
+# File cache dir  
+filecachedir = '/tmp'  
+deletedownloadedtempfiles = on  
+  
+# Trickle delay  
+initialtrickledelay = 20  
+trickledelay = 10  
+  
+# Download Managers  
+downloadmanager = '/etc/dansguardian/downloadmanagers/fancy.conf'  
+#downloadmanager = '/etc/dansguardian/downloadmanagers/trickle.conf'  
+downloadmanager = '/etc/dansguardian/downloadmanagers/default.conf'  
+  
+# Content Scanners (Also known as AV scanners)  
+#  
+# Some of the scanner(s) require 3rd party software and libraries eg clamav.  
+# See the individual plugin conf file for more options (if any).  
+#  
+#contentscanner = '/etc/dansguardian/contentscanners/clamav.conf'  
+#contentscanner = '/etc/dansguardian/contentscanners/clamdscan.conf'  
+#!! Unimplemented !! contentscanner = '/etc/dansguardian/contentscanners/kavav.conf'  
+#!! Not compiled !! contentscanner = '/etc/dansguardian/contentscanners/kavdscan.conf'  
+#contentscanner = '/etc/dansguardian/contentscanners/icapscan.conf'  
+#contentscanner = '/etc/dansguardian/contentscanners/commandlinescan.conf'  
+  
+# Content scanner timeout  
+contentscannertimeout = 60  
+contentscanexceptions = off  
+  
+# Auth plugins  
+# These replace the usernameidmethod* options in previous versions. They  
+# handle the extraction of client usernames from various sources, such as  
+# Proxy-Authorisation headers and ident servers, enabling requests to be  
+# handled according to the settings of the user's filter group.  
+# Multiple plugins can be specified, and will be queried in order until one  
+# of them either finds a username or throws an error. For example, if Squid  
+# is configured with both NTLM and Basic auth enabled, and both the 'proxy-basic'  
+# and 'proxy-ntlm' auth plugins are enabled here, then clients which do not support  
+# NTLM can fall back to Basic without sacrificing access rights.  
+#  
+# If you do not use multiple filter groups, you need not specify this option.  
+#  
+authplugin = '/etc/dansguardian/authplugins/proxy-basic.conf'  
+#authplugin = '/etc/dansguardian/authplugins/proxy-digest.conf'  
+{% if ad.enabled == "yes" and squid['ldap']['enabled'] != "yes" %}  
+authplugin = '/etc/dansguardian/authplugins/proxy-ntlm.conf'  
+{% endif %}  
+#authplugin = '/etc/dansguardian/authplugins/proxy-ntlm.conf'  
+#authplugin = '/etc/dansguardian/authplugins/ident.conf'  
+#authplugin = '/etc/dansguardian/authplugins/ip.conf'  
+  
+# Re-check replaced URLs  
+# As a matter of course, URLs undergo regular expression search/replace (urlregexplist)  
+# *after* checking the exception site/URL/regexpURL lists, but *before* checking against  
+# the banned site/URL lists, allowing certain requests that would be matched against the  
+# latter in their original state to effectively be converted into grey requests.  
+# With this option enabled, the exception site/URL/regexpURL lists are also re-checked  
+# after replacement, making it possible for URL replacement to trigger exceptions based  
+# on them.  
+# Defaults to off.  
+recheckreplacedurls = off  
+  
+# Misc settings  
+  
+forwardedfor = on  
+usexforwardedfor = off  
+logconnectionhandlingerrors = on  
+logchildprocesshandling = off  
+  
+# Children Options  
+maxchildren = {{ dansguardian['maxchildren'] }}  
+minchildren = {{ dansguardian['minchildren'] }}  
+maxsparechildren = {{ dansguardian['maxsparechildren'] }}  
+minsparechildren = {{ dansguardian['minsparechildren'] }}  
+preforkchildren = {{ dansguardian['preforkchildren'] }}  
+maxagechildren = {{ dansguardian['maxagechildren'] }}  
+  
+maxips = 0  
+  
+# Process options  
+# (Change these only if you really know what you are doing).  
+# These options allow you to run multiple instances of DansGuardian on a single machine.  
+# Remember to edit the log file path above also if that is your intention.  
+  
+# IPC filename  
+ipcfilename = '/tmp/.dguardianipc'  
+  
+# URL list IPC filename  
+urlipcfilename = '/tmp/.dguardianurlipc'  
+  
+# IP list IPC filename  
+ipipcfilename = '/tmp/.dguardianipipc'  
+  
+# PID filename  
+#pidfilename = '/var/run/dansguardian.pid'  
+  
+# Disable daemoning  
+nodaemon = off  
+  
+# Disable logging process  
+nologger = off  
+  
+# Enable logging of "ADs" category blocks  
+logadblocks = off  
+  
+# Enable logging of client User-Agent  
+loguseragent = off  
+  
+# Daemon runas user and group  
+#daemonuser = 'dansguardian'  
+#daemongroup = 'dansguardian'  
+  
+# Soft restart  
+softrestart = off  
+  
+# Mail program  
 mailer = '/usr/sbin/sendmail -t'
 ```
 
@@ -675,6 +690,60 @@ nginx:
     access_log: "/var/log/nginx/sarg.access.log"
     error_log: "/var/www/html/sarg.error.log"
 ```
+
+### Windows Etki Alanı(AD) Yapılandırması
+
+* AD sunucusu üzerinde Group Policy ayarlanır. Group Policy Management açılır Default Domain Policy düzenlenir veya yeni bir GPO oluşturulur.
+```
+Default Domain Policy > Edit
+Computer Configuration > Policies > Windows Settings > Security Settings > Local Policies > Security Options
+Network Security: Lan Manager Authentication Level > Edit
+Checked[x] Define This policy setting
+Select: Send LM & NTLM -use NTLMv2 session security if negotiated
+OK
+```
+
+* AD sunucu üzerinde komut satırı açılır ve aşağıdaki komut çalıştırılır.
+```
+gpupdate /force
+```
+
+
+* Gitlab arayüzünden mys reposuna erişilerek burada bulunan “**roles/squid/vars**" dizini altında değişkenleri barındıran “**ad.yml**" dosyası düzenlenmelidir.
+
+* “**enabled**" değişkeni ile windows etki alanı aktif edilir. “**domain**" parametresi etki alanı domaini, “**fqdn**" etki alanının fqdn i, “**server_ip**" etki alanının IP adresi, “**workgroup**" etki alanı çalışma grubu, “**user**" join işlemi için kullanılacak admin kullanıcısı ve “**password**" bu kullanıcının şifresi olmalıdır.
+
+```
+---
+#active directory parametreleri
+ad:
+  # ad aktif edilirse squid ayarlarindan ldapi kapatiniz.
+  enabled: "no"
+  domain: "ahtapot.org.tr"
+  fqdn: "ad.ahtapot.org.tr"
+  server_ip: "192.168.0.89"
+  workgroup: "AHTAPOT"
+  user: "Administrator"
+  password: "ahtapot123!"
+```
+* AD aktif edilirse “**roles/squid/vars/squid.yml**" dosyasından **ldap** seçeneği kapatılmalıdır. LDAP ve AD birlikte çalışmamaktadır.
+
+* Windows AD sunucusu ile proxy sunucusunun saatlerinin senkron olması gerekmektedir.
+
+* AD sunucusunun ve proxy sunucusunun “**roles/base/vars/hosts.yml**" dosyasında örnekteki gibi doğru bir şekilde tanımlanması gerekmektedir.
+
+```
+    server02:
+        ip: "192.168.0.17"
+        fqdn: "proxy.ahtapot.org.tr"
+        hostname: "proxy"
+    server03:
+        ip: "192.168.0.89"
+        fqdn: "ad.ahtapot.org.tr"
+        hostname: "adahtapot"
+
+```
+
 * Gitlab arayüzünde tüm değişikler gerçekleştirildikten sonra değişikliklerin master branch yetkisine sahip bir kullanıcı tarafından onaylanması için “**Merge Request**” oluşturulması gerekir. Gitlab arayüzünde sol tarafta bulunan “**Merge Request**” sekmesine geçilir ve “**CREATE MERGE REQUEST**” butonuna basılarak yapılan commit’lerin onaylanması için istek oluşturulur.
 * Master branch yetkisine sahip bir kullanıcı tarafından merge request için accept işlemi gerçekleştirildiği takdirde playbook oynayacak ve squid proxy  istenilen sunucuya kurulmuş olacaktır.
 

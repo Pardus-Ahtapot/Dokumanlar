@@ -41,6 +41,7 @@ pages:
     - 'MHN Kullanımı': 'kullanim-klavuzlari/mhn-kullanim.md'
     - 'Balküpü Kullanımı': 'kullanim-klavuzlari/honeypot-kullanim.md'
     - 'Sadece Gerekli Durumlarda Playbookların Çalışmasını Sağlama Kullanım': 'kullanim-klavuzlari/standalone-kullanim.md'
+    - 'Cyphon Kullanımı': 'kullanim-klavuzlari/cyphon.md'
 - "DIZAYN":
     - 'Merkezi Yönetim Sistemi': 'dizayn/merkezi-yonetim-sistemi.md'
     - 'Merkezi Güvenlik Duvarı Yönetim Sistemi Kontrol Paneli': 'dizayn/merkezi-guvenlik-duvari-yonetim-sistemi-kontrol-paneli.md'
