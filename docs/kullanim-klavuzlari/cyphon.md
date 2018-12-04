@@ -56,10 +56,11 @@ Bu bölümde Cyphon'a örnek bir log kaynağının rsyslog ile nasıl entegre ed
 ![cyphonlogin](../img/cyphon_log_gonderme.png)
 
 Yukarıdaki şemada görüldüğü üzere ;
-1- Log dosyası Suricata üzerindeki Lokal rsyslog'a dahil edilir ve istenilen yöntemle Logstash'in kurulu olduğu cihazdaki Uzak Rsyslog'a gönderilir. (Eğer relp kullanılmıyor ise loglar buradan json olarak doğrudan Logstash'e gönderilebilir.)
-2- Logstash üzerindeki Rsyslog gelen logu Json formatında Logstash'e iletir.
-3- Logstash gelen json formatındaki veriyi parse edip anlamlandırır.
-4- Logstash anlamlandırdığı veriyi ElasticSearch ve RabbitMQ Sunucusuna gönderir.
+
+- Log dosyası Suricata üzerindeki Lokal rsyslog'a dahil edilir ve istenilen yöntemle Logstash'in kurulu olduğu cihazdaki Uzak Rsyslog'a gönderilir. (Eğer relp kullanılmıyor ise loglar buradan json olarak doğrudan Logstash'e gönderilebilir.)
+- Logstash üzerindeki Rsyslog gelen logu Json formatında Logstash'e iletir.
+- Logstash gelen json formatındaki veriyi parse edip anlamlandırır.
+- Logstash anlamlandırdığı veriyi ElasticSearch ve RabbitMQ Sunucusuna gönderir.
 
 **Cyphon Log okuma**
 
@@ -99,10 +100,11 @@ if $programname == 'suricatafastlog' then @10.0.3.16:514
 ```
 
 Bu ayar dosyasında dikkat edilmesi gereken alanlar;
-1- **$InputFileName** : Log dosyasının tanımlandığı alan.
-2- **InputFileTag** : Program adı olarak belirlenir.
-3- **InputFileStateFile** Durum dosyası. Program adı ile aynı yapılması önerilir.
-4- **if $programname == 'suricatafastlog' then @10.0.3.16:514** Logun gönderildiği satır. Program adı **InputFileTag kısmında belirtildiği gibi yazılmalıdır.
+
+- **$InputFileName** : Log dosyasının tanımlandığı alan.
+- **InputFileTag** : Program adı olarak belirlenir.
+- **InputFileStateFile** Durum dosyası. Program adı ile aynı yapılması önerilir.
+- **if $programname == 'suricatafastlog' then @10.0.3.16:514** Logun gönderildiği satır. Program adı **InputFileTag kısmında belirtildiği gibi yazılmalıdır.
 
 Protokol seçimi aşağıdaki şekilde yapılmaktadır.
 @10.0.3.16 = UDP
@@ -283,9 +285,13 @@ input {
 ```
 
 Örnekte kullanılan modül **UDP**. Belirlenen port UDP protokolü ile çalışacaktır.
+
 **host:** Logstash'in istekleri kabul edeceği sunucu üzerindeki IP adressi. Burada belirlenen ip adresi üzerinde servis dinelemeye başlar.
+
 **port:** Logstash'in dinleyeceği port.
+
 **codec:** Logstash'in gelen logu anlamlandırması için kullanılacak codec türü. Bizim örneğimizde rsyslog ile logları json olarak gönderdiğimiz için codec **json** olarak belirlenmiştir.
+
 **type:** Logun hangi kaynaktan geldiğine ilişkin tanımlayıcı ifade.
 
 **FILTER Bölümü**
@@ -334,9 +340,13 @@ Gelen **message** logstash ayar dosyasında **grok** bölümünde regex ile pars
 **if [ts]** ile başlayan kısımda tarih formatını belirleyip **sys_timestamp** anahtarına **date** tipinde aktarılması sağlandıktan sonra **ts** anahtarına ihtiyaç kalmadığı için json'dan kaldırılır. Bu sayede logun gerçekte üretildiği zaman kullanılarak log kaydı oluşturulmuş oldu.
 
 Bunun için regex yazılması gerekmektedir.
+
 Regex içindeki **grup** isimleri **json anahtar-değer** ikilisine otomatik olarak çevrilir.
+
 Regex yazmak için **regex101.com** adresi kullanılabilir.
+
 Regex programlama dili **javascript**'dir.
+
 Aşağıdaki Örnek Log ve Regex'i test edebilirsiniz.
 
 **Suricata fast log**
@@ -476,7 +486,9 @@ Sırası ile aşağıdaki adımlar uygulanır.
 
 ### Bottle Field Tanımları
 Bu kısımda json içindeki gerekli anahtar-değer ikilisinin tanımları yapılır.
+
 Bunun için **Shaping Data > Bottle fields** alanına tıklanır.
+
 Açılan ekranda **Add bottle Field** denir ve aşağıdaki tabloda yer alanlar tek tek tanımlanır.
 
 |Field Name		   |Field Type					   |Target Type
@@ -496,36 +508,57 @@ Açılan ekranda **Add bottle Field** denir ve aşağıdaki tabloda yer alanlar 
 
 ### Bottle Log Seçimi
 Bu kısımda log içinden istenilen alanlar seçilir ve bir paket oluşturulur.
+
 Bunun için **Shaping Data > Bottles** alanına tıklanır.
+
 Açılan ekranda **Add bottle** denir ve istenilen loglar seçilir. Hepsini seçmek için choose all butonuna basılır.
+
 **name:** "b_suricatafastlog" olarak ayarlanabilir.
 
 ### Container oluşturma
 Bu kısımda üretilecek uyarının ekranda nasıl gözükeceği belirlenir.
+
 Bunun için **Shaping Data > Containers** alanına tıklanır.
+
 Açılan ekranda **Add Container** denir. Açılan ekranda aşağıdaki tanımlar yapılır.
+
 **name:** c_suricatafastlog Herhangi bir isim verilir.
+
 **bottle:** b_suricatafastlog Bir önceki menüde oluşturulan bottle seçilir.
 
 Alert Görünüm yapılandırması
+
 **Taste** kısmında uyarı oluştuğunda hangi log alanlarının gözükeceği seçilir. Buradaki seçimler daha önce tanımlanan bottle fields kısmından gelmektedir.
+
 **Authhor:** host
+
 **Title:** signature
+
 **Content:** classification
+
 **Datetime:** sys_timestamp
 
 ### Storing Data
 Bu bölümde elasticsearch tanımı yapılır. 
+
 Bunun için **Storing Data > Warehouses** bölümüne geçilir.
+
 **Add warehouse** butonuna basılır ve aşağıdaki tanımlar yapılır.
+
 **Backend:** elasticsearch
+
 **Name:** cyphon
+
 **Time series** işaretlenir.
 
 İkinci olarak
+
 Bunun için **Storing Data > # Collections** bölümüne geçilir.
+
 **Add Collection** denir ve aşağıdaki tanımlar yapılır.
+
 **Warehouse:** elasticsearch.cyphon 
+
 **Collaction name:**  suricatafastlog 
 
 >Logstash içinde collection olarak **elasticsearch.cyphon.%{programname}** bu şekilde bir tanım yapmıştık.
@@ -533,17 +566,25 @@ Bunun için **Storing Data > # Collections** bölümüne geçilir.
 
 ### Distillery
 Bu bölümde datanın elasticsearch üzerindeki eşleştirilmesi yapılır. 
+
 Bunun için **Distilling Data > Distilleries** bölümüne geçilir.
+
 **Add distillery** butonuna basılır ve aşağıdaki tanım yapılır.
+
 **Name:** suricatafastlog
+
 **Collection:** elasticsearch.cyphon.suricatafastlog
+
 **Container:** c_suricatafastlog
+
 **is shell** işaretlenir.
 
 
 ### Watchdog
 Bu kısımda uyarı önceliklendirme kuralları tanımlanır.
+
 **1-** Data Rules tanımlanır. 
+
 Bunun için **Sifting Data > JSON Data > Data Rules** bölümünden **Add data rule** denilerek aşağıdaki tanımlar ayrı ayrı yapılır.
 
 |DataRule Name	        		|Field Name		|Operator		|Value
@@ -554,6 +595,7 @@ Bunun için **Sifting Data > JSON Data > Data Rules** bölümünden **Add data r
 |priority_equals_3				|priority		|equals			|3
 
 **2-** Data Data Sieves tanımlanır.
+
 Bunun için **Sifting Data > JSON Data > Data Sieves** bölümünden **Add data Sieve** denilerek aşağıdaki tanımlar ayrı ayrı yapılır.
 
 |Name	 |Logic |Node1 Object (Type:data rule)|Node2 Object (Type:data rule)
@@ -566,14 +608,17 @@ Bunun için **Sifting Data > JSON Data > Data Sieves** bölümünden **Add data 
 **3-** Configuring Alert
 Bu bölümde alert oluşturulması sağlanır.
 Bunun için **Configuring Alert > Watchdogs** bölümüne geçilir.
+
 **Add wathdog** denir ve aşağıdaki ayarlar yapılır.
+
 **Name:** suricatafastlog
+
 **Enabled** işaretlenir.
 
 **Triggers** Bölümünde aşağıdaki tanımlar yapılır.
 
 |DataSieve	        	|Alert Level	|Rank
-|-------------------------------|---------------|---------------|------|
+|-------------------------------|---------------|---------------|
 |Suricata alert - high priority	|High			|0
 |Suricata alert - medium priority	|Medium			|10
 |Suricata alert - low priority	|Low			|20
@@ -582,15 +627,19 @@ Bunun için **Configuring Alert > Watchdogs** bölümüne geçilir.
 Bu tanımlamalardan sonra örnek log üretilir. Cyphon arayüzünde uyarılar görüntülenmelidir.
 
 Daha fazla bilgi için;
+
 https://cyphon.readthedocs.io
+
 https://www.elastic.co/guide/en/logstash/current/index.html
+
 https://www.elastic.co/guide/en/elasticsearch/reference/current/index.html
+
 https://www.rabbitmq.com/documentation.html
 
 **Ahtapot Projesi**
 
 Fatih USTA
-fatihusta@labrisnetworks.com
 
+fatihusta@labrisnetworks.com
 
 
