@@ -553,7 +553,7 @@ Bunun için **Storing Data > Warehouses** bölümüne geçilir.
 
 İkinci olarak
 
-Bunun için **Storing Data > # Collections** bölümüne geçilir.
+Bunun için **Storing Data >  Collections** bölümüne geçilir.
 
 **Add Collection** denir ve aşağıdaki tanımlar yapılır.
 
