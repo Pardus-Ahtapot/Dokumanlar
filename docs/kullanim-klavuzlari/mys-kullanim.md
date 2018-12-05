@@ -517,7 +517,7 @@ base_ahtapot_directories:
 Bu rol Ahtapot projesi kapsamındaki Ansible görevini üstlenecek sunucularda çalıştırılan Ansible ayarlamaların yapıldığı roldür.  Bu rolün görevleri:
 
     * Ansible sunucusu üzerinde bulunması gereken paketlerin kurulum ve denetimleri: 
-	git,ansible, python-requests, ahtapot-gkts, rsync
+	git,ansible, python-requests, ahtapot-gkts, rsync, awx
 
     * Ansible sunucusu yapılması gereken genel işlemler:
 	   * Ansible’da çalışalıcak dizin ve alt dizinlerin oluşturulması
@@ -633,6 +633,39 @@ gkts:
     port: "22"
     logseverity: "local5.notice"
 ```
+
+* "**awx.yml**" ansible'ı web arayüz aracılığı ile yönetmeyi sağlayan awx paketinin değişkenlerinin belirlendiği dosyadır. "**awx_ssl_port**" awx arayüzüne bağlanılacak port, "**awx_ssl_country**" awx ssl sertifika ülkesi, "**awx_ssl_state**" awx ssl sertifika semti, "**awx_ssl_locality**" awx ssl sertifika şehri, "**awx_ssl_organization**" awx ssl sertifika organizasyonu, "**awx_ssl_organizationalunit**" awx ssl sertifika organizasyon birimi, "**awx_ssl_commonname**" awx ssl sertifika ismi olarak girilmelidir. 
+
+```
+awx_ssl_port: 443
+awx_ssl_country: TR
+awx_ssl_state: Cankaya
+awx_ssl_locality: Ankara
+awx_ssl_organization: Labris
+awx_ssl_organizationalunit: Arge
+awx_ssl_commonname: ahtapot
+
+```
+
+#### AWX
+
+AWX, ansible playbooklarını web arayüzünden yönetmeye yarıyan modüldür. 
+Yukarıda belirtildiği gibi parametreler belirlenip playbook çalıştırıldığında yüklenmiş olur.
+
+AWX'e erişmek için tarayıcıdan "**https://ansible_fqdn**" adresine girilir(443 dışında bir port belirtilmiş ise port bilgiside girilmelidir). Ekrana aşağıdaki giriş ekranı gelecektir. 
+
+Öntanımlı olarak giriş için "**admin**" kullanıcı adı ve şifre olarak "**password**" kullanılır. Giriş bilgilerini güvenlik amacıyla değiştirmeniz önerilir.
+ 
+![AWX](../img/awx_login.png)
+
+Git Repo bilgileri girilerek proje eklenir. Eğer ssh kullanılacaksa **Credentials** tabından gerekli keylerin yaratılması gerekmektedir.
+ 
+
+![AWX](../img/awx_project_add.png)
+
+Detaylı dokumana aşağıdaki linkten ulaşılabilir. 
+
+https://docs.ansible.com/ansible-tower/latest/html/userguide/overview.html
 
 #### Gitlab
 
