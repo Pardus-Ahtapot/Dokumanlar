@@ -42,6 +42,8 @@ pages:
     - 'Balküpü Kullanımı': 'kullanim-klavuzlari/honeypot-kullanim.md'
     - 'Sadece Gerekli Durumlarda Playbookların Çalışmasını Sağlama Kullanım': 'kullanim-klavuzlari/standalone-kullanim.md'
     - 'Cyphon Kullanımı': 'kullanim-klavuzlari/cyphon.md'
+    - 'PBNJ Port Scanner Yazilimi Kullanimi': 'kullanim-klavuzlari/pbnj.md'
+    - 'Faraday Kullanımı': 'kullanim-klavuzlari/faraday.md'
 - "DIZAYN":
     - 'Merkezi Yönetim Sistemi': 'dizayn/merkezi-yonetim-sistemi.md'
     - 'Merkezi Güvenlik Duvarı Yönetim Sistemi Kontrol Paneli': 'dizayn/merkezi-guvenlik-duvari-yonetim-sistemi-kontrol-paneli.md'
@@ -53,6 +55,7 @@ pages:
     - 'Güvenli İnternet Erişim Sistemi' : 'dizayn/guvenli-internet-erisim-sistemi.md'
     - 'Ahtapot Projesinde Sistemlere Kurulan Paketler ve Bağımlılıkları' : 'dizayn/paketler.md'
     - 'Sistem Bütünlüğü' : 'dizayn/sistem-butunlugu.md'
+    - 'AlienVault OTX Verilerinin Çevrimdışı OSSIM Cihazlarında Kullanımı' : 'dizayn/otx.md'
 - "GEREKLİ DOSYALAR":
     - 'Firewall Builder Konfigürasyon Dosyası': 'dosyalar/gdys-fwb.md'
 - "HAKKINDA": hakkinda.md
