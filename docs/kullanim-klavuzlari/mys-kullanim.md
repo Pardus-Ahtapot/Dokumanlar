@@ -649,19 +649,65 @@ awx_ssl_commonname: ahtapot
 
 #### AWX
 
-AWX, ansible playbooklarını web arayüzünden yönetmeye yarıyan modüldür. 
+AWX, ansible playbooklarını web üzerinden yönetmeye yarayan arayüzdür. 
 Yukarıda belirtildiği gibi parametreler belirlenip playbook çalıştırıldığında yüklenmiş olur.
 
-AWX'e erişmek için tarayıcıdan "**https://ansible_fqdn**" adresine girilir(443 dışında bir port belirtilmiş ise port bilgiside girilmelidir). Ekrana aşağıdaki giriş ekranı gelecektir. 
+Playbookların çalışabilmesi için gerekli **Credentials** ve **Inventory** lerin oluşturulup projenin aktarılması gerekmektedir. Aşağıda bu işlemler birer örnekle anlatılmıştır. 
+
+##### Login 
+AWX'e erişmek için tarayıcıdan "**https://ansible_fqdn**" adresine girilir(443 dışında bir port belirtilmiş ise port bilgisi de girilmelidir). Ekrana aşağıdaki giriş ekranı gelecektir. 
 
 Öntanımlı olarak giriş için "**admin**" kullanıcı adı ve şifre olarak "**password**" kullanılır. Giriş bilgilerini güvenlik amacıyla değiştirmeniz önerilir.
  
 ![AWX](../img/awx_login.png)
 
-Git Repo bilgileri girilerek proje eklenir. Eğer ssh kullanılacaksa **Credentials** tabından gerekli keylerin yaratılması gerekmektedir.
- 
+
+##### Credential Ekleme  
+
+**Credentials** tabına girilerek credentials ekleme ekranı açılır. 
+Credentials type "**Machine**" seçilerek mys makinasının ssh anahtarı verilir. 
+Bu dosya default olarak **~/.ssh/id_rsa** uzantısındadır. Kullanıcı **ahtapotops** verilir.
+Eğer şifre ile bağlanılacak ise anahtar yerine şifre verilmelidir. 
+
+![AWX](../img/awx_credentials_add.png)
+
+##### Inventory Ekleme
+
+**Inventories** tabına girilerek inventory eklenir. 
+
+![AWX](../img/awx_inventory_add.png)
+
+Ekleme yapıldıktan sonra inventoryimizin içinde grup yaratılır.
+
+![AWX](../img/awx_group_add.png)
+
+Son olarak grubumuzun içinde host yaratılır.
+
+![AWX](../img/awx_host_add.png)
+
+AWX üzerinden yönetilmek istenen bütün hostlar ve host grupları aynı şekilde eklenir.
+
+##### Proje Ekleme
+
+Git Repo bilgileri girilerek proje eklenir. Eğer ssh kullanılacaksa **Credentials** tabından gerekli keylerin yaratılması ve scm credentials olarak girilmesi gerekmektedir.
 
 ![AWX](../img/awx_project_add.png)
+
+##### Görev Ekleme
+
+Son olarak playbookları çalıştırmak için görev şablonları tanımlanmalıdır. 
+**Templates** tabına girilerek aşağıdaki gibi görev tanımlanır ve run edilir. 
+
+![AWX](../img/awx_template_add.png)
+
+**Jobs** tabının altında çalışan görevler ve çıktıları aşağıdaki gibi gözlemlenir. 
+
+![AWX](../img/awx_job_result.png)
+
+**Önemli Not:** AWX ansible'ı farklı bir klasorde çalıştırdığı için ansible.cfg dosyasında **roles_path** değişkeninin ayarlanması gerekmektedir. 
+Proje eklendikten sonra /var/awx_projects klasörünün altından proje klasoru bulunarak roles_path editlenmelidir. 
+Örnek: /var/awx_projects/__12_ahtapot/roles
+
 
 Detaylı dokumana aşağıdaki linkten ulaşılabilir. 
 
