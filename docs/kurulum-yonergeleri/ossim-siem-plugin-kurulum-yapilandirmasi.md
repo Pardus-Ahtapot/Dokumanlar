@@ -39,6 +39,16 @@ Alien Vault OSSIM üzerinde özel plugin yazmak için aşağıdaki adımlar taki
 
     /etc/logrotate.d/
 
+**logrotate filei:**
+
+    /var/log/plugin_adi.log {
+        weekly
+        missingok
+        rotate 7
+        compress
+        notifempty
+    }
+
 ----
 5- Rsyslog servisi yeniden başlatılır.
 
