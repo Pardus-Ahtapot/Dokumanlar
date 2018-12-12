@@ -1,5 +1,4 @@
-
-# IDS
+﻿# IDS
 Ahtapot projesi kapsamında IDS işlevinin kurulumunu ve yönetimini sağlayan playbook’dur. “**/etc/ansible/playbooks/**” dizini altında bulunan “**ids.yml**” dosyasına bakıldığında, “**hosts**” satırında Ansible’a ait “**/etc/ansible/**” altında bulunan “**hosts**” dosyasında “**[surcata_ids]**” satırı altına yazılmış tüm sunucularda bu playbookun oynatılacağı belirtilir. “**sudo**” satırı ile çalışacak komutların sudo yetkisi ile çalışması belirlenir. “**vars_files**” satırı ids playbookunun değişken dosyalarını belirtmektedir. “**roles**” satırı altında bulunan satırlarda ise bu playbook çalıştığında “**base**”, “**ids**”, “**barnyard2**” ve “**pulledpork**”rollerinin çalışacağı belirtilmektedir.
 
 
@@ -933,61 +932,6 @@ suricata_unix_command:
 
 ```
 
-Eğer **IPS** sistemi güvenlik duvarı ile entegre kurulacaksa **FirewallBuilder** üzerinden ayarlamaların yapılması gerekmektedir. 
-
-**IPS** eğer **NAT/Router** modda kullanılacaksa şu adımların izlenmesi gerekir:
-
-**1-** Firewalls > Firwall_Obje > Policy > Çift Klik > Top Rule Set [ ] işareti kaldırılır. 
-**2-** Firewalls > Firwall_Obje > Sağ Klik > New Policy Rule Set denilerek yeni policy oluşturulur. Name: 00_SuricataNFQ [x] Top Rule Set işaretlenir. 
-**3-** Eklenen yeni Policy tablosuna 1 kural eklenir ve **Options** kısmında **logging off** seçilir. 
-**4-** Eklenen kuralın **Rule Options** kısmında aşağıdaki işlemler yapılır.
-**a-** Assume firewall is part of "any" for this rule only: **off** 
-**b-** Stateless Rule [ ] işareti kaldırılır. 
-**5-** Kuralın ACTION kısmında Custom seçilir ve aşağıdaki değer yazılır.
-
-**nproc** komutu ile cpu core sayısı belirlenir ve aşağıdaki kuraldaki uygun alana yazılır. 
-*/usr/bin/nproc* 
-Cpu Core Sayısı: 4 
-
-*-j NFQUEUE --queue-balance 1:4 --queue-bypass* 
-
-Eğer 1 tane cpu core var ise kural’ın ACTION kısmı aşağıdaki gibi yazılır. 
-
-*-j NFQUEUE --queue-num 1 --queue-bypass* 
-
-**Not:** queue-bypass parametresi ile suricata servisi çalışmıyor ise trafiği alttaki kurallardan işletmeye devam eder.
-
-**IPS** eğer **Bridge** modda kullanılacaksa şu adımların izlenmesi gerekir:
-
-**1-** Firewalls > Firwall_Obje > Policy > Çift Klik > Top Rule Set [ ] işareti kaldırılır. 
-**2-** Firewalls > Firwall_Obje > Sağ Klik > New Policy Rule Set denilerek yeni policy oluşturulur. Name: 00_SuricataNFQ [x] Top Rule Set işaretlenir. 
-**3-** Eklenen yeni Policy tablosuna 2 kural eklenir ve **Options** kısmında **logging off** seçilir. 
-**4-** Eklenen kuralların **Rule Options** kısmında aşağıdaki işlemler yapılır.
-**a-** Assume firewall is part of "any" for this rule only: **off**
-**b-** Stateless Rule [ ] işareti kaldırılır. 
-**5-** Eklenen kuralların Direction kısımları düzenlenir. 
-**a-** 1 nolu kuralın Direction’u **OUTBOUND** olarak ayarlanır. 
-**b-** 2 nolu kuralın Direction’u **INBOUND** olarak ayarlanır. 
-**6-** Kuralların ACTION kısmında Custom seçilir ve aşağıdaki değer yazılır.
-
-**nproc** komut ile cpu core sayısı belirlenir ve aşağıdaki kuraldaki uygun alana yazılır. 
-*/usr/bin/nproc* 
-Cpu Core Sayısı: 4 
-
-**a-** OUTBOUND ACTION 
-*-m physdev --physdev-in eth1 --physdev-out eth2 -j NFQUEUE --queue-bypass --queue-balance 1:4* 
-**b-** INBOUND ACTION 
-*-m physdev --physdev-in eth2 --physdev-out eth1 -j NFQUEUE --queue-bypass --queue-balance 1:4* 
-
-Eğer 1 tane cpu core var ise kural’ın ACTION kısmı aşağıdaki gibi yazılır. 
-
-**a-** *OUTBOUND ACTION -m physdev --physdev-in eth1 --physdev-out eth2 -j NFQUEUE --queue-bypass --queue-num 1* 
-**b-** *INBOUND ACTION -m physdev --physdev-in eth2 --physdev-out eth1 -j NFQUEUE --queue-bypass --queue-num 1* 
-
-Not: queue-bypass parametresi ile suricata servisi çalışmıyor ise trafiği alttaki kurallardan işletmeye devam eder.
-
-
-
 # Pulledpork
 
 Pulledpork rolü "**ids**" ve "**ips**" tarafından kullanılmaktadır.
@@ -1073,57 +1017,4 @@ snorby_mysql_user: snorby
 snorby_mysql_password: snorby
 snorby_mysql_host: localhost
 ```
-
-Kurulum tamamlandıktan sonra snorby’ye web erişim adresi kullanılarak bağlanılır. 
-
-**Snorby Web Adresi:** http://cihaz_ip_adresi:3000
-
-![IPS](../img/snorby1.png)
-
-**Dashboard** 
-**1-** Snorby menü opsiyonlarının bulunduğu alandır. Bu alanda yer alan menüleri kullanarak uyarı ve sensör listestelerine ulaşılabilir. Ayrıca Search kısmı kullanılarak detaylı arama yapılabilir. 
-**2-** Snorby’nin genel ayarları, imza sınıfları ve servis durumları gibi ayarların yapılabildiği alt menülere erişim sağlar. 
-**3-** Dashboard üzerinde görüntülenen verinin tarih filtresidir. 
-**4-** Uyarıların kiritiklik seviyesine göre istatistiklerinin gösterildiği alandır. Üzerine tıklanarak detaylarına ulaşılabilir. 
-**5-** Pasta ve zaman çizelgesi tiplerine göre bazı istatistiklerin yer aldığı alandır. 
-**6-** PDF dışa aktarma, zaman filtresi gibi opsiyonların bulunduğu alandır. 
-**7-** Sistemde yer alan ve en çok uyarı kaydı olan 5 sensör’ün listelendiği alandır. 
-**8-** Snorby sistemini en çok kullanan 5 kullanıcının listelendiği alandır. 
-**9-** En son kaydedilen farklı türkdeki 5 uyarı kaydının listelendiği alandır. 
-**10-** Uyarıların sınıflarına göre kategorize edilerek listelendiği alandır.
-
-**Events**
-Bütün saldırı uyarılarının görüntülendiği bölümdür.
-
-![IPS](../img/snorby2.png)
-
-**Uyarı Detayı**
-İlgili saldırı üzerine tıklanarak saldırı hakkında detay bilgiye ulaşılabilir.
-
-![IPS](../img/snorby3.png)
-
-**1-** Bu uyarı ile ilgili yapılabilecek işlemlerin opsiyonlarının bulunduğu alandır.
-**2-** IP başlık bilgilerinin yer aldığı alandır. IP Adresi üzerine tıklayarak iIP adresine isim verebilir, bu IP adresi ile ilgili whois sorgusu gerçekleştirilebilir veya uyarı veri tabanındaki geçmiş olayları aranabilir.
-**3-** İmzaya ilişkin bilgilerin bulunduğu alandır. Bu alandaki Query signature Database butonu ile imzanın referans URL adresine erişilebilir detayına bakılabilir. Ayrıca View Rule opsyionu ile imzanın içeriği görüntülenebilir.
-**4-** Referans Url adresinin bulunduğu bölümdür.
-**5-** Uyarıya ilişkin trafiğin içeriğinin görüntülendiği alandır. Bu alanda ki içerik HEX formatında görüntülenebileceği gibi ASCII formatında da görüntülenebilir.
-**6-** Uyarıya ilişkin yönetici notlarının eklendiği alandır.
-
-**Sensors** 
-Veri tabanındaki bütün sensorlerin yer aldığı alandır. Bu alandaki View events butonu kullanılarak sadece ilgili sensor’ün uyarı kayıtlarına ulaşılabilir.
-![IPS](../img/snorby4.png)
-
-**Search**
-Bu bölümde veri tabanındaki uyarılar arasından birden fazla arama kriteri verilerek arama yapılabilir.
-![IPS](../img/snorby5.png)
-
-
-**Yedekli Kurulum** 
-Yedekli Saldırı tespit ve önleme sistemi kurulumu NAT/Router ve Bridge mod olarak yapılabilir. 
-
-Bridge Mode Yedekli yapılandırma için aşağıdaki keepalived Ayar dosyası uygulanır ve Bridge inteface yapılandırması düzenlenir. Bridge mode yedekli kurulumda iki cihaz arasında Özel bir HA port kullanılmalıdır. Yönetim poru ile sistem toplamda 4 interface ile yapılandırılmalıdır.
-
-**Örnek Topoloji**
-
-![IPS](../img/ipsha.png)
 
