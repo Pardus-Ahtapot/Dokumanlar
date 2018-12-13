@@ -59,6 +59,7 @@ pages:
     - 'Sistem Bütünlüğü' : 'dizayn/sistem-butunlugu.md'
     - 'AlienVault OTX Verilerinin Çevrimdışı OSSIM Cihazlarında Kullanımı' : 'dizayn/otx.md'
     - 'Standalone Rolü ve Dizaynı' : 'dizayn/standalone-dizayn.md'
+    - 'Firewall Builder Yetki Mekanizması' : 'dizayn/fwb.md'
 - "GEREKLİ DOSYALAR":
     - 'Firewall Builder Konfigürasyon Dosyası': 'dosyalar/gdys-fwb.md'
 - "HAKKINDA": hakkinda.md
