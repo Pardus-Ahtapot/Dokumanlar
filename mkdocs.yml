@@ -57,6 +57,7 @@ pages:
     - 'Ahtapot Projesinde Sistemlere Kurulan Paketler ve Bağımlılıkları' : 'dizayn/paketler.md'
     - 'Sistem Bütünlüğü' : 'dizayn/sistem-butunlugu.md'
     - 'AlienVault OTX Verilerinin Çevrimdışı OSSIM Cihazlarında Kullanımı' : 'dizayn/otx.md'
+    - 'Standalone Rolü ve Dizaynı' : 'dizayn/standalone-dizayn.md'
 - "GEREKLİ DOSYALAR":
     - 'Firewall Builder Konfigürasyon Dosyası': 'dosyalar/gdys-fwb.md'
 - "HAKKINDA": hakkinda.md
