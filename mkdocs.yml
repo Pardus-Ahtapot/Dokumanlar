@@ -9,6 +9,7 @@ pages:
     - 'Sanal Özel Ağ Sistemi (VPN) Kurulumu': 'kurulum-yonergeleri/vpn-kurulum.md'
     - 'Güvenli Internet Erişim Sistemi (PROXY) Kurulumu': 'kurulum-yonergeleri/proxy-kurulum.md'
     - 'Siber Olay, Açıklık, Risk İzleme ve Yönetim Sistemi Kurulumu': 'kurulum-yonergeleri/siem-kurulum.md'
+    - 'IDS/IPS Kurulumu' : 'kullanim-klavuzlari/ids-ips.md'
     - 'Antispam Sistemi Kurulumu': 'kurulum-yonergeleri/antispam-kurulum.md'
     - 'SKS Sistemi Kurulumu': 'kurulum-yonergeleri/sks-kurulum.md'
     - 'Freshclam-Mirror Sistemi Kurulumu': 'kurulum-yonergeleri/freshclam-mirror-kurulum.md'
@@ -57,6 +58,8 @@ pages:
     - 'Ahtapot Projesinde Sistemlere Kurulan Paketler ve Bağımlılıkları' : 'dizayn/paketler.md'
     - 'Sistem Bütünlüğü' : 'dizayn/sistem-butunlugu.md'
     - 'AlienVault OTX Verilerinin Çevrimdışı OSSIM Cihazlarında Kullanımı' : 'dizayn/otx.md'
+    - 'Standalone Rolü ve Dizaynı' : 'dizayn/standalone-dizayn.md'
+    - 'Firewall Builder Yetki Mekanizması' : 'dizayn/fwb.md'
 - "GEREKLİ DOSYALAR":
     - 'Firewall Builder Konfigürasyon Dosyası': 'dosyalar/gdys-fwb.md'
 - "HAKKINDA": hakkinda.md
