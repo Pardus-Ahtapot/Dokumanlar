@@ -171,17 +171,17 @@ Bu dokümanda, Ahtapot Projesinde Sistemlere Kurulan Paketler ve Bağımlılıkl
         
         * Dependencies:
         
-        |Paket Listesi        |                  |                 |               |
-        |---------------------|------------------|-----------------|---------------|
-        |ansible|docker-ce-ahtapot|python|awx-images| 
-        ||nginx||| 
+        |Paket Listesi        |                  |                 |
+        |---------------------|------------------|-----------------|
+        |ansible|docker-ce-ahtapot|python|
+        |nginx|awx-images||
     
     * awx-images: awx icin gerekli containerı yukler.
         * Dependencies:
 
-        |Paket Listesi        |                  |                 |               |
-        |---------------------|------------------|-----------------|---------------|
-        |docker-ce-ahtapot|||| 
+        |Paket Listesi        |
+        |---------------------|
+        |docker-ce-ahtapot|
 
 
       
