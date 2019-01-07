@@ -328,7 +328,7 @@ Bu dokümanda, Ahtapot Projesinde Sistemlere Kurulan Paketler ve Bağımlılıkl
         |Paket Listesi        |                  |                 |               |
         |---------------------|------------------|-----------------|---------------| 
         |libc6|libncurses5|libtinfo5|mtr|
-|        suidmanager||||
+        |suidmanager||||
 
     * Iptstate : Güvenlik duvarı anlık izleme için yüklenmiş pakettir.
     
@@ -594,7 +594,7 @@ Bu dokümanda, Ahtapot Projesinde Sistemlere Kurulan Paketler ve Bağımlılıkl
 
     * uwsgi-plugin-python
 
-               * Dependencies:
+        * Dependencies:
 
         |Paket Listesi        |                  |                                |
         |---------------------|------------------|--------------------------------| 
@@ -626,6 +626,7 @@ Bu dokümanda, Ahtapot Projesinde Sistemlere Kurulan Paketler ve Bağımlılıkl
         |nginx-full|nginx-light|nginx-extras||
 
     * ahtapot-ocs-wb : Ocswb uygulamasını barındıran pakettir.
+        
         * Dependencies:
 
         |Paket Listesi        |                           |
@@ -633,6 +634,7 @@ Bu dokümanda, Ahtapot Projesinde Sistemlere Kurulan Paketler ve Bağımlılıkl
         |python|python-pymysql|
 
     * ahtapot-ocs-wb-alarm : Ocswb alarm uygulamasını barındıran pakettir.
+        
         * Dependencies:
 
         |Paket Listesi        |                  |
