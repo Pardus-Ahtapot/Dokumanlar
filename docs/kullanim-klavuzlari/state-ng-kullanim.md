@@ -11,14 +11,26 @@ State-ng, uç birimlerin yapılandırmalarını periyodik olarak çekmesi için 
 #### State-ng Rolü Değişkenleri
 Bu roldeki değişkenler “**/etc/ansible/roles/state-ng/vars/**” dizini altında bulunan **state-ng.yml** dosyasında belirtilmiştir. Değişken bilgileri aşağıdaki gibidir;
 
-- "**ansible_git_url**" değişkeni uç birimin pull ediceği repoyu belirtir. Uç birim ile git reposu arasında ssh yapılandırılması yapılmalıdır. "**branch**" değişkeni hangi git branch'ının kullanılacağını belirtir. "**directory**" değişkeni ansible resosunun nereye kaydedilmesi gerektiğini belirtir. Bu klasörun MYS cihazındaki ile aynı olması gerektiğine dikkat ediniz. "**cron_file**" cron yapılandırmalarının kaydedileceği dosyayı belirtir. "**cron_minute**" cron dakika yapılandırması, "**cron_hour**" cron saat yapılandırması, "**cron_day**" cron gün yapılandırmasıdır. 
+- "**ansible_git_url**" değişkeni uç birimin pull ediceği ansible reposunu belirtir. 
+"**gdys_git_url**" değişkeni uç birimin pull ediceği gdys reposunu belirtir. Firewall cihazları bu repodan değişiklik kontrolu yapmaktadır.
+Uç birim ile git reposu arasında ssh yapılandırılması yapılmalıdır. 
+"**branch**" değişkeni hangi git branch'ının kullanılacağını belirtir. 
+"**ansible_directory**" ve "**gdys_directory**"değişkenleri ansible ve gdys repolarının nereye kaydedilmesi gerektiğini belirtir.
+ Anbible için bu klasörun MYS cihazındaki ile aynı olması gerektiğine dikkat ediniz. 
+ "**cron_file**" cron yapılandırmalarının kaydedileceği dosyayı belirtir. 
+ "**cron_minute**" cron dakika yapılandırması, 
+ "**cron_hour**" cron saat yapılandırması, 
+ "**cron_day**" cron gün yapılandırmasıdır.
+ "**pull_hosts**" değişkenine eklenen hostlar yapılandırmalarını otomatik olarak cron ile alır. Öntanımlı olarak kapalıdır.  
+
 
 ```
----  
 state_ng:
   ansible_git_url: "ahtapotops@10.0.0.200:/srv/git/ansible.git"
+  gdys_git_url: "ahtapotops@10.0.0.200:/srv/git/gdys.git"
   branch: "master"
-  directory: "/etc/ansible"
+  ansible_directory: "/etc/ansible"
+  gdys_directory: "/home/ahtapotops/gdys"
   mys:
     cron_file: "/etc/cron.d/ahtapot-stateng"
     cron_minute: "0"
@@ -26,7 +38,12 @@ state_ng:
     cron_day: "*"
   host:
     cron_file: "/etc/cron.d/ahtapot-stateng"
-    cron_minute: "0"
     cron_hour: "*/4"
     cron_day: "*"
+
+  #pull_hosts:
+    #- host1
+    #- host2
+    #- host3
+
 ```

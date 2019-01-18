@@ -70,30 +70,44 @@ Now try logging into the machine, with:   "ssh 'kullanici@gitlabsunucuadresi'"
 and check to make sure that only the key(s) you wanted were added.
 ``` 
 
+* Gitlab kullanılıyor ise gitlab arayüzünden de eklenebilir. 
+
 Ardından state-ng sistemi ile ilgili aşağıda tanımlanmış değişkenler açıklamalarda belirtilen şekilde uygun değerlerle doldurulur.
 
 #### Uç Sistemlere Değişen Yapılandırmaların Otomatik Olarak Yollaması
 * Her bir commit sonrası değişen yapılandırmalar uç sistemlere merkezden aktarılmak isteniyorsa aşağıdaki komut MYS makinasında **.git/hooks/post-commit** dosyasına eklenerek her commit sonrası otomatik bir şekilde çağırılır.
 ```
-/usr/sbin/ahtapot_stateng.py --push
+/usr/sbin/ahtapot_stateng.py --smart-push
 ```
 * Her push sonrası state-ng hostlarının yapılandırmalarını çekmesi isteniyorsa aşağıdaki gibi bir alias eklenerek bu işlem yapılabilmektedir. 
 ```
-$ git config alias.xpush '!git push $1 $2 && ansible-playbook /etc/ansible/playbooks/state-ng.yml'
+$ git config alias.xpush '!git push $1 $2 && ansible-playbook /etc/ansible/playbooks/state-ng.yml --tags smarttrigger'
 ```
 Daha sonra push yapılmak istendiğinde **git push** yerine **git xpush** çağırılarak sistemler uyarılır ve yapılandırmaları çekerler. 
 
 #### State-ng Rolü Değişkenleri
 Bu roldeki değişkenler “**/etc/ansible/roles/state-ng/vars/**” dizini altında bulunan **state-ng.yml** dosyasında belirtilmiştir. Değişken bilgileri aşağıdaki gibidir;
 
-- "**ansible_git_url**" değişkeni uç birimin pull ediceği repoyu belirtir. Uç birim ile git reposu arasında ssh yapılandırılması yapılmalıdır. "**branch**" değişkeni hangi git branch'ının kullanılacağını belirtir. "**directory**" değişkeni ansible resosunun nereye kaydedilmesi gerektiğini belirtir. Bu klasörun MYS cihazındaki ile aynı olması gerektiğine dikkat ediniz. "**cron_file**" cron yapılandırmalarının kaydedileceği dosyayı belirtir. "**cron_minute**" cron dakika yapılandırması, "**cron_hour**" cron saat yapılandırması, "**cron_day**" cron gün yapılandırmasıdır. 
+- "**ansible_git_url**" değişkeni uç birimin pull ediceği ansible reposunu belirtir. 
+"**gdys_git_url**" değişkeni uç birimin pull ediceği gdys reposunu belirtir. Firewall cihazları bu repodan değişiklik kontrolu yapmaktadır.
+Uç birim ile git reposu arasında ssh yapılandırılması yapılmalıdır. 
+"**branch**" değişkeni hangi git branch'ının kullanılacağını belirtir. 
+"**ansible_directory**" ve "**gdys_directory**"değişkenleri ansible ve gdys repolarının nereye kaydedilmesi gerektiğini belirtir.
+ Anbible için bu klasörun MYS cihazındaki ile aynı olması gerektiğine dikkat ediniz. 
+ "**cron_file**" cron yapılandırmalarının kaydedileceği dosyayı belirtir. 
+ "**cron_minute**" cron dakika yapılandırması, 
+ "**cron_hour**" cron saat yapılandırması, 
+ "**cron_day**" cron gün yapılandırmasıdır.
+ "**pull_hosts**" değişkenine eklenen hostlar yapılandırmalarını otomatik olarak cron ile alır. Öntanımlı olarak kapalıdır.  
+
 
 ```
----  
 state_ng:
   ansible_git_url: "ahtapotops@10.0.0.200:/srv/git/ansible.git"
+  gdys_git_url: "ahtapotops@10.0.0.200:/srv/git/gdys.git"
   branch: "master"
-  directory: "/etc/ansible"
+  ansible_directory: "/etc/ansible"
+  gdys_directory: "/home/ahtapotops/gdys"
   mys:
     cron_file: "/etc/cron.d/ahtapot-stateng"
     cron_minute: "0"
@@ -101,9 +115,14 @@ state_ng:
     cron_day: "*"
   host:
     cron_file: "/etc/cron.d/ahtapot-stateng"
-    cron_minute: "0"
     cron_hour: "*/4"
-    cron_day: "*" 
+    cron_day: "*"
+
+  #pull_hosts:
+    #- host1
+    #- host2
+    #- host3
+
 ```
 
 İlgili değişkenler ayarlandıktan sonra aşağıdaki komut ile state-ng yapılandırması aktarılır.
