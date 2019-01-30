@@ -517,7 +517,7 @@ base_ahtapot_directories:
 Bu rol Ahtapot projesi kapsamındaki Ansible görevini üstlenecek sunucularda çalıştırılan Ansible ayarlamaların yapıldığı roldür.  Bu rolün görevleri:
 
     * Ansible sunucusu üzerinde bulunması gereken paketlerin kurulum ve denetimleri: 
-	git,ansible, python-requests, ahtapot-gkts, rsync
+	git,ansible, python-requests, ahtapot-gkts, rsync, awx
 
     * Ansible sunucusu yapılması gereken genel işlemler:
 	   * Ansible’da çalışalıcak dizin ve alt dizinlerin oluşturulması
@@ -633,6 +633,85 @@ gkts:
     port: "22"
     logseverity: "local5.notice"
 ```
+
+* "**awx.yml**" ansible'ı web arayüz aracılığı ile yönetmeyi sağlayan awx paketinin değişkenlerinin belirlendiği dosyadır. "**awx_ssl_port**" awx arayüzüne bağlanılacak port, "**awx_ssl_country**" awx ssl sertifika ülkesi, "**awx_ssl_state**" awx ssl sertifika semti, "**awx_ssl_locality**" awx ssl sertifika şehri, "**awx_ssl_organization**" awx ssl sertifika organizasyonu, "**awx_ssl_organizationalunit**" awx ssl sertifika organizasyon birimi, "**awx_ssl_commonname**" awx ssl sertifika ismi olarak girilmelidir. 
+
+```
+awx_ssl_port: 443
+awx_ssl_country: TR
+awx_ssl_state: Cankaya
+awx_ssl_locality: Ankara
+awx_ssl_organization: Labris
+awx_ssl_organizationalunit: Arge
+awx_ssl_commonname: ahtapot
+
+```
+
+#### AWX
+
+AWX, ansible playbooklarını web üzerinden yönetmeye yarayan arayüzdür. 
+Yukarıda belirtildiği gibi parametreler belirlenip playbook çalıştırıldığında yüklenmiş olur.
+
+Playbookların çalışabilmesi için gerekli **Credentials** ve **Inventory** lerin oluşturulup projenin aktarılması gerekmektedir. Aşağıda bu işlemler birer örnekle anlatılmıştır. 
+
+##### Login 
+AWX'e erişmek için tarayıcıdan "**https://ansible_fqdn**" adresine girilir(443 dışında bir port belirtilmiş ise port bilgisi de girilmelidir). Ekrana aşağıdaki giriş ekranı gelecektir. 
+
+Öntanımlı olarak giriş için "**admin**" kullanıcı adı ve şifre olarak "**password**" kullanılır. Giriş bilgilerini güvenlik amacıyla değiştirmeniz önerilir.
+ 
+![AWX](../img/awx_login.png)
+
+
+##### Credential Ekleme  
+
+**Credentials** tabına girilerek credentials ekleme ekranı açılır. 
+Credentials type "**Machine**" seçilerek mys makinasının ssh anahtarı verilir. 
+Bu dosya default olarak **~/.ssh/id_rsa** uzantısındadır. Kullanıcı **ahtapotops** verilir.
+Eğer şifre ile bağlanılacak ise anahtar yerine şifre verilmelidir. 
+
+![AWX](../img/awx_credentials_add.png)
+
+##### Inventory Ekleme
+
+**Inventories** tabına girilerek inventory eklenir. 
+
+![AWX](../img/awx_inventory_add.png)
+
+Ekleme yapıldıktan sonra inventoryimizin içinde grup yaratılır.
+
+![AWX](../img/awx_group_add.png)
+
+Son olarak grubumuzun içinde host yaratılır.
+
+![AWX](../img/awx_host_add.png)
+
+AWX üzerinden yönetilmek istenen bütün hostlar ve host grupları aynı şekilde eklenir.
+
+##### Proje Ekleme
+
+Git Repo bilgileri girilerek proje eklenir. Eğer ssh kullanılacaksa **Credentials** tabından gerekli keylerin yaratılması ve scm credentials olarak girilmesi gerekmektedir.
+
+![AWX](../img/awx_project_add.png)
+
+##### Görev Ekleme
+
+Son olarak playbookları çalıştırmak için görev şablonları tanımlanmalıdır. 
+**Templates** tabına girilerek aşağıdaki gibi görev tanımlanır ve run edilir. 
+
+![AWX](../img/awx_template_add.png)
+
+**Jobs** tabının altında çalışan görevler ve çıktıları aşağıdaki gibi gözlemlenir. 
+
+![AWX](../img/awx_job_result.png)
+
+**Önemli Not:** AWX ansible'ı farklı bir klasorde çalıştırdığı için ansible.cfg dosyasında **roles_path** değişkeninin ayarlanması gerekmektedir. 
+Proje eklendikten sonra /var/awx_projects klasörünün altından proje klasoru bulunarak roles_path editlenmelidir. 
+Örnek: /var/awx_projects/__12_ahtapot/roles
+
+
+Detaylı dokumana aşağıdaki linkten ulaşılabilir. 
+
+https://docs.ansible.com/ansible-tower/latest/html/userguide/overview.html
 
 #### Gitlab
 
@@ -940,7 +1019,7 @@ firewallbuilder_packages:
 #        state:
 ```
 
-* "**fwbuilder.yml**" dosyası içerisindeki “**fix**” fonksiyonu, FirewallBuilder tarafında  oluşan xlock problemini çözmek üzere oluşturulmuş fonksiyondur. "**bash**" fonksiyonu ise "**/etc/ansible/roles/firewallbuilder/templates**" dizini altında bulunan "**fwbuilder-ahtapot.sh.j2**" scripti "**/etc/profile.d/**" dizini altına yerleştirir ve  “**owner**”, “**group**” ve “**mode**” ile bu dosyanın sahibi olan kullanıcı, grup ve hakları belirlenir.
+* "**fwbuilder.yml**" dosyası içerisindeki “**fix**” fonksiyonu, FirewallBuilder tarafında  oluşan xlock problemini çözmek üzere oluşturulmuş fonksiyondur. "**bash**" fonksiyonu ise "**/etc/ansible/roles/firewallbuilder/templates**" dizini altında bulunan "**fwbuilder-ahtapot.sh.j2**" scripti "**/etc/profile.d/**" dizini altına yerleştirir ve  “**owner**”, “**group**” ve “**mode**” ile bu dosyanın sahibi olan kullanıcı, grup ve hakları belirlenir. "**fwb_editable_objects**" değişkeni ise, hangi firewallbuilder kurulumunun hangi güvenlik duvarlarını düzenleyebileceğinin belirtildiği değişkendir. "**/etc/ansible/hosts**" dosyasında bulunan her firewallbuilder tanımı için burada da bir girdi bulunmak zorundadır. Aşağıdaki örnek dosyada "**FWB.DOMAIN**" ismine sahip firewallbuilder sunucusu, sadece "**FW.DOMAIN**" isimli güvenlik duvarı için yazma yetkisine sahiptir. "**FWB2.DOMAIN**" ismine sahip firewallbuilder sunucusu ise tüm güvenlik duvarları için yazma yetkisine sahiptir (Altında herhangi bir objects tanımı olmayan bunun gibi sunucular tüm güvenlik duvarlarını düzenleme yetkisine sahip olmaktadır).
 
 ```
 # Guvenlik Duvari Kurucusunun degiskenlerini iceren dosyadir.
@@ -959,6 +1038,11 @@ firewallbuilder:
             owner: "root"
             group: "root"
             mode: "0755"
+    fwb_editable_objects:
+        FWB.DOMAIN:
+            - objects:
+                - FW.DOMAIN
+        FWB2.DOMAIN:
 ```
 
 * “**directory.yml**” dosyası içerisinde FirewallBuilder sunucusu üzerinde oluşturulacak dizinler ve bu dizinlerin hakları ve erişim yetkileri belirtilmektedir. "**directory02**" onay mekanizmasina gitmeden test scriptlerinin konumlandırıldığı dizini belirtmektedir.

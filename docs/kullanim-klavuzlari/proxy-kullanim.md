@@ -4,8 +4,8 @@
 
 [TOC]
 
-####Vekil Sunucu ve MYS üzerinde Engelleme İşlemleri
-#####Vekil Sunucu Üzerinde URL Engelleme
+#### Vekil Sunucu ve MYS üzerinde Engelleme İşlemleri
+##### Vekil Sunucu Üzerinde URL Engelleme
 
 * Bir URL adresi engellenmek istendiği zaman vekil sunucu üzerinde, “**/etc/dansguardian/lists**” dizini altına gidilir. Engellenmek istenilen URL adresi başında “**http://**” bulundurmadan; “**/etc/dansguardian/lists/bannedurllist_local**” dosyası içerisine yazılır. 
 ```
@@ -17,11 +17,11 @@ haberturk.com/ekonomi
 
 ![Proxy](../img/proxy1.jpg)
 
-#####MYS ile Vekil Sunucu Üzerinde URL Engelleme
+##### MYS ile Vekil Sunucu Üzerinde URL Engelleme
 
 * Bir URL adresi engellenmek istendiği zaman mys üzerinde, “**roles/squid/templates/dansguardian/bannedurllist**” dizini altına gidilir. Bu dizin içerisinde bulunan "**bannedurllist.j2**" dosyası düzenlenir. Engellenmek istenilen URL adresi başında “**http://**” bulundurmadan; “**bannedurllist.j2**” dosyası içerisine yazılır.
  
-#####Vekil Sunucu Üzerinde Regex ile URL Engelleme
+##### Vekil Sunucu Üzerinde Regex ile URL Engelleme
 
 * Bir URL adresi regex paternı ile engellenmek istendiği zaman, “**/etc/dansguardian/lists**” dizini altına gidilir.  URL içerisinde engellenmek istenilen kelimeler, engellenmek istenilen URL regex patternı “**/etc/dansguardian/lists/bannedregexpurllist**” dosyası içerisine yazılır. Aşağıdaki örnekte “**testkelimesi**”  ve “**cyber**” kelimesi içeren bütün url adreslerini engelleyecektir.  İkinci satırda kullanılan regex paternı ile “**im.haberturk.com**”  adresi üzerinde belirtilen dosya türlerinin hepsi engellenecektir. Bu şekilde siteye gidildiğinde web sitesinde bulunan ve engellenmesi istenen uzantıya ait resimlerin engellediği gözlemlenebilir.
 
@@ -31,7 +31,7 @@ squid:~ahtapotops$ vi /etc/dansguardian/lists/bannedregexpurllist
 (testkelimesi|cyber)
 (im.haberturk.com)+.*(\.jpg|\.wmv|\.mpg|\.mpeg|\.gif|\.mov)
 ```
-#####Vekil Sunucu Üzerinde Domain Engelleme
+##### Vekil Sunucu Üzerinde Domain Engelleme
 
 * Bir domain adresi engellenmek istendiği zaman, “**/etc/dansguardian/lists**” dizini altına gidilir. Engellenmek istenilen domain adresi; “**/etc/dansguardian/lists/bannedsitelist_local**” dosyası içerisine yazılır. Daha sonra engellenmiş olan domain test edilir.
 ```
@@ -41,12 +41,12 @@ haberturk.com
 ```
 ![Proxy](../img/proxy2.jpg)
 
-#####Mys ile Vekil Sunucu Üzerinde Domain Engelleme
+##### Mys ile Vekil Sunucu Üzerinde Domain Engelleme
 
 * Bir domain adresi engellenmek istendiği zaman mys üzerinde, “**roles/squid/templates/dansguardian/bannedsitelist**” dizini altına gidilir. Bu dizin içerisindeki "**bannedsitelist.j2**" dosyası düzenlenir. Engellenmek istenilen domain adresi yazılarak "**bannedsitelist.j2**" dosyası kaydedilir. Daha sonra engellenmiş olan domain test edilir.
 
-####Vekil Sunucu Üzerinde İstisna İşlemleri
-#####Vekil Sunucu Üzerinde Domain(Whitelisting) İstinası Tanımlama
+#### Vekil Sunucu Üzerinde İstisna İşlemleri
+##### Vekil Sunucu Üzerinde Domain(Whitelisting) İstinası Tanımlama
 
 * Bir domain adresi whitelisting(istisna) edilmek istendiği zaman, “**/etc/dansguardian/lists**” dizini altına gidilir. İstisna olarak tanımlanmak istenilen domain adresi başında “**http://**” bulundurmadan; “**/etc/dansguardian/lists/exceptionsitelist_local**” dosyası içerisine yazılır. Daha sonra whitelist'e eklenmiş olan domain test edilir, erişimin sağlandığı görülecektir.
 ```
@@ -55,11 +55,11 @@ squid:~ahtapotops$ vi /etc/dansguardian/lists/exceptionsitelist_local
 haberturk.com
 ```
 
-#####Mys ile Vekil Sunucu Üzerinde Domain(Whitelisting) İstinası Tanımlama
+##### Mys ile Vekil Sunucu Üzerinde Domain(Whitelisting) İstinası Tanımlama
 
 * Bir domain adresi whitelisting(istisna) edilmek istendiği zaman mys üzerinde, “**roles/squid/templates/dansguardian/exceptionsitelist**” dizini altına gidilir. Bu dizin içerisinde bulunan "**exceptionsitelist.j2**" dosyası düzenlenir. İstisna olarak tanımlanmak istenilen domain adresi başında “**http://**” bulundurmadan; “**exceptionsitelist.j2**” dosyası içerisine yazılır. Daha sonra whitelist'e eklenmiş olan domain test edilir, erişimin sağlandığı görülecektir.
 
-#####Vekil Sunucu Üzerinde URL(Whitelisting) İstinası Tanımlama
+##### Vekil Sunucu Üzerinde URL(Whitelisting) İstinası Tanımlama
 
 * Bir URL adresi whitelisting(istisna) edilmek istendiği zaman, “**/etc/dansguardian/lists**” dizini altına gidilir. Engellenmek istenilen domain adresi başında “**http://**” bulundurmadan; “**/etc/dansguardian/lists/exceptionurllist_local**” dosyası içerisine yazılır ve kaydedilir. Daha sonra whiteliste eklenmiş olan adres test edilir, erişimin sağlandığı görülecektir.
 ```
@@ -67,11 +67,11 @@ squid:~ahtapotops$ vi /etc/dansguardian/lists/exceptionurllist_local
 
 haberturk.com/ekonomi
 ```
-#####Mys ile Vekil Sunucu Üzerinde URL(Whitelisting) İstinası Tanımlama
+##### Mys ile Vekil Sunucu Üzerinde URL(Whitelisting) İstinası Tanımlama
 
 * Bir URL adresi whitelisting(istisna) edilmek istendiği zaman mys üzerinde, “**roles/squid/templates/dansguardian/exceptionurllist**” dizini altına gidilir. Bu dizin içerisindeki "**exceptionurllist.j2**" dosyası düzenlenir. İstisna olarak tanımlanmak istenilen domain adresi başında “**http://**” bulundurmadan; “**exceptionurllist.j2**” dosyası içerisine yazılır ve kaydedilir. Daha sonra whiteliste eklenmiş olan adres test edilir, erişimin sağlandığı görülecektir.
 
-#####Vekil Sunucu Üzerinde URL Regex (Whitelisting) İstinası Tanımlama
+##### Vekil Sunucu Üzerinde URL Regex (Whitelisting) İstinası Tanımlama
 
 * Bir URL adresi regex paternı ile whitelisting(istisna) edilmek istendiği zaman, “**/etc/dansguardian/lists**” dizini altına gidilir. Whitelist'e eklenilmek istenilen regex paterni; “**/etc/dansguardian/lists/exceptionregexpurllist**” dosyası içerisine yazılır. Daha sonra whiteliste eklenmiş olan url paterni test edilir, bu kelimeleri içeren adreslerin erişim sağlandığı görülecektir.
 ```
@@ -80,7 +80,7 @@ squid:~ahtapotops$ vi /etc/dansguardian/lists/exceptionregexpurllist
 ekonomi
 testkelimesi
 ```
-####Vekil Sunucu Üzerine Otomatik Engelleme Listesinin Çekilmesi
+#### Vekil Sunucu Üzerine Otomatik Engelleme Listesinin Çekilmesi
 
 * “**Shalla Secure Services**”  üzerinden indirilen blacklist bir script tarafından otomatik/yarı otomatik olarak internet üzerinden güncelleme yapabilmektedir. “**Updshalla**” isminde üretilen script “**shallalist.de**” adresi üzerinden en son listeyi indirip, dansguardian üzerinde güncelleme yapmaktadır. Updshalla scripti : “/etc/dansguardian/updshalla” dizininde bulunmaktadır.
 ```
@@ -116,7 +116,7 @@ drwxr-xr-x  3 root root  4096 Jun 23 15:10 tmp
 squid:~ahtapotops$ bash /etc/dansguardian/updshalla
 ```
 
-####Vekil Sunucu Kullanım İstatisklerinin Raporlanması
+#### Vekil Sunucu Kullanım İstatisklerinin Raporlanması
 
 * SARG (squid analysis report generator) Web(Örün) arayüzü ile son kullanıcı için hazırlanmış proxy raporu görülebilir. Web arayüzüne;  “**http://squid.fqdn.adresi/squid-reports**” adresine gidilerek ulaşılabilir.
 
@@ -125,7 +125,7 @@ squid:~ahtapotops$ bash /etc/dansguardian/updshalla
 
 * Açılan ekranda kullanıcılara ait çalışma raporu görüntülenebilmektedir. İhtiyaç doğrultusunda ana ekranda çıkan rapor çeşitlerinden bir tanesi seçilerek, gerekli rapor görüntülenebilir.
 
-####Vekil Sunucu Dosya Yükleme Engelleme / Sınırlandırma
+#### Vekil Sunucu Dosya Yükleme Engelleme / Sınırlandırma
 * Dansguardian konfigurasyon dosyası içerisinde bulunan; “**maxuploadsize**” özelliği ile engelleme ya da sınırlandırma yapılabilrmektedir. “**Maxuploadsize = -1**” Bu özelliği devre dışı bırakır. “**Maxuploadsize = 0**” Tüm upload işlemlerini bloklar.
 ```
 squid:~ahtapotops$ vi /etc/dansguardian/dansguardian.conf
@@ -141,11 +141,11 @@ maxuploadsize = 0
 * Yükleme işlemine hız sınırlandırması yapılmak istendiğinde **Kilobayt0** cinsinden sınırlandırılma getirilecek olan hız  “**maxuploadsize**” parametresine yazılır. Örneğin
 “**Maxuploadsize = 512**” 512kb üzeri dosyaların upload edilmesini bloklar.
 
-####Mys ile Vekil Sunucu Üzerinde Dosya Yükleme Engelleme / Sınırlandırma
+#### Mys ile Vekil Sunucu Üzerinde Dosya Yükleme Engelleme / Sınırlandırma
 
 * Gitlab arayüzünden mys reposuna erişilerek burada bulunan “**roles/squid/vars**” dizini altında değişkenleri barındıran “**dansguardian.yml**” dosyası üzerinde “Dansguardian yapilandirmasini belirtmektedir.” başlığı altında belirtilen “**maxuploadsize**” özelliği ile engelleme ya da sınırlandırma yapılabilmektedir. “**maxuploadsize = -1**” Bu özelliği devre dışı bırakır. “**maxuploadsize = 0**” Tüm upload işlemlerini bloklar. Burada belirtilen "**maxuploadsize**" özelliği playbook oynatıldığında dansguardianın konfigürasyon dosyasına yazılır.
 * Yükleme işlemine hız sınırlandırması yapılmak istendiğinde **Kilobayt0** cinsinden sınırlandırılma getirilecek olan hız  “**maxuploadsize**” parametresine yazılır.
-####Vekil Sunucu Erişim Talebi Yapılması
+#### Vekil Sunucu Erişim Talebi Yapılması
 
 * Yanlış engellendiği değerlendirilen web sayfası için izin isteme talebini oluşturacak **ahtapot-pwlm** uygulaması, Ansible playbook ile yapılandırılması yapılan proxy paketi içerisinde kurulmaktadır.
 
@@ -175,7 +175,9 @@ maxuploadsize = 0
 
 ![Pwlm](../img/pwlm04.png)
 
-####Mys ile Vekil Sunucu Kullanıcı Doğrulama Yapılandırması
+#### Mys ile Vekil Sunucu Kullanıcı Doğrulama Yapılandırması
+
+##### Doğrulamanın LDAP ile Yapılması
 
 * Gitlab arayüzünden mys reposuna erişilerek burada bulunan “**roles/squid/vars**” dizini altında değişkenleri barındıran “**squid.yml**” dosyası üzerinde “**squid yapilandirmasini belirtmektedir.**” başlığı altında belirtilen “**ldaphost:**” satırına ldap sunucusunun **FQDN** bilgisi, “**ldapdomain:**” satırına ise ldap makinesine ldap uygulmasını kurarken belirlenmiş domain bilgisi girilir. 
 
@@ -198,6 +200,61 @@ squid:
         domain: "dc=ulakbim,dc=com"
     http_port: "3128"
 ```
+
+##### Doğrulamanın AD ile Yapılması
+
+* AD sunucusu üzerinde Group Policy ayarlanır. Group Policy Management açılır Default Domain Policy düzenlenir veya yeni bir GPO oluşturulur.
+```
+Default Domain Policy > Edit
+Computer Configuration > Policies > Windows Settings > Security Settings > Local Policies > Security Options
+Network Security: Lan Manager Authentication Level > Edit
+Checked[x] Define This policy setting
+Select: Send LM & NTLM -use NTLMv2 session security if negotiated
+OK
+```
+
+* AD sunucu üzerinde komut satırı açılır ve aşağıdaki komut çalıştırılır.
+```
+gpupdate /force
+```
+
+
+* Gitlab arayüzünden mys reposuna erişilerek burada bulunan “**roles/squid/vars**" dizini altında değişkenleri barındıran “**ad.yml**" dosyası düzenlenmelidir.
+
+* “**enabled**" değişkeni ile windows etki alanı aktif edilir. “**domain**" parametresi etki alanı domaini, “**fqdn**" etki alanının fqdn i, “**server_ip**" etki alanının IP adresi, “**workgroup**" etki alanı çalışma grubu, “**user**" join işlemi için kullanılacak admin kullanıcısı ve “**password**" bu kullanıcının şifresi olmalıdır.
+
+```
+---
+#active directory parametreleri
+ad:
+  # ad aktif edilirse squid ayarlarindan ldapi kapatiniz.
+  enabled: "no"
+  domain: "ahtapot.org.tr"
+  fqdn: "ad.ahtapot.org.tr"
+  server_ip: "192.168.0.89"
+  workgroup: "AHTAPOT"
+  user: "Administrator"
+  password: "ahtapot123!"
+```
+* AD aktif edilirse “**roles/squid/vars/squid.yml**" dosyasından **ldap** seçeneği kapatılmalıdır. LDAP ve AD birlikte çalışmamaktadır.
+
+* Windows AD sunucusu ile proxy sunucusunun saatlerinin senkron olması gerekmektedir.
+
+* AD sunucusunun ve proxy sunucusunun “**roles/base/vars/hosts.yml**" dosyasında örnekteki gibi doğru bir şekilde tanımlanması gerekmektedir.
+
+```
+    server02:
+        ip: "192.168.0.17"
+        fqdn: "proxy.ahtapot.org.tr"
+        hostname: "proxy"
+    server03:
+        ip: "192.168.0.89"
+        fqdn: "ad.ahtapot.org.tr"
+        hostname: "adahtapot"
+
+```
+
+
 * İlgili ayarın aktif olması için Ansible makinası üzerinde “Squid” rolüne ait ansible playbook çalıştırılır.
 ```
 ansible:~ahtapotops$ cd /etc/ansible
@@ -207,7 +264,7 @@ ansible:~ahtapotops$ ansible-playbook playbooks/suqid.yml
 
 ![Proxy](../img/proxy6.png)
 
-####Mys ile Vekil Sunucu İnternet Erişim Kayıtlarının İmzalanması
+#### Mys ile Vekil Sunucu İnternet Erişim Kayıtlarının İmzalanması
 
 * 5651 kapsamında İnternet Erişim Kayıtlarının İmzalanması **Rsyslog** sunucusu üzerinde yapılmaktadır.
 

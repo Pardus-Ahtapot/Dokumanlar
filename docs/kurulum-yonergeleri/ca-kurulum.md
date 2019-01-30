@@ -1,4 +1,5 @@
 ![ULAKBIM](../img/ulakbim.jpg)
+
 # Sertifika Otoritesi (CA) Kurulumu ve Anahtar Yönetimi
 ------
 
@@ -6,10 +7,12 @@
 
 ------
 
+
 Bu dokümanda, Ahtapot bütünleşik güvenlik yönetim sisteminde kullanılan SSH anahtarlarını yöneten Sertifika Otoritesi (CA - Certificate Authority) sisteminin kurulması ve anahtar imzalama prosedürü anlatılmaktadır.
 
 Gereken : 
 Pardus Temel ISO’ dan kurulumu tamamlanmış bir sunucu.
+
 
 #### Önemli Uyarılar
   * Kurulacak sunucu, PKI (Public Key Infrastructure) yapısının omurgasını teşkil edeceğinden yüksek düzeyli korunacak sistemler arasında yer almalıdır.
@@ -98,6 +101,7 @@ The key's randomart image is:
 #### Sertifika Otoritesi Anahtarı ile Kullanıcı Anahtarı İmzalama 
 
 
+
   * Oluşturulan kullanıcı anahtarlarının **ahtapot_ca** ile imzalanması gerekmektedir.
 
 ```
@@ -134,6 +138,7 @@ kaptan-cert.pub:
   **NOT :** Bu yöntem kullanılarak git kullanıcısı için de imzalama işlemi gerçekleştirilmelidir.
 
 #### Sertifika Otoritesi Anahtarı ile Kısıtlı Anahtar İmzalama 
+
 
   * fw_kullanici anahtarının sadece FirewallBuilder uygulamasını çalıştırması için **-O force-command** parametresi ile çalıştıracağı komut yazılmalıdır.
 

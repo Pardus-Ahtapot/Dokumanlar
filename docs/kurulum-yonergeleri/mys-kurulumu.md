@@ -7,8 +7,8 @@
 Bu yönerge dokümanından hareketle yapılan kurulum sonrasında, birbirleri ile entegre şekilde çalışan ve Ansible, GitLab, Rsyslog, FWbuilder ve Sertifika Otoritesi (CA) ana bileşenlerinden oluşan bir sistem inşa edilmiş olacaktır. 
 
 #### MYS Sunucu Gereksinimleri
-| Sunucu Rolü                  | RAM | CPU        | Disk |       Network |
-|-|-----|--|----:|
+| Sunucu Rolü                  | RAM | CPU         | Disk |       Network  |
+|------------------------------|-----|-------------|------|----------------|
 | Ahtapot - Ansible             | 8GB | 4 x 2.0GHz | 200G | 1 x 1Gbit/sec |
 | Ahtapot - GitLab              | 8GB | 4 x 2.0GHz | 100G | 1 x 1Gbit/sec |
 | Ahtapot - Sertifika Otoritesi | 2GB | 1 x 2.0GHz | 100G | 1 x 1Gbit/sec |

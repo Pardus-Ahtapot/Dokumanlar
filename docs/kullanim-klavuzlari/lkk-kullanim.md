@@ -47,6 +47,18 @@ görülebilmektedir.
 * **Iptables Durumu (iptstate)** : Iptables durumu bilgilerini verir.
 * **Arp tablosu (arp -an)** : Bulunduğu ağda paket alışverişi gerçekleştirdiği cihazların MAC ve IP adresi bilgileri görüntülenir.
 
+
+######5. Ağ Arabirimi İzleme
+
+Seçilen ağ arabirimi ile ilgili istatistiksel verileri ve canlı verileri izlemeye yarar. Bunun için "**vnstat**" aracı kullanılır.
+* **Canlı Bilgileri Görüntüle** : Seçili ağ arabirimi için canlı olarak veri aktarım değerlerini gösterir.
+* **En Yüksek 10 Günü Görüntüle** : Seçili ağ arabirimi için tüm zamanların en yüksek trafik içeren 10 günü gösterir.
+* **Saatlik Verileri Görüntüle** : Seçili ağ arabirimi için ağ trafiği istatistiklerini saatlik bazda gösterir.
+* **Günlük Verileri Görüntüle** : Seçili ağ arabirimi için ağ trafiği istatistiklerini günlük bazda gösterir.
+* **Haftalık Verileri Görüntüle** : Seçili ağ arabirimi için ağ trafiği istatistiklerini haftalık bazda gösterir.
+* **Aylık Verileri Görüntüle** : Seçili ağ arabirimi için ağ trafiği istatistiklerini aylık bazda gösterir.
+
+
 ####Araçlarda kullanılan komutlar ve bağımlılıkları
 
 * **sudo komutu (sudo paketi)
@@ -167,5 +179,10 @@ Depends: libc6
 Depends: libncurses5
 Depends: libtinfo5
 
+* vnstat komutu (vnstat paketi)
+Bağımlılıkları:
+Depends: adduser
+Depends: libc6 (>= 2.7)
+Suggests: vnstati
 
 **Sayfanın PDF versiyonuna erişmek için [buraya](lkk-kullanim.pdf) tıklayınız.**
