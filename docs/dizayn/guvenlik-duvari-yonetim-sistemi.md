@@ -6,7 +6,7 @@ Bu dokümanda, Güvenlik Duvarı Yönetim Sistemi tasarım ve çalışma prensib
 
 ------
 
-![GDYS](../img/GDYSdiyagram.jpg)
+![GDYS](../img/GDYS_diyagram.png)
 
 
   * Güvenlik duvarı kurallarının güncellenmesi ve düzenlenmesi için gelecek talepler Redmine iş takibi ortamında yaratılacak görevler (task) üzerinden ilgili kişiye atanır.
