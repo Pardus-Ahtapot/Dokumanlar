@@ -6,7 +6,7 @@ Bu dokümanda, Merkezi Yönetim Sistemi tasarım ve çalışma prensibi anlatıl
 
 ------
 
-![MYS](../img/MYSdiyagram.png)
+![MYS](../img/mys_diyagram.png)
 
 * Ahtapot projesinin temelini oluşturan Merkezi Yönetim Sisteminde, Sunucu yönetimleri Ansible sunucusu tarafından yapılmaktadır.
 * Sistem Yöneticisi tarafından GitLab arayüzü kullanılarak Ansible Playbooklar üzerinde gerekli değişiklikler yapılarak, onaya gönderilir.

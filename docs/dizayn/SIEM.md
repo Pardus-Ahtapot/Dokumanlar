@@ -6,7 +6,7 @@ Bu dokümanda, Ahtapot Siber Olay, Açıklık, Risk İzleme ve Yönetim Sistemi 
 
 ------
 
-![SIEM](../img/SiemDiagram.png)
+![SIEM](../img/Siem_diyagram.png)
 
 SIEM kapsamında istemciler üzerinde bulunan loglar SSL ile Nxlog’ un tcp 514. portu, syscheck bilgileri ise Ossec Agent’ ın 1514. portu ile Bölge-Ossimler üzerine gönderilir. Bölge-Ossimler içerisine gelen loglar 2 farklı dosya içerisine yazılarak merkezde bulunan 2 farklı Ossim makinesi içerisine Rsyslog ile şifreli ve sıkıştırılmış olarak gönderilirler. 
 
