@@ -151,8 +151,11 @@ suricata_protocol_anomaly_rules:
 suricata_mode: "ids"#ids|ips
 fwbuilder_exists: "false"
 suricata_ips_mode: "bridge" #nat|bridge
-ips_int_iface: enp1s3
-ips_ext_iface: enp0s3
+ips_int_iface_master: enp1s3
+ips_ext_iface_master: enp0s3
+ips_int_iface_backup: enp1s3
+ips_ext_iface_backup: enp0s3
+ips_master_hostname: ahtapot-ips
 config_suricata: true  #defines if suricata should be configured
 scripts_dir: /opt/scripts
 suricata_home_net: "[192.168.0.0/16,10.0.0.0/8,172.16.0.0/12]"
@@ -611,15 +614,19 @@ suricata_protocol_anomaly_rules:
   - alert udp any any -> any 53 (msg:"SURICATA UDP port 53 but not DNS"; flow:to_server; app-layer-protocol:!dns; sid:2271015; rev:1;)
   - alert tcp any any -> any 502 (msg:"SURICATA TCP port 502 but not MODBUS"; flow:to_server; app-layer-protocol:!modbus; sid:2271018; rev:1;)
 ```
--   “**main.yml**” dosyasında ips ayarlarının yapılması için gerekli ayar parametreleri bulunmaktadır. Burda ips yapılandırması için gerekli olan parametreler açıklanacaktır. "**suricata_mode**" ips için buraya ips yazılır. Eğer ips kurulacak makinede firewall kuralları fwbuilder tarafından yönetiliyorsa "**fwbuilder_exists**" paarametresi "**true**" yapılır yoksa "**false**" yapılır. "**suricata_ips_mode**" parametresi ips'in çalışma şeklini belirtmektedir. Router modu için "**nat**", bridge modu için "**bridge**" yazılır. Eğer ips bridge modunda çalışacaksa iç ağ trafiğinin geçeceği arabirim "**ips_int_iface**" dış ağ trafiğinin geçeceği arabirim "**ips_ext_iface**" parametrseinde ayarlanır. "**suricata_home_net:**" iç ağ tanımlarının yapıldığı değişkendir. "**suricata_external_net**" dış ağ tanımlarının yapıldığı parametredir. "**suricata_rules**" aktif edilecek imza gruplarının tanımlandığı yerdir. Aktif edilmesi istenmeyen parametreler başına "**#**" konularak yorum satırına alınabilir.
+-   “**main.yml**” dosyasında ips ayarlarının yapılması için gerekli ayar parametreleri bulunmaktadır. Burda ips yapılandırması için gerekli olan parametreler açıklanacaktır. "**suricata_mode**" ips için buraya ips yazılır. Eğer ips kurulacak makinede firewall kuralları fwbuilder tarafından yönetiliyorsa "**fwbuilder_exists**" paarametresi "**true**" yapılır yoksa "**false**" yapılır. "**suricata_ips_mode**" parametresi ips'in çalışma şeklini belirtmektedir. Router modu için "**nat**", bridge modu için "**bridge**" yazılır. Eğer ips bridge modunda çalışacaksa iç ağ trafiğinin geçeceği arabirim "**ips_int_iface_master**" dış ağ trafiğinin geçeceği arabirim "**ips_ext_iface_master**" parametrseinde ayarlanır.
+Eğer kurulum yedekli yapılıyorsa bu durumda hosts dosyası altında tanımlanan IPS sunucu isimlerinden master olması istenen sunucunun adı "**ips_master_hostname**" değişkenine yazılır. Bu durumda pasif modda olan sunucunun iç ve dış ağ arabirimleri sırasıyla "**ips_int_iface_backup**" ve "**ips_ext_iface_backup**" değişkenlerine yazılır. "**suricata_home_net**" iç ağ tanımlarının yapıldığı değişkendir. "**suricata_external_net**" dış ağ tanımlarının yapıldığı parametredir. "**suricata_rules**" aktif edilecek imza gruplarının tanımlandığı yerdir. Aktif edilmesi istenmeyen parametreler başına "**#**" konularak yorum satırına alınabilir.
 ```
 ---
 # defaults file for ansible-suricata
 suricata_mode: "ids"#ids|ips
 fwbuilder_exists: "false"
 suricata_ips_mode: "bridge" #nat|bridge
-ips_int_iface: enp1s3
-ips_ext_iface: enp0s3
+ips_int_iface_master: enp1s3
+ips_ext_iface_master: enp0s3
+ips_int_iface_backup: enp1s3
+ips_ext_iface_backup: enp0s3
+ips_master_hostname: ahtapot-ips
 config_suricata: true  #defines if suricata should be configured
 scripts_dir: /opt/scripts
 suricata_home_net: "[192.168.0.0/16,10.0.0.0/8,172.16.0.0/12]"

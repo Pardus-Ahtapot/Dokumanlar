@@ -44,7 +44,7 @@ Yukarıdaki şemada gösterildiği üzere GDYS sisteminin çalışma prensibini 
 
 
 
-#Güvenlik Duvarı Kurulumu 
+# Güvenlik Duvarı Kurulumu 
 
 
 Bu dokümanda, Ahtapot bütünleşik güvenlik yönetim sisteminde kullanılan güvenlik duvarlarının kurulum prosedürü anlatılıyor.
@@ -270,7 +270,7 @@ $ ansible-playbook playbooks/firewall.yml --skip-tag=deploy
 ```
 # dpkg -r ansible
 ```
-#Güvenlik Duvarı Yönetim Sistemi Entegrasyonu
+# Güvenlik Duvarı Yönetim Sistemi Entegrasyonu
 ------
 
 Bu dokümanda, Ahtapot bütünleşik güvenlik yönetim sistemi entegrasyonu anlatılıyor.
