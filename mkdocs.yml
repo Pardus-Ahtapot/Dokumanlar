@@ -18,6 +18,7 @@ pages:
     - 'Balküpü Kurulumu': 'kurulum-yonergeleri/honeypot-kurulum.md'
     - 'Sadece Gerekli Durumlarda Playbookların Çalışmasını Sağlama Kurulum': 'kurulum-yonergeleri/standalone-kurulum.md'
     - 'Ossim Plugin Yazılması ve Siem Entegrasyonu': 'kurulum-yonergeleri/ossim-siem-plugin-kurulum-yapilandirmasi.md'
+    - 'Icinga Kurulumu': 'kurulum-yonergeleri/icinga-kurulum.md'
 - "KULLANIM KLAVUZLARI": 
     - 'Güvenlik Duvarı Yönetim Sistemi Kullanımı': 'kullanim-klavuzlari/gdys-kullanim.md'
     - 'Geçici Kural Tanımlama Sistemi Kullanımı': 'kullanim-klavuzlari/gkts-kullanim.md'
@@ -46,6 +47,7 @@ pages:
     - 'PBNJ Port Scanner Yazilimi Kullanimi': 'kullanim-klavuzlari/pbnj.md'
     - 'Faraday Kullanımı': 'kullanim-klavuzlari/faraday.md'
     - 'DDOSMON Kullanımı': 'kullanim-klavuzlari/ddosmon.md'
+    - 'Icinga Kullanımı': 'kullanim-klavuzlari/icinga-kullanim.md'
 - "DIZAYN":
     - 'Merkezi Yönetim Sistemi': 'dizayn/merkezi-yonetim-sistemi.md'
     - 'Merkezi Güvenlik Duvarı Yönetim Sistemi Kontrol Paneli': 'dizayn/merkezi-guvenlik-duvari-yonetim-sistemi-kontrol-paneli.md'
