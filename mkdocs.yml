@@ -16,8 +16,9 @@ pages:
     - 'E-posta Karantina Kurulumu': 'kurulum-yonergeleri/eposta-karantina-kurulum.md'
     - 'MHN Kurulumu': 'kurulum-yonergeleri/mhn-kurulum.md'
     - 'Balküpü Kurulumu': 'kurulum-yonergeleri/honeypot-kurulum.md'
-    - 'Sadece Gerekli Durumlarda Playbookların Çalışmasını Sağlama Kurulum': 'kurulum-yonergeleri/standalone-kurulum.md'
+    - 'Sadece Gerekli Durumlarda Playbookların Çalışmasını Sağlama Kurulum': 'kurulum-yonergeleri/state-ng-kurulum.md'
     - 'Ossim Plugin Yazılması ve Siem Entegrasyonu': 'kurulum-yonergeleri/ossim-siem-plugin-kurulum-yapilandirmasi.md'
+    - 'Icinga Kurulumu': 'kurulum-yonergeleri/icinga-kurulum.md'
 - "KULLANIM KLAVUZLARI": 
     - 'Güvenlik Duvarı Yönetim Sistemi Kullanımı': 'kullanim-klavuzlari/gdys-kullanim.md'
     - 'Geçici Kural Tanımlama Sistemi Kullanımı': 'kullanim-klavuzlari/gkts-kullanim.md'
@@ -41,11 +42,12 @@ pages:
     - 'E-posta Karantina Sistemi Kullanımı': 'kullanim-klavuzlari/eposta-karantina.md'
     - 'MHN Kullanımı': 'kullanim-klavuzlari/mhn-kullanim.md'
     - 'Balküpü Kullanımı': 'kullanim-klavuzlari/honeypot-kullanim.md'
-    - 'Sadece Gerekli Durumlarda Playbookların Çalışmasını Sağlama Kullanım': 'kullanim-klavuzlari/standalone-kullanim.md'
+    - 'Sadece Gerekli Durumlarda Playbookların Çalışmasını Sağlama Kullanım': 'kullanim-klavuzlari/state-ng-kullanim.md'
     - 'Cyphon Kullanımı': 'kullanim-klavuzlari/cyphon.md'
     - 'PBNJ Port Scanner Yazilimi Kullanimi': 'kullanim-klavuzlari/pbnj.md'
     - 'Faraday Kullanımı': 'kullanim-klavuzlari/faraday.md'
     - 'DDOSMON Kullanımı': 'kullanim-klavuzlari/ddosmon.md'
+    - 'Icinga Kullanımı': 'kullanim-klavuzlari/icinga-kullanim.md'
 - "DIZAYN":
     - 'Merkezi Yönetim Sistemi': 'dizayn/merkezi-yonetim-sistemi.md'
     - 'Merkezi Güvenlik Duvarı Yönetim Sistemi Kontrol Paneli': 'dizayn/merkezi-guvenlik-duvari-yonetim-sistemi-kontrol-paneli.md'
@@ -58,7 +60,7 @@ pages:
     - 'Ahtapot Projesinde Sistemlere Kurulan Paketler ve Bağımlılıkları' : 'dizayn/paketler.md'
     - 'Sistem Bütünlüğü' : 'dizayn/sistem-butunlugu.md'
     - 'AlienVault OTX Verilerinin Çevrimdışı OSSIM Cihazlarında Kullanımı' : 'dizayn/otx.md'
-    - 'Standalone Rolü ve Dizaynı' : 'dizayn/standalone-dizayn.md'
+    - 'State-ng Rolü ve Dizaynı' : 'dizayn/state-ng-dizayn.md'
     - 'Firewall Builder Yetki Mekanizması' : 'dizayn/fwb.md'
 - "GEREKLİ DOSYALAR":
     - 'Firewall Builder Konfigürasyon Dosyası': 'dosyalar/gdys-fwb.md'

@@ -687,15 +687,34 @@ Son olarak grubumuzun içinde host yaratılır.
 
 AWX üzerinden yönetilmek istenen bütün hostlar ve host grupları aynı şekilde eklenir.
 
+##### Inventory Aktarılması/Çıkarılması
+
+Inventory listesininin hosts dosyasından aktarılması edilmesi mümkündür. 
+Inventory sayfasında **Source** tabından 'Sourced from a Project' seçilerek dosyadan aktarılabilir.
+
+![AWX](../img/awx_inventory_import.png)
+
+AWX inventoryi dosya ya çıkarma(export) işlemini desteklememektedir. Bu işlem için bir betik yazılmıştır. 
+AWX üzerindeki inventoryleri dosya formatına dönüştürmek için aşağıdaki betik çalıştırılır. Betik dosyayı ekrana basar. 
+
+```
+$ awx_inventory.sh
+``` 
+
 ##### Proje Ekleme
 
 Git Repo bilgileri girilerek proje eklenir. Eğer ssh kullanılacaksa **Credentials** tabından gerekli keylerin yaratılması ve scm credentials olarak girilmesi gerekmektedir.
 
 ![AWX](../img/awx_project_add.png)
 
+
+
 ##### Görev Ekleme
 
-Son olarak playbookları çalıştırmak için görev şablonları tanımlanmalıdır. 
+Son olarak playbookları çalıştırmak için görev şablonları tanımlanmalıdır.
+Task ile ilgili değişkenler 'Extra Variables' olarak eklenebilir. Buraya eklenen değerler vars dosyalarından öncelikli çalışacaktır. 
+AWX arayüzünden vars dosyaları değiştirilememektedir.
+
 **Templates** tabına girilerek aşağıdaki gibi görev tanımlanır ve run edilir. 
 
 ![AWX](../img/awx_template_add.png)
@@ -703,6 +722,7 @@ Son olarak playbookları çalıştırmak için görev şablonları tanımlanmal�
 **Jobs** tabının altında çalışan görevler ve çıktıları aşağıdaki gibi gözlemlenir. 
 
 ![AWX](../img/awx_job_result.png)
+
 
 **Önemli Not:** AWX ansible'ı farklı bir klasorde çalıştırdığı için ansible.cfg dosyasında **roles_path** değişkeninin ayarlanması gerekmektedir. 
 Proje eklendikten sonra /var/awx_projects klasörünün altından proje klasoru bulunarak roles_path editlenmelidir. 
