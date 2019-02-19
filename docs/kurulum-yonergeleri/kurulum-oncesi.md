@@ -3,6 +3,7 @@
 ### Pardus 17 Ahtapot ISO'sunun indirilmesi
 
 Pardus 17 Ahtapot ISO'su **http://ahtapot.org.tr/indirmeler.html** adresinden, 	**Pardus 17 Ahtapot ISO** bağlantısından indirilebilir.
+**NOT:** Pardus 17 Ahtapot, **ahtapotops** ön tanımlı kullanıcısı ile gelmektedir. Ön tanımlı ahtapotops kullanıcısının şifresi : **LA123** . Şifre ilk giriş sırasında değiştirilmek zorundadır. 
 
 ### Pardus-Ahtapot Kurumsal 5 ISO'sunun indirilmesi
 
