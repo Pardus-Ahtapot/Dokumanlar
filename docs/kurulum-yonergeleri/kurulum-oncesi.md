@@ -1,8 +1,12 @@
 # Kurulumlara Başlamadan Önce Yapılması Gereken Hazırılıklar
 
-### Pardus-Ahtapot ISO'sunun indirilmesi
+### Pardus 17 Ahtapot ISO'sunun indirilmesi
 
-Pardus-Ahtapot ISO'su **http://depo.pardus.org.tr/pub/ISO/Ahtapot/pardus-ahtapot-kurumsal5-amd64.iso** adresinden indirebilinir.
+Pardus 17 Ahtapot ISO'su **http://ahtapot.org.tr/indirmeler.html** adresinden, 	**Pardus 17 Ahtapot ISO** bağlantısından indirilebilir.
+
+### Pardus-Ahtapot Kurumsal 5 ISO'sunun indirilmesi
+
+Pardus-Ahtapot Kurumsal 5 ISO'su **http://ahtapot.org.tr/indirmeler.html** adresinden, **Kurumsal 5 Ahtapot ISO** bağlantısından indirilebilir.
 
 ### Pardus17 Sunucu ISO'nun İndirilmesi ve Repo Ayarları
 
@@ -27,6 +31,9 @@ $ sudo apt-get update
 $ sudo wget http://depo.pardus.org.tr/pardus/pool/main/p/pardus-archive-keyring/pardus-archive-keyring_2017.2_all.deb
 $ sudo dpkg -i pardus-archive-keyring_2017.2_all.deb
 ```
+
+**DİKKAT:** Pardus Ahtapot ISOları, Pardus Sunucu ISO 'sunun sıkılaştırma ve Ahtapot projesi için gerek görülmeyen paketlerin kaldırılmasıyla oluşturulur. Test ortamında Pardus Sunucu versiyonu kullanılabilir, fakat gerçek ortamda Ahtapot ISOlarının tercih edilmesi güvenlik açısından önerilir.
+
 ### Sertifika Otoritesi Sunucusunun Kurulması
 
 Kuracağınız sistemde CA sunucusunun ayrı bir sunucu olarak yer almasını istiyor iseniz, Ahtapot kurulumlarına başlanılmadan önce Pardus-Ahtapot ISO kurulmuş bir sunucu "**CA Sunucusu**" olarak ayrılmalıdır.
