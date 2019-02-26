@@ -16,7 +16,7 @@ pages:
     - 'E-posta Karantina Kurulumu': 'kurulum-yonergeleri/eposta-karantina-kurulum.md'
     - 'MHN Kurulumu': 'kurulum-yonergeleri/mhn-kurulum.md'
     - 'Balküpü Kurulumu': 'kurulum-yonergeleri/honeypot-kurulum.md'
-    - 'Sadece Gerekli Durumlarda Playbookların Çalışmasını Sağlama Kurulum': 'kurulum-yonergeleri/state-ng-kurulum.md'
+    - 'Sadece Gerekli Durumlarda Playbookların Çalışmasını Sağlama Kurulum': 'kurulum-yonergeleri/smartstate-kurulum.md'
     - 'Ossim Plugin Yazılması ve Siem Entegrasyonu': 'kurulum-yonergeleri/ossim-siem-plugin-kurulum-yapilandirmasi.md'
     - 'Icinga Kurulumu': 'kurulum-yonergeleri/icinga-kurulum.md'
 - "KULLANIM KLAVUZLARI": 
@@ -42,7 +42,7 @@ pages:
     - 'E-posta Karantina Sistemi Kullanımı': 'kullanim-klavuzlari/eposta-karantina.md'
     - 'MHN Kullanımı': 'kullanim-klavuzlari/mhn-kullanim.md'
     - 'Balküpü Kullanımı': 'kullanim-klavuzlari/honeypot-kullanim.md'
-    - 'Sadece Gerekli Durumlarda Playbookların Çalışmasını Sağlama Kullanım': 'kullanim-klavuzlari/state-ng-kullanim.md'
+    - 'Sadece Gerekli Durumlarda Playbookların Çalışmasını Sağlama Kullanım': 'kullanim-klavuzlari/smartstate-kullanim.md'
     - 'Cyphon Kullanımı': 'kullanim-klavuzlari/cyphon.md'
     - 'PBNJ Port Scanner Yazilimi Kullanimi': 'kullanim-klavuzlari/pbnj.md'
     - 'Faraday Kullanımı': 'kullanim-klavuzlari/faraday.md'
@@ -60,7 +60,7 @@ pages:
     - 'Ahtapot Projesinde Sistemlere Kurulan Paketler ve Bağımlılıkları' : 'dizayn/paketler.md'
     - 'Sistem Bütünlüğü' : 'dizayn/sistem-butunlugu.md'
     - 'AlienVault OTX Verilerinin Çevrimdışı OSSIM Cihazlarında Kullanımı' : 'dizayn/otx.md'
-    - 'State-ng Rolü ve Dizaynı' : 'dizayn/state-ng-dizayn.md'
+    - 'Smartstate Rolü ve Dizaynı' : 'dizayn/smartstate-dizayn.md'
     - 'Firewall Builder Yetki Mekanizması' : 'dizayn/fwb.md'
 - "GEREKLİ DOSYALAR":
     - 'Firewall Builder Konfigürasyon Dosyası': 'dosyalar/gdys-fwb.md'
