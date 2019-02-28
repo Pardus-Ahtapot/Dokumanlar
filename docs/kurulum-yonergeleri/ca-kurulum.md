@@ -21,7 +21,7 @@ Pardus Temel ISO’ dan kurulumu tamamlanmış bir sunucu.
 
 **UYARI :** Aşağıdaki adımların çalıştırılacağı sistem "**Ahtapot Sertifika Otoritesi Sunucusu**" olmalıdır.
 
-  * Pardus Temel ISO’ dan Pardus kurulumu tamamlandıktan sonra sistemde tanımlı bir kullanıcı ile (tercihen root) Ahtapot Sertifika Otoritesi olacak sunucu sistemine bağlantı sağlanır. ssh-keygen kullanılarak standart bir SSH anahtarı oluşturulur. Bu anahtar dosya ismi olarak "**ahpapot_ca**" ön eki ile oluşturulur. SSH anahtarı oluşturulurken kullanılan şifrenin özenle saklanması gerekmektedir.
+  * Pardus Temel ISO’ dan Pardus kurulumu tamamlandıktan sonra sistemde tanımlı bir kullanıcı ile ssh-keygen kullanılarak standart bir SSH anahtarı oluşturulur. Bu anahtar dosya ismi olarak "**ahpapot_ca**" ön eki ile oluşturulur. SSH anahtarı oluşturulurken kullanılan şifrenin özenle saklanması gerekmektedir. Şifre kullanmak zorunda değilsiniz kullanmak istemiyorsanız enter'a basıp geçebilirsiniz.
 
 ``` 
 ahtapotops@ahtapot:~ ssh-keygen -f ahtapot_ca
@@ -50,7 +50,6 @@ The key's randomart image is:
   * Yukarıdaki adım ile 2 adet dosya oluşturulur.  Bu dosyalardan "**ahtapot_ca**" özenle korunması gereken gizli anahtar (Private Key), "**ahtapot_ca.pub**" dosyası ise her yere dağıtılabilen açık anahtar (Public Key) olarak kaydedilir.
 
 ```
-
 ahtapotops@ahtapot:~ ls -al
 total 8
 drwxr-xr-x 1 ahtapotops users   52 Oct 29 10:44 .
@@ -64,7 +63,6 @@ drwxr-xr-x 1 ahtapotops users  274 Oct 29 10:34 ..
   * Ahtapot sistemini yönetecek olan ahtapotops kullanıcısı için başka bir anahtar oluşturulur. Bu anahtar otomatik sistemlerle kullanılacağından ötürü şifre verilmeden oluşturulmalıdır.
 
 ```
-
 ahtapotops@ahtapot:~ ssh-keygen -f ahtapotops
 Generating public/private rsa key pair.
 Enter passphrase (empty for no passphrase): 
@@ -91,28 +89,31 @@ The key's randomart image is:
   * Yukarıdaki adım ile 2 adet dosya oluşturulur.  Bu dosyalardan "**ahtapotops**" özenle korunması gereken gizli anahtar (Private Key), "**ahtapotops.pub**" dosyası ise her yere dağıtılabilen açık anahtar (Public Key) olarak kaydedilir.
 
 
-**NOT :** Bu yöntem kullanılarak aşağıdaki kullanıcı listesi için farklı anahtarlar oluşturulmalıdır.
+  * Bu yöntem kullanılarak aşağıdaki kullanıcı listesi için farklı anahtarlar oluşturulmalıdır.
+```
+  * git
+  * myshook
+  * gdyshook
+  * fw_kullanici
+```
 
-        * git
-        * myshook
-        * gdyshook
-        * fw_kullanici
+```
+ahtapotops@ahtapot:~ ssh-keygen -f git
+ahtapotops@ahtapot:~ ssh-keygen -f myshook
+ahtapotops@ahtapot:~ ssh-keygen -f gdyshook
+ahtapotops@ahtapot:~ ssh-keygen -f fw_kullanici
+```
 
 #### Sertifika Otoritesi Anahtarı ile Kullanıcı Anahtarı İmzalama 
 
-
-
   * Oluşturulan kullanıcı anahtarlarının **ahtapot_ca** ile imzalanması gerekmektedir.
-
 ```
-ahtapotops@ahtapot:~ ssh-keygen -s ahtapot_ca -I ahtapotops@ahtapot.com -n ahtapotops -O source-address=10.0.7.0/24 -O no-agent-forwarding -O no-port-forwarding -O no-x11-forwarding ahtapotops.pub
+ahtapotops@ahtapot:~ ssh-keygen -s ahtapot_ca -I ahtapotops@ahtapot.com -n ahtapotops -O no-agent-forwarding -O no-port-forwarding -O no-x11-forwarding ahtapotops.pub
 Enter passphrase: 
-Signed user key kaptan-cert.pub: id "ahtapotops@ahtapot.com" serial 0 for ahtapot valid forever
+Signed user key atapotops-cert.pub: id "ahtapotops@ahtapot.com" serial 0 for ahtapot valid forever
 ```
-  * Yukarıdaki adım ile "**ahtapotops.pub**" dosyası sadece 10.0.7.0/24 network bloğundan, sadece ahtapotops kullanıcısı olarak bağlanacak şekilde kısıtlandırılarak imzalanır. Ayrıca SSH yaparken port forward etme, X11 protokolüyle erişim gibi özellikler de kısıtlanır. Bu dokümanın sonunda SSH anahtarı imzalanırken kullanılabilecek olan tüm opsiyonlar detaylandırılmıştır.
-  * Yukarıdaki komutta "**-V YYYYMMDDHHMMSS**" opsiyonu kullanılarak belli bir süreye kadar geçerli olma ayarlaması da yapılabilir. Örneğin, yukarıdaki anahtarı 1 Ocak 2016 ‘dan 1 Ocak 2018’e  kadar geçerli olacak şekilde oluşturmak için:
-  * İsteğe bağlı olarak **-O source-address=10.0.7.0./24** parametresi komuttan çıkarılabilinir. 
-
+  * Yukarıdaki adım ile "**ahtapotops.pub**" dosyası sadece ahtapotops kullanıcısı SSH yaparken port forward etme, X11 protokolüyle erişim gibi özellikleri kısıtlanır. Bu dokümanın sonunda SSH anahtarı imzalanırken kullanılabilecek olan tüm opsiyonlar detaylandırılmıştır. 
+  * Eğer belirli bir network bloğundan erişmesini istiyorsanız "** -O source-address=10.0.7.0/24 **" opsiyonunu kullanabilirsiniz. "**-V YYYYMMDDHHMMSS**" opsiyonu kullanılarak belli bir süreye kadar geçerli olma ayarlaması da yapılabilir.
   * Oluşan imzalanmış anahtar dosyasının adı "**ahtapotops_cert.pub**" dir. Bu dosyada ki imzalanmış kısıtlamalara göz atmak için aşağıdaki komut kullanılır.
 
 ```
@@ -123,19 +124,22 @@ kaptan-cert.pub:
         Signing CA: RSA 68:1c:65:34:85:10:d7:56:db:99:c5:31:43:4d:e5:24
         Key ID: "ahtapotops@ahtapot.com"
         Serial: 0
-        Valid: from 2016-01-01T00:00:00 to 2018-01-01T00:00:00
+        Valid: forever
         Principals: 
                 ahtapotops
-        Critical Options: 
-                source-address 10.0.7.0/24
+        Critical Options: (none)
         Extensions: 
                 permit-pty
                 permit-user-rc
 
 ```
 
-
-  **NOT :** Bu yöntem kullanılarak git kullanıcısı için de imzalama işlemi gerçekleştirilmelidir.
+  * Bu yöntem kullanılarak git kullanıcısı için de imzalama işlemi gerçekleştirilir.
+```
+ahtapotops@ahtapot:~ ssh-keygen -s ahtapot_ca -I ahtapotops@ahtapot.com -n ahtapotops -O no-agent-forwarding -O no-port-forwarding -O no-x11-forwarding git.pub
+Enter passphrase: 
+Signed user key git-cert.pub: id "git@ahtapot.com" serial 0 for ahtapot valid forever
+```
 
 #### Sertifika Otoritesi Anahtarı ile Kısıtlı Anahtar İmzalama 
 
@@ -187,6 +191,7 @@ Signed user key myshook.pub: id "ahtapotops@ahtapot.com" serial 0 for ahtapotops
 komutları çalıştırılmalıdır.
 
 #### Sertifika Otoritesi Anahtarı ile Kullanıcı Erişim Kısıtlama Ayarları 
+ * Tablodaki opsiyonlardan faydalanarak serifika imzalarınızda isteğe bağlı kısıtlamalar yapabilirsiniz.
 
 | clear                        | Clear all enabled permissions.  This is useful for clearing the default set of permissions so permissions may be added individually.                                            |
 |-- | ----- |
@@ -205,6 +210,8 @@ komutları çalıştırılmalıdır.
 
 #### SSL Anahtar Oluşturma
 
+**NOT :** SSL anahtarı oluşturmak şu an için gerekli değildir. Ahtapot bileşenlerinde gerekli olduğu kısımlarda bu kurulum sayfasından yararlanılarak oluşturulabilir.
+ 
 * Rsyslog veya nxlog kullanılarak client-server arasında log gönderimi için öncelikle "**CA sunucusu**" üzerinde "**openssl**" kullanılarak "**rootCA**" oluşturulmalıdır.
 
 ```

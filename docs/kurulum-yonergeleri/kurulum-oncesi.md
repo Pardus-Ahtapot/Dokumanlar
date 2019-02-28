@@ -21,9 +21,8 @@ ahtapotops@ansible:~$ sudo nano /etc/apt/source.list
 ```
 ```
 deb [trusted=yes] http://depo.pardus.org.tr/pardus-yenikusak yenikusak main non-free contrib
-deb [trusted=yes] http://depo.pardus.org.tr/ahtapot testing main
-deb [trusted=yes] http://depo.pardus.org.tr/ahtapot stable main
-deb http://depo.pardus.org.tr/pardus onyedi main contrib non-free
+deb http://depo.pardus.org.tr/ahtapot testing main
+deb http://depo.pardus.org.tr/ahtapot stable main
 ```
 ```
 $ sudo apt-get update
@@ -32,6 +31,8 @@ $ sudo apt-get update
 ```
 $ sudo wget http://depo.pardus.org.tr/pardus/pool/main/p/pardus-archive-keyring/pardus-archive-keyring_2017.2_all.deb
 $ sudo dpkg -i pardus-archive-keyring_2017.2_all.deb
+$ sudo wget depo.pardus.org.tr/pardus-yenikusak-public.asc
+$ sudo apt-key add pardus-yenikusak-public.asc
 ```
 
 **DİKKAT:** Pardus Ahtapot ISOları, Pardus Sunucu ISO 'sunun sıkılaştırma ve Ahtapot projesi için gerek görülmeyen paketlerin kaldırılmasıyla oluşturulur. Test ortamında Pardus Sunucu versiyonu kullanılabilir, fakat gerçek ortamda Ahtapot ISOlarının tercih edilmesi güvenlik açısından önerilir.
