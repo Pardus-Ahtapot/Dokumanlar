@@ -1,8 +1,14 @@
 # Kurulumlara Başlamadan Önce Yapılması Gereken Hazırılıklar
 
-### Pardus-Ahtapot ISO'sunun indirilmesi
+### Pardus 17 Ahtapot ISO'sunun indirilmesi
 
-Pardus-Ahtapot ISO'su **http://depo.pardus.org.tr/pub/ISO/Ahtapot/pardus-ahtapot-kurumsal5-amd64.iso** adresinden indirebilinir.
+Pardus 17 Ahtapot ISO'su **http://ahtapot.org.tr/indirmeler.html** adresinden, 	**Pardus 17 Ahtapot ISO** bağlantısından indirilebilir.
+
+**NOT:** Pardus 17 Ahtapot, **ahtapotops** ön tanımlı kullanıcısı ile gelmektedir. Ön tanımlı ahtapotops kullanıcısının şifresi : **LA123** . Şifre ilk giriş sırasında değiştirilmek zorundadır. 
+
+### Pardus-Ahtapot Kurumsal 5 ISO'sunun indirilmesi
+
+Pardus-Ahtapot Kurumsal 5 ISO'su **http://ahtapot.org.tr/indirmeler.html** adresinden, **Kurumsal 5 Ahtapot ISO** bağlantısından indirilebilir.
 
 ### Pardus17 Sunucu ISO'nun İndirilmesi ve Repo Ayarları
 
@@ -28,6 +34,9 @@ $ sudo dpkg -i pardus-archive-keyring_2017.2_all.deb
 $ sudo wget depo.pardus.org.tr/pardus-yenikusak-public.asc
 $ sudo apt-key add pardus-yenikusak-public.asc
 ```
+
+**DİKKAT:** Pardus Ahtapot ISOları, Pardus Sunucu ISO 'sunun sıkılaştırma ve Ahtapot projesi için gerek görülmeyen paketlerin kaldırılmasıyla oluşturulur. Test ortamında Pardus Sunucu versiyonu kullanılabilir, fakat gerçek ortamda Ahtapot ISOlarının tercih edilmesi güvenlik açısından önerilir.
+
 ### Sertifika Otoritesi Sunucusunun Kurulması
 
 Kuracağınız sistemde CA sunucusunun ayrı bir sunucu olarak yer almasını istiyor iseniz, Ahtapot kurulumlarına başlanılmadan önce Pardus-Ahtapot ISO kurulmuş bir sunucu "**CA Sunucusu**" olarak ayrılmalıdır.
@@ -45,3 +54,7 @@ Merkezi Yönetim Sistemi kurulumu tamamlandıktan sonra ihtiyaca göre diğer bi
 
 * Eğer merkezi olarak yönetilecek diğer ahtapot bileşenlerine Sanal Özel Ağ ile erişilmesi gerekiyorsa bir sonraki adımda da  Sanal Özel Ağ Sistemi kurulumu gerçekleştirilmelidir. 
 * Bundan sonraki sıralama kullanıcı tercihine göre belirlenebilir. Bileşenler kuruldukça kayıtlarının (log) Siber Olay, Açıklık, Risk İzleme ve Yönetim Sistemine aktarılması isteniyorsa bir sonraki adım olarak bu sistemin kurulması tercih edilebilir.
+
+### Kurulum Sırasındaki Önceliklendirmeler
+
+Diğer Ahtapot sistemlerinin verimli ve hızlı bir şekilde kurulabilmesi için Sertifika Otoritesi kurulumu tamamlandıktan sonra öncelikle Merkezi Yönetim Sistemi suncusu kurulmalı. Eğer merkezi olarak yönetilecek diğer ahtapot bileşenlerine Sanal Özel Ağ ile erişilmesi gerekiyorsa bir sonraki adımda da  Sanal Özel Ağ Sistemi kurulumu gerçekleştirilmelidir. Bundan sonraki sıralama kullanıcı tercihine göre belirlenebilir. Bileşenler kuruldukça kayıtlarının (log) Siber Olay, Açıklık, Risk İzleme ve Yönetim Sistemine aktarılması isteniyorsa bir sonraki adım olarak bu sistemin kurulması tercih edilebilir.
