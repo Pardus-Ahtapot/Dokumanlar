@@ -18,15 +18,17 @@ Ahtapot, Pardus Linux üzerine inşa edilen ve bir kurumun ihtiyaç duyacağı t
 * Ağ Cihazları, Sunucu ve İstemci Bilgi Sistemleri İzleme Çözümü
 * Saldırı Tespit / Önleme Sistemi (IDS/IPS)
 * Eposta Güvenlik Sistemi
+* Siber Saldırı Erken Uyarı Sistemi (HoneyPot) 
+
 
 ### Bütünleştirilmesi Devam Eden Bileşenler
 
 * Örün Uygulama Güvenlik Duvarı
-* Siber Saldırı Erken Uyarı Sistemi (HoneyPot) 
+* Ağ Erişim Kontrol Sistemi (NAC)
+
 
 ### Bütünleştirilmesi Planlanan Bileşenler
 
-* Ağ Erişim Kontrol Sistemi (NAC)
 * Ağ Trafiği Yakalama, İzleme ve İnceleme Çözümü
 
 ## Dokümantasyon
