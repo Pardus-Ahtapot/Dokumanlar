@@ -6,101 +6,75 @@
 
 ------
 
-Bu dokümanda, Ahtapot projesi kapsamında kullanılmak üzere üretilmiş minimal Pardus Kurumsal 5 kurulumunu anlatılmaktadır.
+Bu dokümanda, Ahtapot projesi kapsamında kullanılmak üzere üretilmiş minimal Pardus 17 Ahtapot ISO kurulumunu anlatılmaktadır. Pardus-Ahtapot ISO'sunda öntanımlı kullanıcı **ahtapotops** öntanımlı parola **LA123** Parola ilk giriş ekranında değiştirilmek zorundadır.
 
- * Pardus Temel ISO dosyasından oluşturulmuş ve kurulduğunda Merkezi Yönetim Sistemi ile yönetilebilmeye hazır hale gelecek ISO dosyasının kurulumu için ilgili sunucu ISO dosyasını barındıran ortam aracılığı ile açılır. Açılan ekranda “**Pardus’u Kur**” seçeneği seçilerek ilerlenir.
+ * Kurulum dili seçim menüsünden dil seçiniz..
 
-![ULAKBIM](../img/pardus1.png)
+![ULAKBIM](../img/ahtapotiso_kurulum_gorseller/1.png)
 
- * ISO üzerinden açılan makinede öncelikli olarak kurulum dili seçim menüsü gelmektedir. Buradan istenilen dil seçilir. 
- 
- ![ULAKBIM](../img/pardus1_33.png)
- 
- * Açılan ekranda klavye seçimi yapılarak ilerlenilir.
- 
- ![ULAKBIM](../img/pardus1_66.png)
+ * Önyükleme menüsünden kurulum için istediğiniz seçeneği seçiniz. (Klavuz **Kur** seçeneği ile ilerleyecektir.)
+
+![ULAKBIM](../img/ahtapotiso_kurulum_gorseller/2.png)
+
+ * Pardus-Ahtapot ISO'sundan kurulacak **sistemin dilini** seçiniz.
+
+![ULAKBIM](../img/ahtapotiso_kurulum_gorseller/3.png) 
+
+ * **Konum** bilginizi seçiniz.
+
+![ULAKBIM](../img/ahtapotiso_kurulum_gorseller/4.png)
+
+ * Kullanmak istediğiniz **Klavye** ayarını seçiniz.
+
+![ULAKBIM](../img/ahtapotiso_kurulum_gorseller/5.png)
   
- * Dil ve klavye seçiminin ardından ağ yapılandırması yapılır. Açılan ilk ekranda “**IP adresi:**” satırının altında bulunan alana sunucunun sahip olması istenilen IP adresi girilerek “**Devam**” seçeneği seçilir.
+ * Sunucunun sahip olması istenen ağ ayarları için **IP adresi:** giriniz, **Devam** seçeneği ile ilerleyiniz.
 
-![ULAKBIM](../img/pardus2.png)
+![ULAKBIM](../img/ahtapotiso_kurulum_gorseller/6.png)
 
- * Ağ yapılandırmasının ikinci aşaması olarak ağ maskesi bilgisi “**Ağ maskesi:**” satırının altında bulunan alana girilerek “**Devam**” seçeneği seçilir.
+ * **Ağ maskesi:** bilgisi giriniz, **Devam** seçeneği ile ilerleyiniz.
 
-![ULAKBIM](../img/pardus3.png)
+![ULAKBIM](../img/ahtapotiso_kurulum_gorseller/7.png)
 
- * Açılan yeni ekranda, “**Ağ geçidi:**” satırının altında bulunan alana ağ geçidi bilgisi girilerek “**Devam**” seçeneği seçilir.
+ * **Ağ geçidi:** bilgisi giriniz, **Devam** seçeneği ile ilerleyiniz.
 
-![ULAKBIM](../img/pardus4.png)
+![ULAKBIM](../img/ahtapotiso_kurulum_gorseller/8.png)
 
- * Ağ yapılandırma ayarları bakımdan erişim bilgisi olarak girilecek son bilgi olan "**Alan adı sunucusu adresleri:**”  satırının altına ilgili IP adresi girilerek “**Devam**” seçeneği seçilir.
+ * Ağ yapılandırma ayarları bakımdan erişim bilgisi olarak girilecek son bilgi olan **Alan adı sunucusu adresleri:**  ilgili IP adresini giriniz, **Devam** seçeneği ile ilerleyiniz.
 
-![ULAKBIM](../img/pardus5.png)
+![ULAKBIM](../img/ahtapotiso_kurulum_gorseller/9.png)
 
- * Ağ yapılandırma ayarları kapsamında makineye verilmesi planlanan isim “**Makine adı:**” satırının altında bulunan alana girilerek “**Devam**” seçeneği seçilir.
+ * Ağ yapılandırma ayarları kapsamında makineye verilmesi planlanan isim **Makine adı:** girilerek **Devam** seçeneği ile ilerleyiniz.
 
-![ULAKBIM](../img/pardus6.png)
+![ULAKBIM](../img/ahtapotiso_kurulum_gorseller/10.png)
 
- * Makinenin dahil olacağı etki alanı bilgisi “**Alan adı:**” satırının altında bulunan alana girilerek “**Devam**” seçeneği seçilir.
+ * Makinenin dahil olacağı etki alanı bilgisini **Alan adı:** giriniz, **Devam** seçeneği ile ilerleyiniz.
 
-![ULAKBIM](../img/pardus7.png)
+![ULAKBIM](../img/ahtapotiso_kurulum_gorseller/11.png)
 
- * Makineye ihtiyaç halinde konsol girişinde kullanmak üzere “**Root**” kullanıcısına atanacak parola “**Root parolası:**” satırının altına girilir.
+ * **Diskleri bölümle** ekranında **Bölümleme şeması:** altında bulunan **Tüm dosyalar tek bölümde (yeni kullanıcılara tavsiye edilir)** seçeneği seçiniz, ve ENTER tuşuna basarak ilerleyiniz.
 
-![ULAKBIM](../img/pardus8.png)
+![ULAKBIM](../img/ahtapotiso_kurulum_gorseller/12.png)
 
- * Bir önceki adımda belirlenen parolayı teyit etmek için “**Doğrulamak için parolayı tekrar girin:**” satırına parola tekrar girilir.
-
-![ULAKBIM](../img/pardus9.png)
-
- * Root parolası belirlendikten sonra “**Diskleri bölümle**” ekranı gelir. Bu ekranda "**Bölümleme yöntemi:**" altında bulunan “**Tüm dosyalar tek bölümde (yeni kullanıcılara tavsiye edilir)**” seçeneği seçilir ve ENTER tuşuna basılır.
-
-![ULAKBIM](../img/pardus20.png)
-
- * Girilen bilgiler doğrultusunda "**Temel sistem kurulumu başlar**". 
+ * Girilen bilgiler doğrultusunda **Temel sistem kurulumu başlar**.
 
 ![ULAKBIM](../img/pardus10.png)
  
- * Temel sistem bileşenlerini kurduktan sonra kurulumu tamamlamak için repodan paketleri alır. Bu aşamada kurulum 3 şekilde devam edebilir.
+  * **GRUB önyükleyici bir sabit diske kur** ekranında, **Önyükleyicinin kurulacağı aygıt:** seçeneğinin altında bulunan **/dev/sda (ata-VBOX_HARDDISK_….)** seçeneğini seçiniz, ENTER tuşuna basarak devam ediniz.
 
-    * Repo kurulum:
+![ULAKBIM](../img/ahtapotiso_kurulum_gorseller/13.png)
 
-		* İnternet bağlantısı ve pardus repoya erişim var ise kurulum otomatik olarak herhangi bir seçim yapmadan devam eder.
+  * Kurulumun tamamlanmasının ardından, Pardus-Ahtapot giriş ekranını göreceksiniz.
 
-		![ULAKBIM](../img/pardus11.png)
-		
-	* Local Repo Kurulum:
-		* Sunucunun Pardus reposuna erişimi olmadığı durumda aşağıda verdiği hata ile, başka bir yansıma repo gösterilebilmektedir. Bunun için “**Devam**” seçeneği seçilir.
+![ULAKBIM](../img/ahtapotiso_kurulum_gorseller/14.png)
 
-		![ULAKBIM](../img/pardus13.png)
-		
-		* Gelen “**Paket Yöneticisini yapılandır**” ekranında “**bilgileri elle girin**” seçeneği seçilir.	
-		
-		![ULAKBIM](../img/pardus14.png)
-		
-		* Açılan ekranda “**Debian arşivi yansısının adresini girin:**” bölümüne local reponun ip adresi yazılarak “**Devam**” seçeneği seçilir.
-		
-		![ULAKBIM](../img/pardus15.png)
-		
-		* Local reponun yansılama dizini “**Debian yansı dizinini girin:**” bölümüne yazılarak “**Devam**” seçeneği seçilir.
-		
-		![ULAKBIM](../img/pardus16.png)
-    
-    * İnternet Bağlantısız Kurulum:
-		* Sunucunun Pardus reposuna erişimi olmadığı durumda aşağıda verdiği hata sonrasında kurulum medyası repo olarak kullanılabilmektedir.. Bunun için “**Geri dön**” seçeneği seçilir.
-        
-        	![ULAKBIM](../img/pardus17.png)
-		
-		* Gelen “**Bir ağ yansısı kullanılmadan devam edilsin mi?**” ekranında “**Evet**” seçeneği seçilerek kuruluma devam edilir.
-        
-        	![ULAKBIM](../img/pardus18.png)
+  * Pardus-Ahtapot ISO sunda öntanımlı kullanıcı **ahtapotops** , öntanımlı parola **LA123** ' tür. Kullanıcı adı ve parola ile giriş yapınız, varolan parolanızı tekrar girmenizi isteyen bir yazı ekrana gelecektir.
 
-  * Gelen “**GRUB önyükleyici bir sabit diske kur**” ekranında, "**Önyükleyicinin kurulacağı aygıt:**" seçeneğinin altında bulunan “**/dev/sda (ata-VBOX_HARDDISK_….)**” seçeneği seçilerek ENTER tuşuna basılır.
+![ULAKBIM](../img/ahtapotiso_kurulum_gorseller/15.png)
 
-![ULAKBIM](../img/pardus21.png)
+  * Pardus-Ahtapot ISO kurulumu tamamlanıp giriş yapıldığında en az 8 karakterli yeni parola belirleyiniz.
 
-  * Kurulum şeklinin seçilmesinin ardından, Pardus Kurumsal 5 giriş ekranı gelerek kurulum tamamlanır.
-
-![ULAKBIM](../img/pardus19.png)
+![ULAKBIM](../img/ahtapotiso_kurulum_gorseller/16.png)
 
   * Kurulumun tamamlanmasından sonra preseed yapılandırması ile kuruluma eklenmiş ve sistemin hazır hale gelmesine yardımcı olacak aşağıdaki adımlar da gerçekleşmiştir.
 	* python, sudo,openssh-server paketleri kurulmuştur.
