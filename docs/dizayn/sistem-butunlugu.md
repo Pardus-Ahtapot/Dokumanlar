@@ -6,7 +6,7 @@ Bu dokümanda, sistem bütünlüğü için yapılan periyodik kontrollerin çal�
 
 ------
 
-
+* Öncelikle git sunucusunda **sb** adında bir **public** proje bulunmalı. Projenin adresi /etc/ansible/roles/post/vars/integrity.yml içerisindeki **git** konfigürasyonunun **repo** değişkenine yazılmalıdır.
 * Sistem bütünlüğü kontrolü için uç makinanın ilk kurulumundan sonra makinadan yüklü paketler, kullanıcılar, gruplar ve konfigürasyon bilgileri alınır.
 * Bu bilgiler hem uzak makinanın kendisinde hemde merkezi bir git sunucusunda saklanır.
 * Toplanan bu bilgileri bir betik kullanıcının belirleyeceği aralıklarla sistemi kontrol eder.
