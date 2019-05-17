@@ -6,7 +6,7 @@ Bu dokümanda, Güvenli İnternet Erişim Sistemi (Proxy) tasarım ve çalışma
 
 ------
 
-![WebProxy](../img/WebProxyDiyagram.jpg)
+![WebProxy](../img/WebProxy_diyagram.png)
 
   * Kullanıcı gitmek istediği sayfaya girmek için browser üzerinden web proxye istek gönderir.
   * Web Proxydeki beyaz listede ilgili sayfa olmadığından ya da kara listede bulunduğundan kullanıcının girişine izin vermez.
