@@ -49,6 +49,7 @@ Ayrı bir sunucu olmasına gerek duymuyor iseniz, Merkezi Yönetim Sistemi (ansi
 Diğer Ahtapot sistemlerinin verimli ve hızlı bir şekilde kurulabilmesi için;
 
 * Sertifika Otoritesi kurulumu tamamlanmalıdır.
+* Gitlab kurulmalidir
 * Merkezi Yönetim Sistemi suncusu kurulmalıdır.
 
 Merkezi Yönetim Sistemi kurulumu tamamlandıktan sonra ihtiyaca göre diğer bileşenlerin kurulumları yapılmalıdır.
