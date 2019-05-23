@@ -259,14 +259,14 @@ ssh:
 ```
 
 
-* Sunucu üzerinde gerekli sıkılaştırma işlemleri ve ansible kurulumu yapacak olan **ansible.yml** playbook’u çalıştırılır.
+* Sunucu üzerinde gerekli sıkılaştırma işlemleri ve ansible kurulumu yapacak olan **ansible.yml** playbook’u açılır ve **roles:** altinda sadece **base** rolü açık kalacak şekilde **ansible** ve **post** rollerinin başına **#** koyulur daha sonra bu dosya aşağıda gösterildiği şekilde çalıştırılır.
 
 ```
 $ ansible-playbook /etc/ansible/playbooks/ansible.yml -k
 
 ```
 
-* ansible.yml playbookunun çalışması bittikten sonra, Ansible kurulumu tamamlanmış olacak ve sistem diğer sunucuları yönetebilir hale gelmiş olacaktır.
+* ansible.yml playbookunun çalışması bittikten sonra, konfigürasyon yedeklemesi ve güvenliğinin sağlanması, yetkisiz değişikliklerin görülebilmesi için Gitlab kurulumu yapılması zorunludur. Aşağıda anlatıldığı şekilde Gitlab kurulumu yapıldıktan sonra Ansible kurulumu tamamlanmış olacak ve sistem diğer sunucuları yönetebilir hale gelmiş olacaktır.
 
 ```
 $ ssh ansible.ahtapot.org.tr
@@ -573,7 +573,7 @@ transport      = smart
 remote_port    = ssh_port 
 ```
 
-* “**Ansible Playbookları**” dokümanında detaylı anlatımı bulunan, sunucu üzerinde gerekli sıkılaştırma işlemleri ve gitlab kurulumu yapacak olan “**gitlab.yml**” playbook’u çalıştırılır.
+* “**Ansible Playbookları**” dokümanında detaylı anlatımı bulunan, sunucu üzerinde gerekli sıkılaştırma işlemleri ve gitlab kurulumu yapacak olan “**gitlab.yml**” playbook’u çalıştırılır. Ancak ilk kurulma mahsus olmak üzere playbook çalıştırılmadan önce "**gitlab.yml**" dosyası açılır ve "**roles**" altında bulunan "**post**" satırının başına **#** işareti konularak ilk kuruluma mahsus bu rolün çalışmaması sağlanır.
 
 ```
 $ ansible-playbook /etc/ansible/playbooks/gitlab.yml -k
@@ -682,7 +682,7 @@ Yapılandırma işlemlerine geçmek üzere, gitlab adresine bir web tarayıcıs�
 
 ![Gitlab](../img/gitlab_gorseller/gitlab13.png)
 
-  * FirewallBuilder ve Ansible entegrasyonunu sağlıklı olarak gerçekleştirmek için iki adet proje oluşturulması gerekmektedir. FirewallBuilder tarafı için **gdys** Ansible tarafı için ise **mys** projeleri oluşturulmalıdır. Proje oluşturmak için **Go to dashboard** butonuna basılır.
+  * FirewallBuilder ve Ansible entegrasyonunu sağlıklı olarak gerçekleştirmek için iki adet proje oluşturulması gerekmektedir. FirewallBuilder tarafı için **gdys** Ansible tarafı için ise **mys** ve **sb** projeleri oluşturulmalıdır. Proje oluşturmak için **Go to dashboard** butonuna basılır.
 
 ![Gitlab](../img/gitlab_gorseller/gitlab14.png)
 
@@ -709,6 +709,8 @@ Yapılandırma işlemlerine geçmek üzere, gitlab adresine bir web tarayıcıs�
   * **Project path** satırında **/** ibaresinden sonra proje ismi olan **mys** yazınız. İsteğe bağlı olarak **Description** bölümüne tanımlama yazılarak **Private** seçiniz  ve **CREATE PROJECT** butonuna basınız.
 
 ![Gitlab](../img/gitlab_gorseller/gitlab20.png)
+
+  * Yukarıdaki son iki adımı **sb** projesini oluşturmak için tekrar edin. Ancak **sb** projesi **Public** olacaktır.
 
   * Proje oluşturulduktan sonra, açılan ekran proje anasayfası olup; **mys** deposuna erişim hakkı olacak kullanıcıları belirtlemek için sağ üst **Members** seçeneğinden kullanıcı ve yetkilerini belirleyiniz.
 
@@ -885,6 +887,22 @@ $ git add --all
 $ git commit -m "yapılan değişiklik commiti yazılır"
 $ git push origin master
 ```
+
+* **ÖNEMLİ:** Gitlab kurulumu tamamlandığına göre bir önceki adım olan MYS kurulumu adımına geri dönülür ve başına **#** işareti koyduğumuz **ansible** ve **post** satırlarının başındaki **#** işareti silinir ve **ansible.yml** yeniden aşağıdaki gibi çalıştırılır.
+
+```
+$ ansible-playbook /etc/ansible/playbooks/ansible.yml -k
+
+```
+
+Ardından yine başına "**gitlab.yml**" dosyası içinde başına **#** işareti koyduğumuz **post** satırının başındaki **#** işareti silinir ve "**gitlab.yml**" yeniden çalıştırılır.
+
+```
+$ ansible-playbook /etc/ansible/playbooks/ansible.yml -k
+
+```
+
+Bu adımlar sonunda artık gitlab ve ansible rolleri tamamıyla kurulmuş olacaktır ve diğer bileşenlerin kurulumuna geçilebilir.
 
 ####Ansible Playbook ile FirewallBuilder Kurulumu
 
