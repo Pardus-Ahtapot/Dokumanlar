@@ -19,6 +19,7 @@ pages:
     - 'Sadece Gerekli Durumlarda Playbookların Çalışmasını Sağlama Kurulum': 'kurulum-yonergeleri/smartstate-kurulum.md'
     - 'Ossim Plugin Yazılması ve Siem Entegrasyonu': 'kurulum-yonergeleri/ossim-siem-plugin-kurulum-yapilandirmasi.md'
     - 'Icinga Kurulumu': 'kurulum-yonergeleri/icinga-kurulum.md'
+    - 'Veritabanı Güvenlik Duvarı Kurulumu': 'kurulum-yonergeleri/veritabani-guvenlik-duvari-kurulumu.md'
 - "KULLANIM KLAVUZLARI": 
     - 'Güvenlik Duvarı Yönetim Sistemi Kullanımı': 'kullanim-klavuzlari/gdys-kullanim.md'
     - 'Geçici Kural Tanımlama Sistemi Kullanımı': 'kullanim-klavuzlari/gkts-kullanim.md'
@@ -48,6 +49,7 @@ pages:
     - 'Faraday Kullanımı': 'kullanim-klavuzlari/faraday.md'
     - 'DDOSMON Kullanımı': 'kullanim-klavuzlari/ddosmon.md'
     - 'Icinga Kullanımı': 'kullanim-klavuzlari/icinga-kullanim.md'
+    - 'Veritabanı Güvenlik Duvarı Kullanımı': 'kullanim-klavuzlari/veritabani-guvenlik-duvari-kullanim.md'
 - "DIZAYN":
     - 'Merkezi Yönetim Sistemi': 'dizayn/merkezi-yonetim-sistemi.md'
     - 'Merkezi Güvenlik Duvarı Yönetim Sistemi Kontrol Paneli': 'dizayn/merkezi-guvenlik-duvari-yonetim-sistemi-kontrol-paneli.md'
