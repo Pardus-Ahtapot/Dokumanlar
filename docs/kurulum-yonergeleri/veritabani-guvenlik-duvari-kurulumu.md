@@ -26,7 +26,7 @@ $ git push origin master
 dbfirewall.gdys.local
 ``` 
 
-* Gitlab arayüzünden mys reposundaki  “**roles/base/vars/host.yml**” dosyasına sks sunucusunun ip adresi, FQDN bilgisi ve hostname’i yeni bir server bloğu oluşturularak yazılır. 
+* Gitlab arayüzünden mys reposundaki  “**roles/base/vars/host.yml**” dosyasına veritabanı güvenlik duvarı sunucusunun ip adresi, FQDN bilgisi ve hostname’i yeni bir server bloğu oluşturularak yazılır. 
 
 ```
 serverN:
@@ -35,7 +35,7 @@ serverN:
         hostname: "dbfirewall"
 ```
 
-Ardından sks sistemi ile ilgili aşağıda tanımlanmış değişkenler açıklamalarda belirtilen şekilde uygun değerlerle doldurulur.
+Ardından veritabanı güvenlik duvarı sistemi ile ilgili aşağıda tanımlanmış değişkenler açıklamalarda belirtilen şekilde uygun değerlerle doldurulur.
 #### Veritabanı Güvenlik Duvarı Rolü Değişkenleri
 Bu roldeki değişkenler “**/etc/ansible/roles/dbfirewall/vars/**” dizini altında bulunan yml dosyalarında belirtilmiştir. yml dosyalarının içerikleri ve değişken bilgileri aşağıdaki gibidir;
 

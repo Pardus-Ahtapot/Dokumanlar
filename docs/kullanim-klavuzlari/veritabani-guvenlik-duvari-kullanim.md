@@ -1,7 +1,7 @@
 
 ### Veritabanı Güvenlik Duvarı Kullanımı
 Ahtapot projesi kapsamında entegre edilen Veritabanı Güvenlik Duvarı, go dilinde yazılmıştır. Ahtapot Veritabanı Güvenlik Duvarının kurulum ve Konfigürasyonu “**/etc/ansible/playbooks/**” dizini altında bulunan “**dbfirewall.yml**” dosyasına bakıldığında, “**hosts**” satırında Ansible’a ait “**/etc/ansible/**” altında bulunan “**hosts**” dosyasında “**[dbfirewall]**” satırı altına yazılmış tüm sunucularda bu playbookun oynatılacağı belirtilir.
- “**sudo**” satırı ile çalışacak komutların sudo yetkisi ile çalışması belirlenir. “**vars_files**” satırı sks playbookunun değişken dosyalarını belirtmektedir. “**roles**” satırı altında bulunan satırlarda ise bu playbook çalıştığında “**base**” ve “**sks**”rollerinin çalışacağı belirtilmektedir.
+ “**sudo**” satırı ile çalışacak komutların sudo yetkisi ile çalışması belirlenir. “**vars_files**” satırı dbfirewall playbookunun değişken dosyalarını belirtmektedir. “**roles**” satırı altında bulunan satırlarda ise bu playbook çalıştığında “**base**” ve “**database-firewall**”rollerinin çalışacağı belirtilmektedir.
 
 ### Dikkat!
 Ahtapot Veritabanı Güvenlik Duvarı, bir veritabanı sunucusuna ya da web sunucusuna kurulacak ise, “**/etc/ansible/playbooks/dbfirewall.yml**” dosyasından, base ve post rollerinin # ile kapatılarak çalıştırılması tavsiye edilir. Bu roller **Ahtapot BSGS** bileşeneleri için güvenlik sıkılaştırmaları uyguladığından, bileşenler haricindeki uygulamaların bu sıkılaştırmalardan sonra çalışmaması ya da doğru çalışmamasına sebep olabilir.
