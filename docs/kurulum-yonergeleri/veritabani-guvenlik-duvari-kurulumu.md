@@ -19,7 +19,7 @@ $ git push origin master
 
 * Gitlab adresine  bir web tarayıcı vasıtası ile girilerek Gitlab web arayüzüne “**https://gitlabsunucuadresi**” ile erişilir. 
 
-* Gitlab arayüzünden mys resposundaki “**hosts**” dosyasında “**[dbfirewall]**” fonksiyonu altına antispam sunucusunun FQDN bilgisi girilir.
+* Gitlab arayüzünden mys resposundaki “**hosts**” dosyasında “**[dbfirewall]**” fonksiyonu altına veritabanı güvenlik duvarı sunucusunun FQDN bilgisi girilir.
 
 ```
 [dbfirewall]
