@@ -582,6 +582,7 @@ $ ansible-playbook /etc/ansible/playbooks/gitlab.yml -k
 * Git kurulumdan sonra parolasız git işlemlerini yapabilmek için   [CA Kurulumu ve Anahtar Yönetimi](ca-kurulum.md) dokümanına uygun bir şekilde oluşturulmuş git kullanıcısına ait anahtalar, GitLab sunucu üzerinde ilgili yerlere kopyalama işlemi yapılmalıdır. Bu adımlar hem GitLab sunucusunda hem de yedek GitLab sunucusunda yapılmalıdır.
 
 ```
+$ scp git git.pub   git-cert.pub  myshook-cert.pub  myshook.pub myshook gdyshook gdyshook.pub gdyshook-cert.pub ahtapotops@gitlab:/home/ahtapotops/
 $ ssh ahtapotops@gitlab.fqdn_bilgisi -i /home/ahtapotops/.ssh/id_rsa
 ```
 * git kullanıcısı için oluşturulmuş anahtarları, GitLab sunucu üzerinde **/home/ahtapotops** dizinine kopyalanır ve ilgili dizinlere taşınır.
@@ -601,7 +602,9 @@ $ sudo cp /home/ahtapotops/gdyshook.pub /var/opt/gitlab/.ssh/gdyshook.pub
 ```
 $ chmod 700 ~/.ssh
 $ cd ~/.ssh/
-$ chmod 600 id_rsa gdyshook myshook
+sudo chmod 600 id_rsa 
+sudo chmod 600 /var/opt/gitlab/.ssh/gdyshook 
+sudo chmod 600 /var/opt/gitlab/.ssh/myshook
 $ exit
 ```
 
