@@ -898,7 +898,7 @@ $ ansible-playbook /etc/ansible/playbooks/ansible.yml -k
 Ardından yine başına "**gitlab.yml**" dosyası içinde başına **#** işareti koyduğumuz **post** satırının başındaki **#** işareti silinir ve "**gitlab.yml**" yeniden çalıştırılır.
 
 ```
-$ ansible-playbook /etc/ansible/playbooks/ansible.yml -k
+$ ansible-playbook /etc/ansible/playbooks/gitlab.yml -k
 
 ```
 
