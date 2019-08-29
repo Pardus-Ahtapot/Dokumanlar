@@ -12,40 +12,29 @@ Gereken : Pardus Temel ISO’ dan kurulumu tamamlanmış sunucular. Pardus Temel
 
 ####Ansible Kurulum İşlemleri
 
-* Pardus Temel ISO dosyasından Pardus kurulumu tamamlandıktan sonra sisteme “**ahtapotops**” kullanıcı ile giriş yapılır. ahtapotops kullanıcısının parolası “**LA123!!**” olarak öntanımlıdır.
-* Dokümanda ansible 1.7 versiyonuna göre kurulum adımları anlatılmıştır.
+* Pardus Temel ISO dosyasından Pardus kurulumu tamamlandıktan sonra sisteme **ahtapotops** kullanıcı ile giriş yapılır. ahtapotops kullanıcısının parolası **LA123** olarak öntanımlıdır.
 * Pardus depolarının doğruluğundan emin olunuz. [Kuruluma Başlamadan Önce](kurulumoncesi.md)
-* [CA Kurulumu ve Anahtar Yönetimi](ca-kurulum.md) dokümanına uygun bir şekilde oluşturulmuş **ahtapotops** **ahtapotops-cert.pub** anahtarları mys sunucusunda **/home/ahtapotops/** dizinine taşındıktan sonra ahtapotops kulanıcısının parolasız erişimi için aşağıdaki adımlar izlenir.
+* [CA Kurulumu ve Anahtar Yönetimi](ca-kurulum.md) dokümanına uygun bir şekilde oluşturulmuş **ahtapotops** **ahtapotops-cert.pub** anahtarları mys sunucusunda **/home/ahtapotops/** dizinine taşıyınız.
 
 ```
 $ cd /home/ahtapotops
 $ mkdir ~/.ssh && chmod 700 ~/.ssh
 $ cp /home/ahtapotops/ahtapotops /home/ahtapotops/.ssh/id_rsa  && chmod 600 /home/ahtapotops/.ssh/id_rsa
 $ cp /home/ahtapotops/ahtapotops-cert.pub /home/ahtapotops/.ssh/id_rsa-cert.pub  && chmod 600 /home/ahtapotops/.ssh/id_rsa-cert.pub
+$ cp /home/ahtapotops/ahtapotops.pub /home/ahtapotops/.ssh/id_rsa.pub  && chmod 600 /home/ahtapotops/.ssh/id_rsa.pub
 ```
-
-* Aşağıdaki komut ile ansible ve git kurulumları yapılır. Ansible versiyonu kontrol edilir. (Tavsiye edilen versiyon: ansible 1.7.2 , Pardus onyedi reposunda ansible 2.x.x versiyonu, yenikuşak reposunda 1.7.2 versiyonu bulunmaktadır.)
-```
-$ sudo apt-get install -y ansible
-$ ansible --version
-$ cd /etc/ansible
-$ sudo apt-get install -y git
-```
-
 * Kurulum, sıkılaştırma vb. gibi işleri otomatize etmeyi sağlayan ansible playbook’ları Ahtapot reposundan ahtapot-mys paketi ile indirilebilir veya Github'tan Ahtapot projesi indirilerek, son güncel ahtapotmys kullanılabilir.
 ```
 $ sudo apt-get install -y ahtapot-mys
 $ sudo chown ahtapotops:ahtapotops -R /etc/ansible/
+$ sudo apt-get install -y git
+$ cd /etc/ansible
+$ git clone -b development https://github.com/Pardus-Ahtapot/MYS.git && cp -rf /etc/ansible/MYS/ahtapotmys/* /etc/ansible/
 ```
-```
-$ git clone -b development https://github.com/Pardus-Ahtapot/MYS.git
-$ sudo cp -rf /ahtapotmys/* /etc/ansible/
-$ sudo chown ahtapotops:ahtapotops -R /etc/ansible/
-```
-* Ahtapot projesi kapsamında oluşacak tüm loglar “**/var/log/ahtapot/**” dizinine yazılmaktadır. Bu dizinin sahipliğini “**ahtapotops**” kullanıcısına vermek için aşağıdaki komut çalıştırılır.
+* Ahtapot projesi kapsamında oluşacak tüm loglar **/var/log/ahtapot/** dizinine yazılmaktadır. Bu dizinin sahipliğini **ahtapotops** kullanıcısına vermek için aşağıdaki komut çalıştırılır.
 
 ```
-$ chown ahtapotops:ahtapotops -R /var/log/ahtapot
+$ sudo chown ahtapotops:ahtapotops -R /var/log/ahtapot
 ```
 
 **NOT :** Ansible makinası yedekli kurulacak ise, yedek olacak makinanın üzerinde /var/log/ahtapot/ dizini el ile oluşturulup sahipliği ahtapotops kullanıcısı olmalıdır.
@@ -79,13 +68,25 @@ base_repositories:
         url: 'deb [trusted=yes] http://depo.pardus.org.tr/pardus-yenikusak yenikusak main non-free contrib'
         updatecache: yes
         state: present
+    repo05:
+        url: 'deb http://depo.pardus.org.tr/guvenlik onyedi main contrib non-free'
+        updatecache: yes
+        state: present
+   repo06:
+        url: 'deb [trusted=yes] http://depo.pardus.org.tr/ahtapot-siem yenikusak main'
+        updatecache: yes
+        state: present   
+   repo07:
+        url: 'deb [trusted=yes] http://depo.pardus.org.tr/ahtapot yenikusak main'
+        updatecache: yes
+        state: present
 #    repoXX:
 #        url: 
 #        updatecache:
 #        state:
 ```
 
-* Kurmak istediğimiz bileşenlerin bilgileri "**/etc/ansible/hosts**" ve "**/etc/ansible/roles/base/vars/host.yml**" dosyalarına yazılması gerekir. Düzenlenmeler yapılırken, sunucuya hangi rol yüklenecek ise “**[rol_adı]**” satırının altına ilgili sunucusunun “**FQDN**” bilgileri girilmelidir. Sistemler yedekli kurulacak ise, yedek sistemlerin FQDN bilgileri de ilgili başlık altına yazılmalıdır.
+* Kurmak istediğimiz bileşenlerin bilgileri **/etc/ansible/hosts** ve **/etc/ansible/roles/base/vars/host.yml** dosyalarına yazılması gerekir. Düzenlenmeler yapılırken, sunucuya hangi rol yüklenecek ise **[rol_adı]** satırının altına ilgili sunucusunun **FQDN** bilgileri girilmelidir. Sistemler yedekli kurulacak ise, yedek sistemlerin FQDN bilgileri de ilgili başlık altına yazılmalıdır.
 
 ```
 $ nano /etc/ansible/hosts
@@ -127,11 +128,11 @@ base_host_servers:
 #        hostname: "server"
 #    server01:
 #       ip: "X.X.X.X"
-#       fqdn: "ansible.ahtapot.org"
+#       fqdn: "ansible.ahtapot.org.tr"
 #       hostname: "ansible"
 ```
 
-* Sunucular sanal ortamda kuruluyor ise, **/etc/ansible/roles/base/vars/kernelmodules_remove.yml** dizinlerindeki bir modül bırakılarak silinmeli veya yorum satırına dönüştürülmelidir.
+* Sunucular sanal ortamda kuruluyor ise, **/etc/ansible/roles/base/vars/kernelmodules_remove.yml** dizinlerindeki modüllerin sanal makinada olmamasından kaynaklı hata verebilir. Playbook çalıştan sonra hata veren modülü yorum satırı yapabilirsiniz veya modülleri kontrol etmek istemiyor iseniz tüm modülleri yorum satırı yapabilir veya silebilirsiniz.
 * Sunucular fiziksel ise herhangi bir değişiklik yapmaya gerek yoktur.
 
 ```
@@ -156,24 +157,17 @@ to_be_removed_modules:
 
 ```
 
-* Ansible makinasının diğer makinalara parolasız erişimi için /etc/ansible/hosts ve /etc/ansible/roles/base/vars/hosts.yml düzenlenir. Düzenlemelerden sonra sunucuların birbirlerinin “**known_host**” dosyasında kayıtlarının olması için “**ahtapotops**” kullanıcısı ile ssh bağlantısı sağlanması gerekmektedir. Bunun için aşağıdaki komutlar ansible makinesinden diğer makinelere doğru çalıştırılmalı ve sunucu anahtarlarının kabul edilmesi sorusu sorulduğunda “yes” yazılmalıdır. Bağlantıda sorun ile karşılaşılması durumunda anahtarların doğruluğu kontrol edilmelidir. 
+* Sunucuların birbirlerinin “**known_host**” dosyasında kayıtlarının olması için “**ahtapotops**” kullanıcısı ile ssh bağlantısı sağlanması gerekmektedir. Bunun için aşağıdaki komutlar ansible makinesinden diğer makinelere doğru çalıştırılmalı ve sunucu anahtarlarının kabul edilmesi sorusu sorulduğunda “yes” yazılmalıdır. Bağlantıda sorun ile karşılaşılması durumunda anahtarların doğruluğu kontrol edilmelidir. 
 
 ```
-$ ssh ansible@fqdn_bilgisi
+$ ssh-copy-id client.fqdn_bilgisi
+$ ssh ahtapotops@mys.fqdn_bilgisi
 $ exit
-$ ssh ansible@ip_adresi
 # örnek olarak
-$ ssh ansible@ahtapot.org.tr
-$ exit
-$ ssh gitlab@ahtapot.org.tr
-$ exit
-
-# daha sonra kuracağınız diğer sunucular için örnek
-$ ssh sunucu@fqdn_bilgisi
-$ exit
-
+# ssh mys.ahtapot.org.tr
+# $ exit
 ```
-* Playbook oynatıldıktan sonra sunucuya uzaktan erişim sağlayabilmek için ssh.yml playbook'unda "**PasswordAuthentication: "yes"**" düzenleme yapılmalıdır. Ansible sunucunuza uzaktan erişim sağlanılmayacaksa düzenleme yapılmasına gerek yoktur.
+* Playbook oynatıldıktan sonra MYS sunucusuna uzaktan erişim sağlayabilmek için **/etc/ansible/roles/base/vars/ssh.yml** playbook'unda **PasswordAuthentication: "yes"** düzenleme yapılmalıdır. Ansible sunucunuza uzaktan erişim sağlanılmayacaksa düzenleme yapılmasına gerek yoktur.
 
 ```
 $ nano /etc/ansible/roles/base/vars/ssh.yml
@@ -263,22 +257,17 @@ ssh:
 ```
 
 
-* Sunucu üzerinde gerekli sıkılaştırma işlemleri ve ansible kurulumu yapacak olan “**ansible.yml**” playbook’u çalıştırılır.
+* Sunucu üzerinde gerekli sıkılaştırma işlemleri ve ansible kurulumu yapacak olan **ansible.yml** playbook’u açılır ve **roles:** altinda sadece **base** rolü açık kalacak şekilde **ansible** ve **post** rollerinin başına **#** koyulur daha sonra bu dosya aşağıda gösterildiği şekilde çalıştırılır.
 
 ```
-$ ansible-playbook /etc/ansible/playbooks/ansible.yml --connection=local --skip-tags=git,security
-```
-
-* ansible.yml playbookunun çalışması bittikten sonra, Ansible kurulumu tamamlanmış olacak ve sistem diğer sunucuları yönetebilir hale gelmiş olacaktır.
+$ ansible-playbook /etc/ansible/playbooks/ansible.yml
 
 ```
-$ ssh FQDN_SUNUCU_ADI
-$ exit
-```
+
+* ansible.yml playbookunun çalışması bittikten sonra, konfigürasyon yedeklemesi ve güvenliğinin sağlanması, yetkisiz değişikliklerin görülebilmesi için Gitlab kurulumu yapılması zorunludur. Aşağıda anlatıldığı şekilde Gitlab kurulumu yapıldıktan sonra Ansible kurulumu tamamlanmış olacak ve sistem diğer sunucuları yönetebilir hale gelmiş olacaktır.
+
 ####Ansible Playbook ile GitLab Kurulumu
-* **NOT:** Dökümanda yapılması istenilen değişiklikler gitlab arayüzü yerine terminal üzerinden yapılması durumunda playbook oynatılmadan önce yapılan değişiklikler git'e push edilmelidir.
-
-* MYS'de /etc/ansible/hosts ve /etc/ansible/roles/base/vars/host.yml dosyalarında github sunucusu bilgileri düzenlenir.
+* MYS'de /etc/ansible/hosts ve /etc/ansible/roles/base/vars/host.yml dosyalarında gitlab sunucusu bilgileri düzenlenir.
 
 ```
 $ nano /etc/ansible/hosts
@@ -292,7 +281,7 @@ gitlab.domain_adi
 #server1.domain_adi
 #örnek;
 #[ansible]
-#ansible.ahtapot.org
+#ansible.ahtapot.org.tr
 
 ```
 
@@ -325,7 +314,7 @@ base_host_servers:
 #        hostname: "server"
 #    server01:
 #       ip: "X.X.X.X"
-#       fqdn: "ansible.ahtapot.org"
+#       fqdn: "ansible.ahtapot.org.tr"
 #       hostname: "ansible"
 ```
 
@@ -405,11 +394,10 @@ ssh:
     UsePAM: "no"
     UseLogin: "no"
 ```
-* “**roles/ansible/vars**” klasörü altında git değişkenlerini barındıran “**git.yml**” dosyası üzerinde “**repo01**” ve “**repo02**” başlıkları altındaki “**repo**” satırında bulunan “**yerel_gitlab_adresi**” bölümünün yerine Merkezi Yönetim Sistemi kapsamında kurulacak Git sunucusunun ip adresi girilmelidir. Eğer sunucularda varsayılan ssh portu dışında port kullanılacak ise “**:ssh_port**” bilgisi girilmeli, kullanılmadığı durumlarda ise “**:ssh_port**” kısmı silinmelidir.
+* **roles/ansible/vars** klasörü altında git değişkenlerini barındıran **git.yml** dosyası üzerinde **repo01** ve **repo02** başlıkları altındaki **repo** satırında bulunan **yerel_gitlab_adresi** bölümünün yerine Merkezi Yönetim Sistemi kapsamında kurulacak Git sunucusunun adresi girilmelidir. Eğer sunucularda varsayılan ssh portu dışında port kullanılacak ise **:ssh_port** bilgisi girilmeli, kullanılmadığı durumlarda ise **:ssh_port** kısmı silinmelidir.
 
 ```
-$ cd roles/ansible/vars/
-$ sudo vi git.yml
+$ nano /etc/ansible/roles/ansible/vars/git.yml
 # Gitin degiskenlerini iceren dosyadir
 gitrepos:
     repo01:
@@ -422,18 +410,19 @@ gitrepos:
         accept_hostkey: "yes"
         destination: "/etc/ansible/"
         key_file: "/home/ahtapotops/.ssh/id_rsa"
+# örnek
 #    repoXX:
-#        repo: ""
+#        repo: "ssh://git@gitlab.ahtapot.org.tr:22/ahtapotops/gdys.git"
 #        accept_hostkey: ""
 #        destination: ""
 #        key_file: ""
 ```
 
-* “**roles/gitlab/vars**” klasörü altında değişkenleri barındıran “**main.yml**” dosyası içerisinde  “**external_url**” satırında bulunan “**yerel_gitlab_URL**” bölümüne GitLab sunucusunu browser üzerinden çağırırken kullanılması istenilen URL girilmelidir.
-* SMTP kullanmayacak iseniz bu ayarları yapmanıza gerek yoktur. GitLab SMTP ayarları için “**gitlab_email_from:**” satırına GitLab tarafından atılacak bilgilendirme postalarının hangi adres tarafından atılacağı belirtilmelidir. “**gitlab_email_display_name:**” satırında gönderilen postalarda görünmesi istenilen isim belirlenir. “**gitlab_email_reply_to:**” satırında GitLab tarafından gönderilen postalara cevap verilmesi durumunda cevabın hangi adrese yönlendirilmesi istendiği belirtilir. “**smtp_address:**” satırında smtp sunucusunun FQDN ve ya IP adres bilgileri girilir. “**smtp_port:**” satırında smtp sunucusunun kullandığı port yazılır. “**smtp_domain:**” satırında ise stmp alan adı bilgisi girilir.
-* Gitlab yedekli kullanılacak ise, git altındaki "**backup**" fonksiyonu altındaki “**Server**” satırına yedek gitlab sunucusunun FQDN bilgileri “**Port**” satırına ise ssh port bilgisi girilmelidir. 
-* GitLab yedekli kullanılmayacak ise "**backup**" fonksiyonu altında bulunan “**Server**” ve “**Port**” değişkenlerine hiçbir şey yapılmamalıdır. 
-* Ansible fonksiyonu altındaki “**Server**” satırına ansible makinesinin FQDN bilgileri “**Port**” satırına ise ssh port bilgisi girilmelidir.
+* **/etc/ansible/roles/gitlab/vars/main.yml** dosyası içerisinde  **external_url** satırında bulunan **yerel_gitlab_URL** bölümüne GitLab sunucusunu browser üzerinden çağırırken kullanılması istenilen URL girilmelidir.
+* SMTP kullanmayacak iseniz bu ayarları yapmanıza gerek yoktur. GitLab SMTP ayarları için **gitlab_email_from:** satırına GitLab tarafından atılacak bilgilendirme postalarının hangi adres tarafından atılacağı belirtilmelidir. **gitlab_email_display_name:** satırında gönderilen postalarda görünmesi istenilen isim belirlenir. **gitlab_email_reply_to:** satırında GitLab tarafından gönderilen postalara cevap verilmesi durumunda cevabın hangi adrese yönlendirilmesi istendiği belirtilir. **smtp_address:** satırında smtp sunucusunun FQDN ve ya IP adres bilgileri girilir. **smtp_port:** satırında smtp sunucusunun kullandığı port yazılır. **smtp_domain:** satırında ise stmp alan adı bilgisi girilir.
+* Gitlab yedekli kullanılacak ise, git altındaki **backup** fonksiyonu altındaki **Server** satırına yedek gitlab sunucusunun FQDN bilgileri **Port** satırına ise ssh port bilgisi girilmelidir. 
+* GitLab yedekli kullanılmayacak ise **backup** fonksiyonu altında bulunan **Server** ve **Port** değişkenlerine hiçbir şey yapılmamalıdır. 
+* Ansible fonksiyonu altındaki **Server** satırına ansible makinesinin FQDN bilgileri **Port** satırına ise ssh port bilgisi girilmelidir.
 
 
 ```
@@ -501,12 +490,11 @@ gitlab:
         Port: 22
 ```
 
-* GitLab yedekli kurulmayacak ise, Ansible playbook üzerinde bulunan yedek GitLab için yapılacak işlemler gitlab rolünden kaldırılır. “**/etc/ansible/roles/gitlab/templates/**” dizini altında bulunan “**post-receive-gdys.sh.j2**” dosyasında, gdys reposunun güncellenmesini sağlayan ilk komut bırakılarak, backup/restore işlemini tetikleyen diğer satırların başına “**#**” işareti konularak, komut satırı haline dönüştürülür. 
+* GitLab yedekli kurulmayacak ise, Ansible playbook üzerinde bulunan yedek GitLab için yapılacak işlemler gitlab rolünden kaldırılır. **/etc/ansible/roles/gitlab/templates/** dizini altında bulunan **post-receive-gdys.sh.j2** dosyasında, gdys reposunun güncellenmesini sağlayan ilk komut bırakılarak, backup/restore işlemini tetikleyen diğer satırların başına **#** işareti konularak, komut satırı haline dönüştürülür. 
 
 
 ```
-$ cd roles/gitlab/templates/
-$ sudo vi post-receive-gdys.sh.j2
+$ nano /etc/ansible/roles/gitlab/templates/post-receive-gdys.sh.j2
 #!/usr/bin/env python
 
 ## Bu dosya ansible tarafindan yonetilmektedir!
@@ -530,8 +518,7 @@ subprocess.Popen(["/usr/bin/ssh -o StrictHostKeyChecking=no -o UserKnownHostsFil
 
 
 ```
-$ cd roles/gitlab/templates/
-$ sudo vi post-receive-mys.sh.j2
+$ nano /etc/ansible/roles/gitlab/templates/post-receive-mys.sh.j2
 #!/usr/bin/env python
 
 ## Bu dosya ansible tarafindan yonetilmektedir!
@@ -550,7 +537,7 @@ subprocess.Popen(["/usr/bin/ssh -o StrictHostKeyChecking=no -o UserKnownHostsFil
 #subprocess.call(["/usr/bin/ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null git@{{ gitlab['backup']['Server'] }} -p {{ gitlab['backup']['Port']}} \"/bin/bash -c 'gitlab-rake gitlab:backup:restore force=yes'\""], shell=True)
 ```
 
-* ISO’dan kurulumu yapılmış her makinenin ilk planda ssh portları “**22**” olarak belirlendiğinden dolayı, ansible ilk kurulumu yaparken her makineye 22. Porttan bağlanacaktır. Bu sebep ile “**ansible.cfg**” dosyasında bulunan “**remote_port**” parametresinin “**22**” olduğu teyit edilmelidir.
+* ISO’dan kurulumu yapılmış her makinenin ilk planda ssh portları **22** olarak belirlendiğinden dolayı, ansible ilk kurulumu yaparken her makineye 22. Porttan bağlanacaktır. Bu sebep ile **ansible.cfg** dosyasında bulunan **remote_port** parametresinin **22** olduğu teyit edilmelidir.
 
 ```
 $ cd /etc/ansible/
@@ -578,30 +565,20 @@ sudo_user      = root
 #ask_pass      = True
 transport      = smart
 remote_port    = ssh_port 
-
-```
-* **NOT:** Dökümanda yapılması istenilen değişiklikler gitlab arayüzü yerine terminal üzerinden yapılması durumunda playbook oynatılmadan önce yapılan değişiklikler git'e push edilmelidir.
-
-```
-$ cd /etc/ansible
-git status komutu ile yapılan değişiklikler gözlemlenir.
-$ git status  
-$ git add --all
-$ git commit -m "yapılan değişiklik commiti yazılır"
-$ git push origin master
-```
-* “**Ansible Playbookları**” dokümanında detaylı anlatımı bulunan, sunucu üzerinde gerekli sıkılaştırma işlemleri ve gitlab kurulumu yapacak olan “**gitlab.yml**” playbook’u çalıştırılır.
-
-```
-$ ansible-playbook /etc/ansible/playbooks/gitlab.yml --skip-tags=security
 ```
 
-* Git kurulumdan sonra parolasız git işlemlerini yapabilmek için AHTAPOT CA KURULUM dokümanına uygun bir şekilde oluşturulmuş git kullanıcısına ait anahtalar, GitLab sunucu üzerinde ilgili yerlere kopyalama işlemi yapılmalıdır. Bu adımlar hem GitLab sunucusunda hem de yedek GitLab sunucusunda yapılmalıdır.
+* “**Ansible Playbookları**” dokümanında detaylı anlatımı bulunan, sunucu üzerinde gerekli sıkılaştırma işlemleri ve gitlab kurulumu yapacak olan “**gitlab.yml**” playbook’u çalıştırılır. Ancak ilk kurulma mahsus olmak üzere playbook çalıştırılmadan önce "**gitlab.yml**" dosyası açılır ve "**roles**" altında bulunan "**post**" satırının başına **#** işareti konularak ilk kuruluma mahsus bu rolün çalışmaması sağlanır.
+
+```
+$ ansible-playbook /etc/ansible/playbooks/gitlab.yml -k
+```
+
+* Git kurulumdan sonra parolasız git işlemlerini yapabilmek için   [CA Kurulumu ve Anahtar Yönetimi](ca-kurulum.md) dokümanına uygun bir şekilde oluşturulmuş git kullanıcısına ait anahtalar, GitLab sunucu üzerinde ilgili yerlere kopyalama işlemi yapılmalıdır. Bu adımlar hem GitLab sunucusunda hem de yedek GitLab sunucusunda yapılmalıdır.
 
 ```
 $ ssh ahtapotops@gitlab.fqdn_bilgisi -i /home/ahtapotops/.ssh/id_rsa
 ```
-* git kullanıcısı için oluşturulmuş anahtarları, GitLab sunucu üzerinde "**/home/ahtapotops**" dizinine kopyalanır ve ilgili dizinlere taşınır.
+* git kullanıcısı için oluşturulmuş anahtarları, GitLab sunucu üzerinde **/home/ahtapotops** dizinine kopyalanır ve ilgili dizinlere taşınır.
 
 ``` 
 $ cd /home/ahtapotops/
@@ -615,174 +592,222 @@ $ sudo cp /home/ahtapotops/gdyshook /var/opt/gitlab/.ssh/gdyshook
 $ sudo cp /home/ahtapotops/gdyshook-cert.pub /var/opt/gitlab/.ssh/gdyshook-cert.pub
 $ sudo cp /home/ahtapotops/gdyshook.pub /var/opt/gitlab/.ssh/gdyshook.pub
 ```
-* Kopyalanan anahtarların git kullanıcısı yetkilerine sahip olması için aşağıdaki komutlar çalıştırılır.
-
 ```
-# sudo su - 
-# chown git:git /var/opt/gitlab/.ssh/*
-# su - git
 $ chmod 700 ~/.ssh
 $ cd ~/.ssh/
 $ chmod 600 id_rsa gdyshook myshook
 $ exit
 ```
 
+* **NOT:** Dökümanda yapılması istenilen değişiklikler gitlab arayüzü yerine terminal üzerinden yapılması durumunda playbook oynatılmadan önce yapılan değişiklikler git'e push edilmelidir.
+
+```
+$ cd /etc/ansible
+git status komutu ile yapılan değişiklikler gözlemlenir.
+$ git status
+$ git add --all
+$ git commit -m "yapılan değişiklik commiti yazılır"
+$ git push origin master
+```
+
+
 **NOT :** Gitlab yedekli kurulacak ise, yedek sistem üzerinde bu adımlar el ile yapılmalıdır.
 
 
 ####GitLab Arayüz Yapılandırması
 
-* Yapılandırma işlemlerine geçmek üzere, adresine bir web tarayıcı vasıtası ile girilerek Gitlab web arayüzüne “**https://gitlabsunucuadresi**” ile erişilir. 
+Gitlab yedekli kurulacak ise, yedek sistemin üzerinde arayüz yapılandırma işlemlerinin yapılmasına gerek yoktur.
 
-**NOT :** Gitlab yedekli kurulacak ise, yedek sistemin üzerinde arayüz yapılandırma işlemlerinin yapılmasına gerek yoktur.
+Yapılandırma işlemlerine geçmek üzere, gitlab adresine bir web tarayıcısı ile girilerek Gitlab web arayüzüne “**https://gitlabsunucuadresi**” ile erişilir. 
 
-Gitlab, öntanımlı kullanıcı adı “**root**” ve öntanımlı parola “**5iveL!fe**” olacak şekilde gelmektedir. Bu bilgiler kullanılarak sisteme giriş sağlanır.
+* Gitlab arayüzüne girildikten sonra root kullanıcısının parola değiştirme işlemi gerçekleştirilir. En az 8 karakterden oluşacak yeni parola belirlenir.
 
-![MYS](../img/merkezi1.jpg)
+![Gitlab](../img/gitlab_gorseller/gitlab1.png)
 
-  * GitLab web arayüzüne erişim sağlandıktan sonra, ilk adım olarak root kullanıcısının parolasının değiştirilmesi gerekmektedir. 
+  * Root kullanıcısı ve belirlenen yeni parola ile giriş yapınız.
 
-En az 8 karakterden oluşacak yeni şifre belirlenerek, “**SET NEW PASSWORD**” butonuna basılır. Şifre değiştirme işleminin ardından web arayüz açılış sayfasına otomatik geri döner. Yeni şifre ile giriş yapılır.
+![Gitlab](../img/gitlab_gorseller/gitlab2.png)
 
-![Gitlab](../img/gitlab2.jpg)
+  * Sağ üst köşede bulunan **Admin Area** simgesine basarak kullanıcıları oluşturmak için **Yönetici Bölümüne** geçiş yapınız.
 
-  * Root kullanıcısı ile giriş yapıldıktan sonra sağ üst köşede bulunan “**Admin Area**” simgesine basılarak sisteme tanımlanması gereken kullanıcıları oluşturmak için “**Yönetici Bölümüne**” geçiş yapılır.
+![Gitlab](../img/gitlab_gorseller/gitlab3.png)
 
-![Gitlab](../img/gitlab3.jpg)
+  * Yönetici bölümünde **Users** bölümünde yer alan **NEW USER** butonuna basınız.
 
-  * Yönetici bölümünde “**Users**” bölümünde yer alan “**NEW USER**” butonuna basılır.
+![Gitlab](../img/gitlab_gorseller/gitlab4.png)
 
-![Gitlab](../img/gitlab4.jpg)
+  * FirewallBuilder kontrol paneli ile iletişimi sağlayarak onay mekanizması yapısı kapsamında Onay Kontrol, Son Onaylanmış Commit ID gibi özelliklerini çalıştıracak API kullanıcısı oluşturulmalıdır. Oluşturulacak kullanıcının isminin **gdysapi** olması önemlidir. Kullanıcıyı oluşturmak için **Name**, **Username** ve **Email** alanları doldurularak **CREATE USER** butonuna basılır. 
 
-  * Öncelikli olarak FirewallBuilder kontrol paneli ile iletişimi sağlayarak onay mekanizması yapısı kapsamında Onay Kontrol, Son Onaylanmış Commit ID gibi özelliklerini çalıştıracak API kullanıcısı oluşturulur. Oluşturulacak kullanıcının isminin “**gdysapi**” olması zaruridir. Kullanıcıyı oluşturmak için “**Name**”, “**Username**” ve “**Email**” alanları doldurularak “**CREATE USER**” butonuna basılır. 
+![Gitlab](../img/gitlab_gorseller/gitlab5.png)
 
-![Gitlab](../img/gitlab5.jpg)
+![Gitlab](../img/gitlab_gorseller/gitlab5.5.png)
 
-  * Kullanıcı oluşturulduktan sonra, ilgili kullanıcıya ait bilgilendirme sayfası açılmaktadır. Bu sayfada kullanıcıya şifre oluşturmak için “**EDIT**” butonuna basılır.
+  * Kullanıcı oluşturulduktan sonra, ilgili kullanıcıya ait bilgilendirme sayfası açılmaktadır. Bu sayfada kullanıcıya şifre oluşturmak için **EDIT** butonuna basılır.
 
-![Gitlab](../img/gitlab6.jpg)
+![Gitlab](../img/gitlab_gorseller/gitlab6.png)
 
-  * Açılan ekranda “**Password**” bölümünden “**gdysapi**” kullanıcı için parola belirlenir ve sayfanın en altında bulunan “**SAVE CHANGES**” butonuna basılır.
+  * Açılan ekranda **Password** bölümünden **gdysapi** kullanıcı için parola belirlenir ve sayfanın en altında bulunan **SAVE CHANGES** butonuna basılır.
 
-![Gitlab](../img/gitlab7.jpg)
+![Gitlab](../img/gitlab_gorseller/gitlab7.png)
 
-  * 3, 4 ve 5. adımlar tekrar uygulanarak bir adet kullanıcı daha oluşturulur. “**gydsapi**” kullanıcısından farklı olarak bu kullanıcı için şifre oluşturulmaz. (6 ve 7. adımlar uygulanmadan geçilecektir.) 
+  * **ahtapotops** kullanıcısını oluşturmak için; Sağ üst köşede bulunan **Admin Area** simgesine basarak kullanıcıları oluşturmak için **Yönetici Bölümüne** geçiş yapınız. Yönetici bölümünde **Users** bölümünde yer alan **NEW USER** butonuna basınız. **gydsapi** kullanıcısından farklı olarak bu kullanıcı için parola oluşturmayınız.
 
-Oluşturulacak kullanıcının isminin “**ahtapotops**” olması zaruridir. Bu kullanıcı FirewallBuilder ile Ansible entegrasyonunu ve Ansible ile yöneteceği sunucular arasında iletişimi sağlamaktadır. Otomatizasyon yapısının çalışabilmesi için yapıyı oluşturacak sunucular arasında parolasız erişim kullanılmalıdır. Bu neden ile kullanıcı oluşturulduktan sonra aşağıdaki adımları takip ederek kullanıcıya ait açık anahtar GitLab sistemine eklenmelidir.
+![Gitlab](../img/gitlab_gorseller/gitlab8.png)
 
-  * Oluşturulan “**ahtapotops**” kullanıcısına SSH-Key belirtme işlemini yapmak için sağ tarafta görünen “**IMPERSONATE**” butonuna basılarak, uygulamanın bu kullanıcı gibi davranması sağlanır.
+  * Oluşturulacak kullanıcının isminin **ahtapotops** olması önemlidir. Bu kullanıcı FirewallBuilder ile Ansible entegrasyonunu ve Ansible'ın yöneteceği sunucular arasında iletişimi sağlamaktadır. Otomatizasyon yapısının çalışabilmesi için yapıyı oluşturacak sunucular arasında parolasız erişim kullanılmalıdır. Bu neden ile kullanıcı oluşturulduktan sonra aşağıdaki adımları takip ederek kullanıcıya ait açık anahtar GitLab sistemine eklenmelidir.
 
-![Gitlab](../img/gitlab8.jpg)
+![Gitlab](../img/gitlab_gorseller/gitlab9.png)
 
-  * Impersonate işleminin başarılı gerçekleştiği sağ üstte bulanan “**Impersonate**” simgesi ile teyit edildikten sonra gelen ekranda sol taraftan “**Profile Settings**” seçeneğine tıklanır.
+![Gitlab](../img/gitlab_gorseller/gitlab9.9.png)
 
-![Gitlab](../img/gitlab9.jpg)
+  * Oluşturulan **ahtapotops** kullanıcısına SSH-Key belirtme işlemini yapmak için sağ tarafta görünen **IMPERSONATE** butonuna basınız, uygulamanın **ahtapotops** kullanıcısı olarak kullanmaya başlayacaksınız.
 
-  * Açılan kullanıcı ayarlarında solda bulunan menüden “**SSH Keys**” seçeneği seçilir ve gelen sayfada "**ADD SSH KEY**" butonuna basılır.
+![Gitlab](../img/gitlab_gorseller/gitlab10.png)
 
-![Gitlab](../img/gitlab10.jpg)
+  * Impersonate işleminin başarılı gerçekleştiği sağ üstte bulanan **Impersonate** simgesi ile teyit edildikten sonra gelen ekranda sol taraftan **Profile Settings** seçeneğine tıklayınız.
 
-  * Ekranda “**Key**” kısmına "**ahtapotops.pub**" dosyasının içeriği kopyalanır , “**Title**” kısmına kullanıcı oluştururken belirttiğimiz posta adresi girilir. “**ADD KEY**” butonuna basılarak sisteme eklenir. 
+![Gitlab](../img/gitlab_gorseller/gitlab11.png)
 
-![Gitlab](../img/gitlab14.jpg)
+  * Açılan kullanıcı ayarlarında menüden **SSH Keys** tıklayınız ve gelen sayfada **ADD SSH KEY** butonuna basınız.
 
-  * FirewallBuilder ve Ansible entegrasyonunu sağlıklı olarak gerçekleştirmek için iki adet proje oluşturulması gerekmektedir. FirewallBuilder tarafı için “**gdys**” Ansible tarafı için ise “**mys**” projeleri oluşturulacaktır. Proje oluşturmak için “**Go to dashboard**” butonuna basılır.
+![Gitlab](../img/gitlab_gorseller/gitlab12.png)
 
+  * Ekranda **Key** kısmına **ahtapotops.pub** dosyasının içeriğini kopyalayınız , **Title** kısmına kullanıcı oluştururken belirttiğimiz posta adresi giriniz. **ADD KEY** butonuna basılarak sisteme ekleyiniz. 
 
-![Gitlab](../img/gitlab15.jpg)
+![Gitlab](../img/gitlab_gorseller/gitlab13.png)
 
-  * Ekranda bulunan “**NEW PROJECT**” butonuna basarak yeni proje oluşturma işlemi gerçekleştirilir.
+  * FirewallBuilder ve Ansible entegrasyonunu sağlıklı olarak gerçekleştirmek için iki adet proje oluşturulması gerekmektedir. FirewallBuilder tarafı için **gdys** Ansible tarafı için ise **mys** ve **sb** projeleri oluşturulmalıdır. Proje oluşturmak için **Go to dashboard** butonuna basılır.
 
-![Gitlab](../img/gitlab16.jpg)
+![Gitlab](../img/gitlab_gorseller/gitlab14.png)
 
-  * “**NEW PROJECT**” butonuna basıldığında gelen ekranda “**Project path**” satırında “**/**” ibaresinden sonra proje ismi olan “gdys” yazılır. İsteğe bağlı olarak “**Description**” bölümüne tanımlama yazılarak “**Private**” olacak şekilde “**CREATE PROJECT**” butonuna basılır.
+  * Ekranda bulunan **NEW PROJECT** butonuna basarak yeni proje oluşturma işlemi gerçekleştirilir.
 
-**NOT :** GDYS kapsamında açılan tüm GitLab projelerinin “**Private**” olması zaruridir.
+![Gitlab](../img/gitlab_gorseller/gitlab15.png)
 
-![Gitlab](../img/gitlab17.jpg)
+  * **NEW PROJECT** butonuna basıldığında gelen ekranda **Project path** satırında **/** ibaresinden sonra proje ismi olan **gdys** yazınız. İsteğe bağlı olarak **Description** bölümüne tanımlama yazılarak **Private** seçiniz ve **CREATE PROJECT** butonuna basınız. GDYS kapsamında açılan tüm GitLab projelerinin **Private** olması zaruridir.
 
-  * Proje oluşturulduktan sonra, açılan ekran proje anasayfası olup; “**gdys**” deposuna erişim hakkı olacak kullanıcıları belirtlemek için sol ağaç yapısından “**Members**” seçeneği seçilir.
+![Gitlab](../img/gitlab_gorseller/gitlab16.png)
 
-![Gitlab](../img/gitlab18.jpg)
+  * Proje oluşturulduktan sonra, açılan ekran proje anasayfası olup; **gdys** deposuna erişim hakkı olacak kullanıcıları belirtlemek için sağ üst **Members** seçeneğinden kullanıcı ve yetkilerini belirleyiniz.
 
-  * GitLab üzerinde oluşturulmuş “**gdys**” projesi için “**gdysapi**” ve “**ahtapotops**” kullanıcıları “**People**” bölümüne eklenerek yetkilendirilir. Yetki seviyesini belirlemek amacı ile “**Project Access**” bölümünden bu kullancılara “**Master**” yetkisi verilerek “**ADD USERS TO PROJECT**” butonuna basılır.
+![Gitlab](../img/gitlab_gorseller/gitlab17.png)
 
-![Gitlab](../img/gitlab19.jpg)
+  * GitLab üzerinde oluşturulmuş **gdys** projesi için **gdysapi** ve **ahtapotops** kullanıcıları **People** bölümüne ekleyerek yetkilendiriniz. Yetki seviyesini belirlemek amacı ile **Project Access** bölümünden bu kullancılara **Master** yetkisi verilerek **ADD USERS TO PROJECT** butonuna basınız.
 
-  * “**Go to dashboard**” butonuna basılarak, ana ekrana gidilerek 16. ve 17. adımlar “**mys**” deposun için tekrar uygulanır. “**mys**” deposuna ait anasayfa geldikten sonra “**Go to dashboard**” seçeneği seçilerek GitLab sayfasına gidilir.
+![Gitlab](../img/gitlab_gorseller/gitlab18.png)
 
-![Gitlab](../img/gitlab24.jpg)
+  * **Go to dashboard** butonuna basılarak, ana ekrana gidilerek **NEW PROJECT** butonuna basarak **mys** projesini oluşturunuz. 
 
-  * Onay mekanizmasının yapısı oluşturmak adına GitLab sayfasından, “**ahtapotops / gdys**” projesine gidilir.Bu yapıyı oluşturmak için projede iki adet dal oluşturulmalıdır. “**master**” ve “**onay**” dalları bu yapıyı sağlamaktadır. Öncelikli olarak “**master**” dalını oluşturmak için “**adding README**” satırına basılırak, bir dosya oluşturulur. Böylelikle master dal oluşmuş olur.
+![Gitlab](../img/gitlab_gorseller/gitlab19.png)
+  
+  * **Project path** satırında **/** ibaresinden sonra proje ismi olan **mys** yazınız. İsteğe bağlı olarak **Description** bölümüne tanımlama yazılarak **Private** seçiniz  ve **CREATE PROJECT** butonuna basınız.
 
-![Gitlab](../img/gitlab25.jpg)
+![Gitlab](../img/gitlab_gorseller/gitlab20.png)
 
-  * Açılan dosya ekranında, ilk satıra yorum olmasını sağlacak şekilde “**#**” simgesi konularak açıklama yazılır. Akabinde “**Commit message**” bölümüne yapılan işlem yazılarak “**COMMIT CHANGES**” butonuna basılır.
+  * Yukarıdaki son iki adımı **sb** projesini oluşturmak için tekrar edin. Ancak **sb** projesi **Public** olacaktır.
 
-![Gitlab](../img/gitlab26.jpg)
+  * Proje oluşturulduktan sonra, açılan ekran proje anasayfası olup; **mys** deposuna erişim hakkı olacak kullanıcıları belirtlemek için sağ üst **Members** seçeneğinden kullanıcı ve yetkilerini belirleyiniz.
 
-  * Oluşturulan “**master**” dalı aşağıdaki ekranda olduğu gibi gözükmektedir. “**Files**” butonuna basılarak, projeye ait dosyaların bulunduğu “**gdys**” dizinine gidilir.
+![Gitlab](../img/gitlab_gorseller/gitlab21.png)
 
-![Gitlab](../img/gitlab27.jpg)
+  * GitLab üzerinde oluşturulmuş **mys** projesi için **gdysapi** ve **ahtapotops** kullanıcıları **People** bölümüne ekleyerek yetkilendiriniz. Yetki seviyesini belirlemek amacı ile **Project Access** bölümünden bu kullancılara **Master** yetkisi verilerek **ADD USERS TO PROJECT** butonuna basınız.
 
-  * “**Files**” sayfasında “**+**” işaretine basılarak “**New file**” seçeneği seçilir.
+![Gitlab](../img/gitlab_gorseller/gitlab22.png)
 
-![Gitlab](../img/gitlab30.jpg)
+  * Onay mekanizmasının yapısı oluşturmak adına GitLab sayfasından, **ahtapotops / gdys** projesine gidiniz. Bu yapıyı oluşturmak için projede iki adet dal oluşturulmalıdır. **master** ve **onay** dalları bu yapıyı sağlamaktadır. Öncelikli olarak **master** dalını oluşturmak için **adding README** satırına basılırak, bir dosya oluşturunuz. Böylelikle master dalı oluşturacaksınız.
 
-  * "**https://ahtapot.bilg.io/dosyalar/gdys-fwb/**" adresinden indirilerek, içeriği kopyalanan “**gdys.fwb**” dosyasının içeriği buraya yapıştırılır. “**master/**” ibaresinden sonraki alana “**gdys.fwb**”  ve “**Commit message**” alanına yapılan işlem yazılarak “**COMMIT CHANGES**” butonuna basılır.
+![Gitlab](../img/gitlab_gorseller/gitlab23.png)
 
-![Gitlab](../img/gitlab31.jpg)
+  * Açılan dosya ekranında, ilk satıra yorum olmasını sağlacak şekilde **#** simgesi konularak açıklama yazabilirsiniz. **Commit message** bölümüne yapılan işlem yazınız ve **COMMIT CHANGES** butonuna basınız.
 
-  * “**Files**” butonuna basılarak, projeye ait dosyaların bulunduğu “**gdys**” dizinine gidilir.
+![Gitlab](../img/gitlab_gorseller/gitlab24.24.png)
 
-![Gitlab](../img/gitlab32.jpg)
+  * Oluşturulan **master** dalı aşağıdaki ekranda olduğu gibi gözükmektedir. **Files** butonuna basılarak, projeye ait dosyaların bulunduğu **gdys** dizinine gidiniz.
 
-  * “**Files**” sayfasında “**+**” işaretine basılarak “**New directory**” seçeneği seçilir.
+![Gitlab](../img/gitlab_gorseller/gitlab25.png)
 
-![Gitlab](../img/gitlab33.jpg)
+  * **Files** sayfasında **+** işaretine basılarak **New file** seçeneği seçiniz.
 
-  * Açılan ekranda “**Directory name**” kısmında “**files**” yazılması zaruridir. “**Commit message**” bölümüne bilgi yazıldıktan sonra “**Target branch**”, “**master**” seçilir ve “**CREATE DIRECTORY**” butonuna basılır.
+![Gitlab](../img/gitlab_gorseller/gitlab26.png)
 
-![Gitlab](../img/gitlab34.jpg)
+  * **http://docs.ahtapot.org.tr/dosyalar/gdys-fwb/** adresinden indirilerek, içeriği kopyalanan **gdys.fwb** dosyasının içeriği buraya yapıştırınız. **master/** ibaresinden sonraki alana **gdys.fwb**  ve **Commit message** alanına yapılan işlem yazılarak **COMMIT CHANGES** butonuna basılır.
 
-  * Dosyayı oluşturduktan sonra sol ağaç menüsünden “**Project**” seçilerek “**gdys**” deposu anasayfaya gidilir. Anasayfasında bulunan “**+**” işaretine basılarak “**New branch**” ile onay dalı oluşturulur.
+![Gitlab](../img/gitlab_gorseller/gitlab27.png)
 
-![Gitlab](../img/gitlab35.jpg)
+  * **Files** butonuna basılarak, projeye ait dosyaların bulunduğu **gdys** dizinine gidiniz.
 
-  * Açılan yeni ekranda “**Branch name**” bölümüne “**onay**” yazılarak “**CREATE BRANCH**” seçeneği seçilir.
+![Gitlab](../img/gitlab_gorseller/gitlab28.png)
 
-![Gitlab](../img/gitlab36.jpg)
+  * **Files** sayfasında **+** işaretine basılarak **New directory** seçeneği seçiniz.
 
-  * Ansible’a ait playbookları “**mys**” deposuna aktarmak için Ansible makinesine ssh ile bağlanılarak aşağıdaki adımlar takip edilir.
+![Gitlab](../img/gitlab_gorseller/gitlab29.png)
 
-  * mys projesini yerele indirme işlemi için bulunulan dizin geçici dizin ile değiştirilir.
+  * Açılan ekranda **Directory name** kısmında **files** yazılması zaruridir. **Commit message** bölümüne bilgi yazıldıktan sonra **Target branch**, **master** seçilir ve **CREATE DIRECTORY** butonuna basınız.
+
+![Gitlab](../img/gitlab_gorseller/gitlab30.png)
+
+  * Dosyayı oluşturduktan sonra menüden **Project** seçilerek **gdys** deposu anasayfaya gidiniz. **+** işaretine basılarak **New branch** ile onay dalı oluşturunuz.
+
+![Gitlab](../img/gitlab_gorseller/gitlab31.png)
+
+  * Açılan yeni ekranda **Branch name** bölümüne **onay** yazarak **CREATE BRANCH** seçeneğini seçiniz.
+
+![Gitlab](../img/gitlab_gorseller/gitlab32.png)
+
+  * Ansible’a ait playbookları **mys** deposuna aktarmak için Ansible makinesinde (MYS) aşağıdaki adımları takip ediniz.
+
+  * mys projesini yerele indirme işlemi için geçici dizine geçiniz.
 
 ```
 $ cd /tmp
 ```
 
-  * GitLab üzerinde açılan proje aşağıdaki komut ile GitLab makinesinin yereline alınır. (“**mys_proje_URL**” bilgisi GitLab arayüzünde “Projects” altından “**mys**” projesi seçildiğinde, mys projesine ait anasayfada “**http://gitlab/root/mys**” şeklinde görüntülenmektedir.) Komutun girilmesi ile birlikte, kullanıcı adı ve parola sormaktadır. Kullanıcı adı olarak GitLab tarafında öntanımlı gelen yetkili kullanıcı “root”, parola olarak 11. adımda belirlenen parola girilmelidir.
-
+  * GitLab üzerinde açılan proje aşağıdaki komut ile GitLab makinesinin yereline alınır.
 
 ```
 $ git clone ssh://git@gitlab_sunucuadı:ssh_port/ahtapotops/mys.git 
+# git clone ssh://git@gitlab.ahtapot.org.tr:22/ahtapotops/mys.git
+```
+```
+Cloning into 'mys'...
+## Bu dosya ansible tarafindan yonetilmektedir!
+## Burada yapilan degisikliklerin uzerine yazilir!!
+
+#+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=
+#  ________  ___  ___  _________  ________  ________  ________  _________   
+# |\     \|\  \|\  \|\___   ___\\     \|\     \|\     \|\___   ___\ 
+# \ \  \|\  \ \  \\\  \|___ \  \_\ \  \|\  \ \  \|\  \ \  \|\  \|___ \  \_| 
+#  \ \     \ \     \   \ \  \ \ \     \ \   ____\ \  \\\  \   \ \  \  
+#   \ \  \ \  \ \  \ \  \   \ \  \ \ \  \ \  \ \  \___|\ \  \\\  \   \ \  \ 
+#    \ \__\ \__\ \__\ \__\   \ \__\ \ \__\ \__\ \__\    \ \_______\   \ \__\
+#     \||\||\||\||    \||  \||\||\||     \|_______|    \||
+#                                                                           
+#+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=
+# AHTAPOT tarafindan yonetilen gitlab makinasina erisiyorsunuz !!!
+# Tum erisim ve hareketleriniz loglaniyor
+#+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=
+warning: You appear to have cloned an empty repository.
 ```
 
-  * Beşinci adımda GitLab üzerinden yerele indirilen playbooklar, bulunduğu dizin içerisinden alınırak geçici dizin altında oluşmuş olan “**mys**” klasörüne kopyalanır.
+```
+$ ls -la /tmp
+drwx------  3 ahtapotops ahtapotops   60 Nis 11 18:43 mys
+```
+
+  * Ansible kurulumu sırasında Github üzerinden yerele indirilen playbooklar, bulunduğu dizin içerisinden alınız ve geçici dizin altında oluşmuş olan **mys** klasörüne kopyalayınız.
 
 ```
 $ sudo cp -rf /etc/ansible/* /tmp/mys/
 ```
 
-  * Dosyaların kopyalandığını teyit etmek amacı ile ilgili dizine gidilir.
+  * Dosyaların kopyalandığını teyit etmek amacı ile ilgili dizini kontrol ediniz.
 
 ```
-$ cd /mys
-$ ls -ltr
+$ ls -ltr /tmp/mys
 $ sudo chown -R ahtapotops:ahtapotops *
 ```
 
-  * “**mys**” klasörüne kopyalanmış playbookların kopyalandığı teyit edildikten sonra, GitLab arayüzüne gönderilir.
+  * **mys** klasörüne kopyalanmış playbookların kopyalandığını teyit ettikten sonra, GitLab arayüzüne gönderiniz.
 
 ```
 $ git add --all
@@ -793,21 +818,45 @@ $ git push origin master
 
 ```
 
-* GitLab kurulumunun tamamlanmasının ardından Ansible sunucusunun bu makineye erişimini kontrol etmek adına, Ansible sunucusuna SSH bağlantısı yapılarak; SSH bağlantı linki üzerinden deponun yerele alınması test edilir. “**Gitlab_sunucuadı**” bölüme kurulmuş gitlab sunucusunun adresi, “**ssh_port**” bölümüne ise sunucusunun ayarlanan sunucunun ssh port bilgisi yazılır.
+* GitLab kurulumunun tamamlanmasının ardından Ansible sunucusundan SSH bağlantı linki üzerinden deponun yerele alınması test edilir.
 
 ```
 $ cd /tmp 
 $ git clone ssh://git@gitlab_sunucuadı:ssh_port/ahtapotops/gdys.git 
+# git clone ssh://git@gitlab.ahtapot.org.tr:22/ahtapotops/gdys.git
 $ rm -rf gdys
 ```
+```
+Cloning into 'gdys'...
+## Bu dosya ansible tarafindan yonetilmektedir!
+## Burada yapilan degisikliklerin uzerine yazilir!!
 
-* Erişimin sağlandığından emin olduktan sonra, Ansible makinesi üzerine ilk kurulum için koyduğumuz playbookların, MYS reposudan çalışmasını sağlamak için yerel gitlab sunucusu üzerindeki MYS reposu ansible makinesine clonelanarak, “**.git**” dosyası “**/etc/ansible**” dosyasına taşınır. Bu dizin altındaki tüm dosyaların sahiplik hakları “**ahtapotops**” kullanıcısına verilir.
-
+#+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=
+#  ________  ___  ___  _________  ________  ________  ________  _________   
+# |\     \|\  \|\  \|\___   ___\\     \|\     \|\     \|\___   ___\ 
+# \ \  \|\  \ \  \\\  \|___ \  \_\ \  \|\  \ \  \|\  \ \  \|\  \|___ \  \_| 
+#  \ \     \ \     \   \ \  \ \ \     \ \   ____\ \  \\\  \   \ \  \  
+#   \ \  \ \  \ \  \ \  \   \ \  \ \ \  \ \  \ \  \___|\ \  \\\  \   \ \  \ 
+#    \ \__\ \__\ \__\ \__\   \ \__\ \ \__\ \__\ \__\    \ \_______\   \ \__\
+#     \||\||\||\||    \||  \||\||\||     \|_______|    \||
+#                                                                           
+#+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=
+# AHTAPOT tarafindan yonetilen gitlab makinasina erisiyorsunuz !!!
+# Tum erisim ve hareketleriniz loglaniyor
+#+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=
+remote: Counting objects: 10, done.
+remote: Compressing objects: 100% (6/6), done.
+remote: Total 10 (delta 1), reused 0 (delta 0)
+Receiving objects: 100% (10/10), 10.22 KiB | 0 bytes/s, done.
+Resolving deltas: 100% (1/1), done.
 ```
 
+* Erişimin sağlandığından emin olduktan sonra, Ansible makinesi üzerine ilk kurulum için koyduğumuz playbookların, MYS reposudan çalışmasını sağlamak için yerel gitlab sunucusu üzerindeki MYS reposu ansible makinesine clonelanarak, **.git** dosyası **/etc/ansible** dosyasına taşınır. Bu dizin altındaki tüm dosyaların sahiplik hakları **ahtapotops** kullanıcısına verilir.
+
+```
 $ cd /tmp/mys
 $ sudo cp -rf .git /etc/ansible/ && sudo chown -R ahtapotops:ahtapotops /etc/ansible/.git
-$ rm -rf ../mys
+$ rm -rf /tmp/mys
 $ sudo chown -R ahtapotops:ahtapotops /etc/ansible/*
 
 ```
@@ -833,6 +882,22 @@ $ git commit -m "yapılan değişiklik commiti yazılır"
 $ git push origin master
 ```
 
+* **ÖNEMLİ:** Gitlab kurulumu tamamlandığına göre bir önceki adım olan MYS kurulumu adımına geri dönülür ve başına **#** işareti koyduğumuz **ansible** ve **post** satırlarının başındaki **#** işareti silinir ve **ansible.yml** yeniden aşağıdaki gibi çalıştırılır.
+
+```
+$ ansible-playbook /etc/ansible/playbooks/ansible.yml -k
+
+```
+
+Ardından yine başına "**gitlab.yml**" dosyası içinde başına **#** işareti koyduğumuz **post** satırının başındaki **#** işareti silinir ve "**gitlab.yml**" yeniden çalıştırılır.
+
+```
+$ ansible-playbook /etc/ansible/playbooks/ansible.yml -k
+
+```
+
+Bu adımlar sonunda artık gitlab ve ansible rolleri tamamıyla kurulmuş olacaktır ve diğer bileşenlerin kurulumuna geçilebilir.
+
 ####Ansible Playbook ile FirewallBuilder Kurulumu
 
 **NOT:** Kurulacak sistem, SIEM yapısına dahil edilmek isteniyorsa, kurulum sonrasında Siber Olay, Açıklık, Risk İzleme ve Yönetim Sistemi Kurulumu sayfasında bulunan [MYS Clientlarında Ossec Agent Dağıtımı](siem-kurulum.md) başlığı incelenmelidir.
@@ -846,9 +911,10 @@ $ mv ahtaporops-cert.pub id_rsa-cert.pub
 $ mv ahtapotops.pub id_rsa.pub
 $ chmod 600 id_rsa
 ```
-*  Gitlab arayüzünden veya “roles/firewallbuilder/vars” klasörü altında değişkenleri barındıran “git.yml” dosyası üzerinde "repo01" fonksiyonu altında “repo” satırında bulunan “yerel_gitlab_adresi” bölümünün yerine Merkezi Yönetim Sistemi kapsamında kurulacak Git sunucusunun ip adresi girilmelidir.
+*  Gitlab arayüzünden veya MYS sunusundan **roles/firewallbuilder/vars/git.yml** dosyası üzerinde **repo01** fonksiyonu altında **repo** satırında bulunan **yerel_gitlab_adresi** bölümünün yerine Merkezi Yönetim Sistemi kapsamında kurulacak Git sunucusunun adresi girilmelidir.
 
 ```
+$ nano /etc/ansible/roles/firewallbuilder/vars/git.yml
 # Git repolarini iceren dosyadir.
 gitrepos:
     repo01:
@@ -857,16 +923,54 @@ gitrepos:
         destination: "/etc/fw/gdys"
         key_file: "/home/ahtapotops/.ssh/id_rsa"
 #    repoXX:
-#        repo: ""
+#        repo: "ssh://git@gitlab.ahtapot.org.tr/ahtapotops/gdys.git"
 #        accept_hostkey: ""
 #        destination: ""
 #        key_file: ""
+```
+* **/etc/ansible/roles/firewallbuilder/vars/fwbuilder.yml** dosyasında düzenleme yapılacak firewallbuilder sunucusunun bilgisi girilir.
+
+```
+nano /etc/ansible/roles/firewallbuilder/vars/fwbuilder.yml
+---
+# Guvenlik Duvari Kurucusunun degiskenlerini iceren dosyadir.
+firewallbuilder:
+    fix:
+        source: "reset_iptables"
+        destination: "/usr/share/fwbuilder-5.1.0.3599/configlets/linux24/reset_iptables"
+        group: "root"
+        owner: "root"
+        mode: "0644"
+        force: "yes"
+    bash:
+        conf:
+            source: "fwbuilder-ahtapot.sh.j2"
+            destination: "/etc/profile.d/fwbuilder-ahtapot.sh"
+            owner: "root"
+            group: "root"
+            mode: "0755"
+
+fwb_editable_objects:
+    FWBUILDER_SERVER_FQDN01:
+    FWBUILDER_SERVER_FQDN02:
+    #FW.DOMAIN:
+    #    - objects:
+    #        - birinci
+    #        - ikinci
+
+#örnek olarak
+#fwb_editable_objects:
+#   fwb.ahtapot.org.tr:
+#       - objects:
+#            - fwb.ahtapot.org.tr
+#            - ikinci
+
 ```
 * “**Ansible Playbookları**” dokümanında detaylı anlatımı bulunan, sunucu üzerinde gerekli sıkılaştırma işlemleri ve FirewallBuilder kurulumu yapacak olan “**firewallbuilder.yml**” playbook’u Ansible makinesinden aşağıdaki komut ile çalıştırılır.
 
 ```
 $ cd /etc/ansible/
-$ ansible-playbook playbooks/firewallbuilder.yml 
+$ ansible-playbook playbooks/firewallbuilder.yml -k
 ```
 
 * Firewall Builder makinesinde gyds-gui dizinine izin vermek için aşağıdaki komut Firewallbuilder makinesinden çalıştırılır
