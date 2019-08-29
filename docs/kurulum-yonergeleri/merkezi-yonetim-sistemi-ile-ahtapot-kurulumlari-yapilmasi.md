@@ -21,25 +21,15 @@ $ cd /home/ahtapotops
 $ mkdir ~/.ssh && chmod 700 ~/.ssh
 $ cp /home/ahtapotops/ahtapotops /home/ahtapotops/.ssh/id_rsa  && chmod 600 /home/ahtapotops/.ssh/id_rsa
 $ cp /home/ahtapotops/ahtapotops-cert.pub /home/ahtapotops/.ssh/id_rsa-cert.pub  && chmod 600 /home/ahtapotops/.ssh/id_rsa-cert.pub
+$ cp /home/ahtapotops/ahtapotops.pub /home/ahtapotops/.ssh/id_rsa.pub  && chmod 600 /home/ahtapotops/.ssh/id_rsa.pub
 ```
-
-* Aşağıdaki komut ile ansible ve git kurulumları yapılır. Ansible versiyonu kontrol edilir. (Pardus onyedi reposunda ansible 2.x.x versiyonu, yenikuşak reposunda 1.7.2 versiyonu bulunmaktadır.)
-```
-$ sudo apt-get install -y ansible
-$ ansible --version
-$ sudo apt-get install -y git
-$ cd /etc/ansible
-```
-
 * Kurulum, sıkılaştırma vb. gibi işleri otomatize etmeyi sağlayan ansible playbook’ları Ahtapot reposundan ahtapot-mys paketi ile indirilebilir veya Github'tan Ahtapot projesi indirilerek, son güncel ahtapotmys kullanılabilir.
 ```
 $ sudo apt-get install -y ahtapot-mys
 $ sudo chown ahtapotops:ahtapotops -R /etc/ansible/
-```
-```
-$ git clone -b development https://github.com/Pardus-Ahtapot/MYS.git
-$ sudo cp -rf /MYS/ahtapotmys/* /etc/ansible/
-$ sudo chown ahtapotops:ahtapotops -R /etc/ansible/
+$ sudo apt-get install -y git
+$ cd /etc/ansible
+$ git clone -b development https://github.com/Pardus-Ahtapot/MYS.git && cp -rf /etc/ansible/MYS/ahtapotmys/* /etc/ansible/
 ```
 * Ahtapot projesi kapsamında oluşacak tüm loglar **/var/log/ahtapot/** dizinine yazılmaktadır. Bu dizinin sahipliğini **ahtapotops** kullanıcısına vermek için aşağıdaki komut çalıştırılır.
 
@@ -76,6 +66,18 @@ base_repositories:
         state: present
     repo04:
         url: 'deb [trusted=yes] http://depo.pardus.org.tr/pardus-yenikusak yenikusak main non-free contrib'
+        updatecache: yes
+        state: present
+    repo05:
+        url: 'deb http://depo.pardus.org.tr/guvenlik onyedi main contrib non-free'
+        updatecache: yes
+        state: present
+   repo06:
+        url: 'deb [trusted=yes] http://depo.pardus.org.tr/ahtapot-siem yenikusak main'
+        updatecache: yes
+        state: present   
+   repo07:
+        url: 'deb [trusted=yes] http://depo.pardus.org.tr/ahtapot yenikusak main'
         updatecache: yes
         state: present
 #    repoXX:
@@ -130,7 +132,7 @@ base_host_servers:
 #       hostname: "ansible"
 ```
 
-* Sunucular sanal ortamda kuruluyor ise, **/etc/ansible/roles/base/vars/kernelmodules_remove.yml** dizinlerindeki bir modül bırakılarak silinmeli veya yorum satırına dönüştürülmelidir.
+* Sunucular sanal ortamda kuruluyor ise, **/etc/ansible/roles/base/vars/kernelmodules_remove.yml** dizinlerindeki modüllerin sanal makinada olmamasından kaynaklı hata verebilir. Playbook çalıştan sonra hata veren modülü yorum satırı yapabilirsiniz veya modülleri kontrol etmek istemiyor iseniz tüm modülleri yorum satırı yapabilir veya silebilirsiniz.
 * Sunucular fiziksel ise herhangi bir değişiklik yapmaya gerek yoktur.
 
 ```
@@ -158,16 +160,12 @@ to_be_removed_modules:
 * Sunucuların birbirlerinin “**known_host**” dosyasında kayıtlarının olması için “**ahtapotops**” kullanıcısı ile ssh bağlantısı sağlanması gerekmektedir. Bunun için aşağıdaki komutlar ansible makinesinden diğer makinelere doğru çalıştırılmalı ve sunucu anahtarlarının kabul edilmesi sorusu sorulduğunda “yes” yazılmalıdır. Bağlantıda sorun ile karşılaşılması durumunda anahtarların doğruluğu kontrol edilmelidir. 
 
 ```
-$ ssh ahtapotops@mys_ip_adresi
+$ ssh-copy-id client.fqdn_bilgisi
+$ ssh ahtapotops@mys.fqdn_bilgisi
 $ exit
-$ ssh localhost
 # örnek olarak
-$ ssh ahtapotops@10.10.10.12
-$ exit
-# daha sonra kuracağınız diğer sunucular için örnek
-$ ssh sunucu@fqdn_bilgisi
-$ exit
-
+# ssh mys.ahtapot.org.tr
+# $ exit
 ```
 * Playbook oynatıldıktan sonra MYS sunucusuna uzaktan erişim sağlayabilmek için **/etc/ansible/roles/base/vars/ssh.yml** playbook'unda **PasswordAuthentication: "yes"** düzenleme yapılmalıdır. Ansible sunucunuza uzaktan erişim sağlanılmayacaksa düzenleme yapılmasına gerek yoktur.
 
@@ -262,16 +260,12 @@ ssh:
 * Sunucu üzerinde gerekli sıkılaştırma işlemleri ve ansible kurulumu yapacak olan **ansible.yml** playbook’u açılır ve **roles:** altinda sadece **base** rolü açık kalacak şekilde **ansible** ve **post** rollerinin başına **#** koyulur daha sonra bu dosya aşağıda gösterildiği şekilde çalıştırılır.
 
 ```
-$ ansible-playbook /etc/ansible/playbooks/ansible.yml -k
+$ ansible-playbook /etc/ansible/playbooks/ansible.yml
 
 ```
 
 * ansible.yml playbookunun çalışması bittikten sonra, konfigürasyon yedeklemesi ve güvenliğinin sağlanması, yetkisiz değişikliklerin görülebilmesi için Gitlab kurulumu yapılması zorunludur. Aşağıda anlatıldığı şekilde Gitlab kurulumu yapıldıktan sonra Ansible kurulumu tamamlanmış olacak ve sistem diğer sunucuları yönetebilir hale gelmiş olacaktır.
 
-```
-$ ssh ansible.ahtapot.org.tr
-$ exit
-```
 ####Ansible Playbook ile GitLab Kurulumu
 * MYS'de /etc/ansible/hosts ve /etc/ansible/roles/base/vars/host.yml dosyalarında gitlab sunucusu bilgileri düzenlenir.
 
