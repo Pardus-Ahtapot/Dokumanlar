@@ -94,7 +94,7 @@ export KEY_NAME="server"
 # cd /etc/easy-rsa && source ./vars && ./build-key client_adi
 ```
 
-* Belirlenen client için OVPN dosyası oluşturularak kuruluma devam edilir. “**/etc/easy-rsa/keys/sunucu_adi.ovpn**” dosyası metin düzenleyicisi ile açılarak “**remote**” satırında bulunan OpenVPN Server IP ve port bilgisi güncellenerek kaydedilir.
+* Belirlenen client için OVPN dosyası oluşturularak kuruluma devam edilir. “**/etc/easy-rsa/keys/sunucu_adi.ovpn**” dosyası metin düzenleyicisi ile açılarak “**remote**” satırında bulunan OpenVPN Server IP ve port bilgisi güncellenerek kaydedilir. Bu noktoda OVPN dosyasındaki “**proto**” satırındaki bağlantı protokolü bilgisinin sunucu konfigürasyon dosyasında ki ile aynı olması gerekmektedir. Aksi halde bağlantı sağlanamaz.
 
 ```
 # vi /etc/easy-rsa/keys/sunucu_adi.ovpn
@@ -246,7 +246,7 @@ $ ansible-playbook playbooks/openvpn.yml
 # cd /etc/easy-rsa && source ./vars && ./build-key client_adi
 ```
 
-* Belirlenen client için OVPN dosyası oluşturularak kuruluma devam edilir. “**/etc/easy-rsa/keys/sunucu_adi.ovpn**” dosyası metin düzenleyicisi ile açılarak “**remote**” satırında bulunan OpenVPN Server IP ve port bilgisi güncellenerek kaydedilir.
+* Belirlenen client için OVPN dosyası oluşturularak kuruluma devam edilir. “**/etc/easy-rsa/keys/sunucu_adi.ovpn**” dosyası metin düzenleyicisi ile açılarak “**remote**” satırında bulunan OpenVPN Server IP ve port bilgisi güncellenerek kaydedilir. Bu noktoda OVPN dosyasındaki “**proto**” satırındaki bağlantı protokolü bilgisinin sunucu konfigürasyon dosyasında ki ile aynı olması gerekmektedir. Aksi halde bağlantı sağlanamaz.
 
 ```
 # vi /etc/easy-rsa/keys/sunucu_adi.ovpn
