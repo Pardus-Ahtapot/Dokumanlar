@@ -259,11 +259,22 @@ ssh:
 ```
 
 
-* Sunucu üzerinde gerekli sıkılaştırma işlemleri ve ansible kurulumu yapacak olan **ansible.yml** playbook’u açılır ve **roles:** altinda sadece **base** rolü açık kalacak şekilde **ansible** ve **post** rollerinin başına **#** koyulur daha sonra bu dosya aşağıda gösterildiği şekilde çalıştırılır.
+* Sunucu üzerinde gerekli sıkılaştırma işlemleri ve ansible kurulumu yapacak olan **ansible.yml** playbook’u aşağıda gösterildiği şekilde çalıştırılır.
 
 ```
 $ ansible-playbook /etc/ansible/playbooks/ansible.yml -k
 
+```
+
+* Daha sonra gelen sorulara yalnızca **base** rolü çalışacak şekilde cevap verilir.
+
+```
+Base rolu calistirilsin mi? (E/h) [E]: e
+confirm Base rolu calistirilsin mi? (E/h) [E]: e
+Ansible rolu calistirilsin mi? (E/h) [E]: h
+confirm Ansible rolu calistirilsin mi? (E/h) [E]: h
+Post rolu calistirilsin mi? (E/h) [E]: h
+confirm Post rolu calistirilsin mi? (E/h) [E]: h
 ```
 
 * ansible.yml playbookunun çalışması bittikten sonra, konfigürasyon yedeklemesi ve güvenliğinin sağlanması, yetkisiz değişikliklerin görülebilmesi için Gitlab kurulumu yapılması zorunludur. Aşağıda anlatıldığı şekilde Gitlab kurulumu yapıldıktan sonra Ansible kurulumu tamamlanmış olacak ve sistem diğer sunucuları yönetebilir hale gelmiş olacaktır.
@@ -573,10 +584,17 @@ transport      = smart
 remote_port    = ssh_port 
 ```
 
-* “**Ansible Playbookları**” dokümanında detaylı anlatımı bulunan, sunucu üzerinde gerekli sıkılaştırma işlemleri ve gitlab kurulumu yapacak olan “**gitlab.yml**” playbook’u çalıştırılır. Ancak ilk kurulma mahsus olmak üzere playbook çalıştırılmadan önce "**gitlab.yml**" dosyası açılır ve "**roles**" altında bulunan "**post**" satırının başına **#** işareti konularak ilk kuruluma mahsus bu rolün çalışmaması sağlanır.
+* “**Ansible Playbookları**” dokümanında detaylı anlatımı bulunan, sunucu üzerinde gerekli sıkılaştırma işlemleri ve gitlab kurulumu yapacak olan “**gitlab.yml**” playbook’u çalıştırılır. Ancak ilk kurulma mahsus olmak üzere yöneltilen sorulara **post** rolü haricindeki rollerin çalışması için onay verilir.
 
 ```
 $ ansible-playbook /etc/ansible/playbooks/gitlab.yml -k
+
+Base rolu calistirilsin mi? (E/h) [E]: e
+confirm Base rolu calistirilsin mi? (E/h) [E]: e
+Gitlab rolu calistirilsin mi? (E/h) [E]: e
+confirm Gitlab rolu calistirilsin mi? (E/h) [E]: e
+Post rolu calistirilsin mi? (E/h) [E]: h
+confirm Post rolu calistirilsin mi? (E/h) [E]: h
 ```
 
 * Git kurulumdan sonra parolasız git işlemlerini yapabilmek için   [CA Kurulumu ve Anahtar Yönetimi](ca-kurulum.md) dokümanına uygun bir şekilde oluşturulmuş git kullanıcısına ait anahtalar, GitLab sunucu üzerinde ilgili yerlere kopyalama işlemi yapılmalıdır. Bu adımlar hem GitLab sunucusunda hem de yedek GitLab sunucusunda yapılmalıdır.
@@ -888,18 +906,30 @@ $ git commit -m "yapılan değişiklik commiti yazılır"
 $ git push origin master
 ```
 
-* **ÖNEMLİ:** Gitlab kurulumu tamamlandığına göre bir önceki adım olan MYS kurulumu adımına geri dönülür ve başına **#** işareti koyduğumuz **ansible** ve **post** satırlarının başındaki **#** işareti silinir ve **ansible.yml** yeniden aşağıdaki gibi çalıştırılır.
+* **ÖNEMLİ:** Gitlab kurulumu tamamlandığına göre bir önceki adım olan MYS kurulumu adımına geri dönülür ve çalıştırmadığımız **ansible** ve **post** rolleri için sorulan sorulara da onay verilerek **ansible.yml** yeniden aşağıdaki gibi çalıştırılır.
 
 ```
 $ ansible-playbook /etc/ansible/playbooks/ansible.yml -k
 
+Base rolu calistirilsin mi? (E/h) [E]: e
+confirm Base rolu calistirilsin mi? (E/h) [E]: e
+Ansible rolu calistirilsin mi? (E/h) [E]: e
+confirm Ansible rolu calistirilsin mi? (E/h) [E]: e
+Post rolu calistirilsin mi? (E/h) [E]: e
+confirm Post rolu calistirilsin mi? (E/h) [E]: e
 ```
 
-Ardından yine başına "**gitlab.yml**" dosyası içinde başına **#** işareti koyduğumuz **post** satırının başındaki **#** işareti silinir ve "**gitlab.yml**" yeniden çalıştırılır.
+Ardından yine "**gitlab**" playbook'unu oynatma sırasında atladığımız **post** rolününde çalışmasına onay verilerek "**gitlab.yml**" yeniden çalıştırılır.
 
 ```
-$ ansible-playbook /etc/ansible/playbooks/ansible.yml -k
+$ ansible-playbook /etc/ansible/playbooks/gitlab.yml -k
 
+Base rolu calistirilsin mi? (E/h) [E]: e
+confirm Base rolu calistirilsin mi? (E/h) [E]: e
+Gitlab rolu calistirilsin mi? (E/h) [E]: e
+confirm Gitlab rolu calistirilsin mi? (E/h) [E]: e
+Post rolu calistirilsin mi? (E/h) [E]: e
+confirm Post rolu calistirilsin mi? (E/h) [E]: e
 ```
 
 Bu adımlar sonunda artık gitlab ve ansible rolleri tamamıyla kurulmuş olacaktır ve diğer bileşenlerin kurulumuna geçilebilir.
