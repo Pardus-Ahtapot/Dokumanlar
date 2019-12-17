@@ -85,7 +85,7 @@ chmod 744 /usr/sbin/alienvault_otx_dump.sh
 4. Cron dosyası oluşturulur.
 
 ```
-touch /etc/crond.d/alienvault_otx_dump.cron
+touch /etc/cron.d/alienvault_otx_dump.cron
 ```
 
 Aşağıdaki alan bu dosyanın içerisine kopyalanır.
@@ -123,7 +123,7 @@ chmod 744 /usr/sbin/alienvault_otx_restore.sh
 4. Cron dosyası oluşturulur.
 
 ```
-touch /etc/crond.d/alienvault_otx_restore.cron
+touch /etc/cron.d/alienvault_otx_restore.cron
 ```
 
 Aşağıdaki alan bu dosyanın içerisine kopyalanır.
