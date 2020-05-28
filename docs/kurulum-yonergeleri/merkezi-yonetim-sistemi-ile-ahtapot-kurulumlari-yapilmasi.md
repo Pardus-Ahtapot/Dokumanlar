@@ -570,6 +570,8 @@ transport      = smart
 remote_port    = ssh_port 
 ```
 
+**NOT :** Eğer gitlab web arayüzü için halihazırda bulunan ssl  sertifikaları dışında yeni veya halihazırda bulunan başka bir sertifika kullanılmak isteniyorsa "**/etc/ansible/roles/gitlab/templates**" dizininde bulunan "**ssl-crt.j2**" dosyasının yerine kendi ssl sertifikanızı, "**ssl-key.j2**" dosyasının yerine ise kendi sertifikanıza ait key dosyasını koymanız gerekmektedir. Bu noktada yeni koyulacak olan dosyaların isminin "**ssl-crt.j2**" ve "**ssl-key.j2**" olması zaruridir. Aksi takdirde kurulum sırasında hata almanız kaçınılmazdır.
+
 * “**Ansible Playbookları**” dokümanında detaylı anlatımı bulunan, sunucu üzerinde gerekli sıkılaştırma işlemleri ve gitlab kurulumu yapacak olan “**gitlab.yml**” playbook’u çalıştırılır. Ancak ilk kurulma mahsus olmak üzere playbook çalıştırılmadan önce "**gitlab.yml**" dosyası açılır ve "**roles**" altında bulunan "**post**" satırının başına **#** işareti konularak ilk kuruluma mahsus bu rolün çalışmaması sağlanır.
 
 ```
