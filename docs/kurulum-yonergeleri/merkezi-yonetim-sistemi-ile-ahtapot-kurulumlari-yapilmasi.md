@@ -157,7 +157,7 @@ to_be_removed_modules:
 
 ```
 
-* Sunucuların birbirlerinin “**known_host**” dosyasında kayıtlarının olması için “**ahtapotops**” kullanıcısı ile ssh bağlantısı sağlanması gerekmektedir. Bunun için aşağıdaki komutlar ansible makinesinden diğer makinelere doğru çalıştırılmalı ve sunucu anahtarlarının kabul edilmesi sorusu sorulduğunda “yes” yazılmalıdır. Bağlantıda sorun ile karşılaşılması durumunda anahtarların doğruluğu kontrol edilmelidir. 
+* Sunucuların birbirlerinin “**known_host**” dosyasında kayıtlarının olması için “**ahtapotops**” kullanıcısı ile ssh bağlantısı sağlanması gerekmektedir. Bunun için aşağıdaki komutlar ansible makinesinden diğer makinelere (örn: gitlab) doğru çalıştırılmalı ve sunucu anahtarlarının kabul edilmesi sorusu sorulduğunda “yes” yazılmalıdır. Bağlantıda sorun ile karşılaşılması durumunda anahtarların doğruluğu kontrol edilmelidir. 
 
 ```
 $ ssh-copy-id client.fqdn_bilgisi
@@ -596,7 +596,8 @@ $ sudo cp /home/ahtapotops/gdyshook-cert.pub /var/opt/gitlab/.ssh/gdyshook-cert.
 $ sudo cp /home/ahtapotops/gdyshook.pub /var/opt/gitlab/.ssh/gdyshook.pub
 ```
 ```
-$ chmod 700 ~/.ssh & cd ~/.ssh/
+$ sudo su
+$ chmod 700 /var/opt/gitlab/.ssh & cd /var/opt/gitlab/.ssh/
 $ chmod 600 id_rsa gdyshook myshook
 $ exit
 ```
@@ -790,11 +791,12 @@ $ sudo chown -R ahtapotops:ahtapotops /etc/ansible/*
 ```
 
 ```
+$ cd /etc/ansible
 $ git status
 $ git add --all
-$ git config --global user.email “ansible@test.com”
-$ git config --global user.name “Ansible Makinesi”
-$ git commit -m “MYS ana dosyalari eklendi.” 
+$ git config --global user.email "ansible@test.com"
+$ git config --global user.name "Ansible Makinesi"
+$ git commit -m "MYS ana dosyalari eklendi." 
 $ git push origin master
 
 ```
@@ -888,6 +890,7 @@ $ git push origin master
 * **ÖNEMLİ:** Gitlab kurulumu tamamlandığına göre bir önceki adım olan MYS kurulumu adımına geri dönülür ve başına **#** işareti koyduğumuz **ansible** ve **post** satırlarının başındaki **#** işareti silinir ve **ansible.yml** yeniden aşağıdaki gibi çalıştırılır.
 
 ```
+$ nano /etc/ansible/playbooks/ansible.yml
 $ ansible-playbook /etc/ansible/playbooks/ansible.yml
 
 ```
@@ -895,6 +898,7 @@ $ ansible-playbook /etc/ansible/playbooks/ansible.yml
 Ardından yine başına "**gitlab.yml**" dosyası içinde başına **#** işareti koyduğumuz **post** satırının başındaki **#** işareti silinir ve "**gitlab.yml**" yeniden çalıştırılır.
 
 ```
+$ nano /etc/ansible/playbooks/gitlab.yml
 $ ansible-playbook /etc/ansible/playbooks/gitlab.yml
 
 ```
