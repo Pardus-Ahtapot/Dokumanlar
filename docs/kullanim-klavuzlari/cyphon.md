@@ -343,9 +343,11 @@ Bunun için regex yazılması gerekmektedir.
 
 Regex içindeki **grup** isimleri **json anahtar-değer** ikilisine otomatik olarak çevrilir.
 
-Regex yazmak için **regex101.com** adresi kullanılabilir.
+Regex programlama dili [**Oniguruma**](https://github.com/kkos/oniguruma)'dir. [Syntax](http://grokconstructor.appspot.com/RegularExpressionSyntax.txt)
 
-Regex programlama dili **javascript**'dir.
+Regex yazmak için [**Grok Debugger**](http://grokdebug.herokuapp.com/) adresi kullanılabilir. Regex için hazır grok patern'leri kullanılabilir. [Grok Regex Patern](https://github.com/logstash-plugins/logstash-patterns-core/blob/master/patterns/grok-patterns)
+
+Örnek: https://qbox.io/blog/logstash-grok-filter-tutorial-patterns
 
 Aşağıdaki Örnek Log ve Regex'i test edebilirsiniz.
 

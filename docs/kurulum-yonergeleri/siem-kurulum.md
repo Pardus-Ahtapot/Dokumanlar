@@ -81,7 +81,7 @@ Bu dokümanda, Ahtapot bütünleşik güvenlik yönetim sisteminde kullanılan S
 
 ![ULAKBIM](../img/pardus19.png)
 
- * Kurulum tamamlandıktan sonra sunucu yeniden başlatılacaktır. Sunucu tekrar başladıktan sonra, "**root**" kullanıcı ile makinaya erişim sağlanır. Erişim sağlandığında aşağıda bulunan ekran gelmektedir. Tüm bileşenlerin aynı sunucuya kurulması için "**SIEM**" seçeneği, Ossim bileşenlerinin kurulması için "**OSSIM**" seçeneği, MYS' den bağımsız olarak ElasticSearch kurulumu için ise, "**ELK**" ve ya "**ES**" seçeneği seçilir. Merkezi yönetim sistemi ile ELK yönetimi yapılmak isteniyorsa, Ahtapot Temel ISO kurulumunu takiben "**ElasticSearch**" playbooku oynatılmalıdır.
+ * Kurulum tamamlandıktan sonra sunucu yeniden başlatılacaktır. Sunucu tekrar başladıktan sonra, "**root**" kullanıcı ile makinaya erişim sağlanır. Erişim sağlandığında aşağıda bulunan ekran gelmektedir. Tüm bileşenlerin aynı sunucuya kurulması için "**SIEM**" seçeneği, Ossim bileşenlerinin kurulması için "**OSSIM**" seçeneği, MYS' den bağımsız olarak ElasticSearch kurulumu için ise, "**ELK**" ve ya "**ES**" seçeneği seçilir. Merkezi yönetim sistemi ile ELK yönetimi yapılmak isteniyorsa, Ahtapot Temel ISO kurulumunu takiben "**ElasticSearch**" playbooku oynatılmalıdır. Kurulum adımlarında playbook ile kurulum gösterilmektedir.
 
 ![ULAKBIM](../img/siem142.jpg)
 
@@ -423,7 +423,7 @@ $ git push origin master
 * GitLab arayüzünde MYS reposunda bulunan **hosts** dosyasına "**ossimcik**" rolü altına ilgili makinanın fqdn bilgileri yazılır.
 ```
 [ossimcik]
-ossimcik01.gdys.local
+ossimcik01.fqdn_bilgisi
 ```
 
 * GitLab arayüzünde MYS reposunda "**roles/base/vars/hosts.yml**" dosyasına ossimcik makinasının bilgileri eklenir.
@@ -433,60 +433,117 @@ ossimcik01.gdys.local
         fqdn: "ossimcik01.gdys.local"
         hostname: "ossimcik01"
 ```
-* "**/etc/ansible/roles/ossimcik/vars/rsyslog.yml**" dosyası içerisinde ossimcik makinesinin logları göndermesi istenilen rsyslog ve ossim makinelerinin fqdn bilgileri girilir.
+* **/etc/ansible/roles/ossimcik/vars/rsyslog.yml** dosyası içerisinde ossimcik makinesinin logları göndermesi istenilen rsyslog ve ossim makinelerinin fqdn bilgileri girilir. **permittedpeer** satırına ossimcik makinasının fqdn bilgisi girilir.
 ```
 vi/etc/ansible/roles/ossimcik/vars/rsyslog.yml
-    rsyslog_server: "rsyslog01.gdys.local"
-    ossim_server: "ossim01.gdys.local"
+    permittedpeer: ["ossimcik.ahtapot.org.tr"]
+    rsyslog_server: "rsyslog.ahtapot.org"
+    ossim_server: "ossim01.ahtapot.org"
 ```
-* "**/etc/ansible/roles/base/vars/rsyslog.yml**"" içerisinde mys sisteminde bulunan makinelerin loglarını göndereceği ossimcikler belirlenir ve **base_ossimcik_servers** altında "**server1**"" içerisine **ossimcik_fqdn** bilgisi "**clients**"" altında **client01** içerisinde ossimcik'e log göndericek **client makinelerin fqdn** bilgisi girilir.
+* **/etc/ansible/roles/base/vars/rsyslog.yml** içerisinde mys sisteminde bulunan makinelerin loglarını göndereceği ossimcikler belirlenir ve **ossimciks** altında **server1** içerisine **ossimcik_fqdn** bilgisi **clients** altında **client01** içerisinde ossimcik'e log göndericek **client makinelerin fqdn** bilgisi girilir.
 ```
 vi /etc/ansible/roles/base/vars/rsyslog.yml 
 ---
 # Log sunucu ayarlarini iceren dosyadir.
 # Yorum satiri ile gosterilen sablon doldurularak istenilen kadar log sunucusu eklenebilir.
 rsyslog:
-    conf:
-        source: "rsyslog.conf.j2" 
-        destination: "/etc/rsyslog.conf" 
-        owner: "root" 
-        group: "root" 
-        mode: "0644" 
-    service:
-        name: "rsyslog" 
-        state: "started" 
-        enabled: "yes"
-    ActionQueueMaxDiskSpace: "2g"
-    ActionQueueSaveOnShutdown: "on" 
-    ActionQueueType: "LinkedList" 
-    ActionQueueFileName: "srvfrwd" 
-    ActionResumeRetryCount: "-1" 
-    WorkDirectory: "/var/spool/rsyslog" 
-    IncludeConfig: "/etc/rsyslog.d/*" 
+   conf:
+      source: "rsyslog.conf.j2"
+      destination: "/etc/rsyslog.conf"
+      owner: "root"
+      group: "root"
+      mode: "0644"
+   service:
+      name: "rsyslog"
+      state: "started"
+      enabled: "yes"
+   tls:
+      state: "on"
+      cacert: "/etc/ssl/certs/rootCA.pem"
+      mycert: "/etc/ssl/certs/{{ ansible_fqdn }}.crt"
+      mykey: "/etc/ssl/private/{{ ansible_fqdn }}.key"
+      authmode: "name"
+      permittedpeer: "ossimcik.ahtapot.org.tr"
+   MainQueueSize: "100000"
+   MainQueueWorkerThreads: "2"
+   ActionResumeRetryCount: "-1"
+   QueueType: "LinkedList"
+   QueueFileNameANS: "srvfrwd_ans"
+   QueueFileNameIPT: "srvfrwd_iptables"
+   QueueFileNameSYS: "srvfrwd_syslog"
+   QueueFileNameSURICATA: "srvfrwd_suricata"
+   QueueSaveOnShutdown: "on"
+   QueueMaxFileSize: "100m"
+   QueueSize: "250000"
+   asyncWriting: "on"
+   ioBufferSize: "256k"
+   Mode: "inotify"
+   WorkDirectory: "/var/spool/rsyslog"
+   IncludeConfig: "/etc/rsyslog.d/*"
 
-base_ossimcik_servers:
-    server1:
-        fqdn: "ossimcik01.gdys.local" 
-        port: "514" 
-        severity: "*" 
-        facility: "*"
-        clients:
-            client01:
-                fqdn: "ansible01.gdys.local"
-            client02:
-                fqdn: "gitlab01.gdys.local"
-#    serverX:
-#        fqdn: "" 
-#        port: "" 
-#        severity: "" 
-#        facility: ""
-#        clients:
-#            clientXX:
-#                fqdn: ""
-#            clientXX:
-#                fqdn: ""
+ossimciks:
+   server01:
+      fqdn: "ossimcik.ahtapot.org.tr"
+      port: "20514"
+      clients:
+        - "mys.ahtapot.org.tr"
+        - "git.ahtapot.org.tr"
+#       - "*.ahtapot.org.tr"
 ```
+* "**/etc/ansible/roles/rsyslog/vars/rsyslog.yml**" dosyası içerinde ossim, ossim korelasyon ve ossec makinalarının ip adresleri girilir. **permittedpeer:** bilgisine genelden log toplayabilmesi için ** *.ahtapot.org.tr** yazılır.
+```
+nano /etc/ansible/roles/rsyslog/vars/rsyslog.yml
+---
+# Rsyslog'un degiskenlerini iceren dosyadir
+rsyslog:
+   conf:
+      source: "rsyslog.conf.j2"
+      destination: "/etc/rsyslog.conf"
+      owner: "root"
+      group: "root"
+      mode: "0644"
+   service:
+      name: "rsyslog"
+      state: "started"
+      enabled: "yes"
+   tls:
+      state: "on"
+      cacert: "/etc/ssl/certs/rootCA.pem"
+      mycert: "/etc/ssl/certs/{{ ansible_fqdn }}.crt"
+      myprivkey: "/etc/ssl/private/{{ ansible_fqdn }}.key"
+      authmode: "name"
+      permittedpeer: "*.ahtapot.org.tr"
+   port: "20514"
+   port_udp: "514"
+   imthreads: "5"
+   MainQueueSize: "100000000"
+   MainQueueWorkerThreads: "5"
+   asyncWriting: "on"
+   ioBufferSize: "1024k"
+   WorkDirectory: "/var/spool/rsyslog"
+   IncludeConfig: "/etc/rsyslog.d/*"
 
+sources:
+   src01:
+      addr: "OSSIM_AV_Alerts"
+      alertname: "OSSIM_AV_Alerts"
+      alertfile: "{{ logrotate['Directory'] }}/ossim/ossimalerts.log"
+      rawname: "OSSIM_All"
+      rawfile: "{{ logrotate['Directory'] }}/ossim/ossim_raw.log"
+   src02:
+      addr: "OSSIMCIK_IP"
+      alertname: "OSSIMCIK_AV_Alerts"
+      alertfile: "{{ logrotate['Directory'] }}/ossimcik/ossimcikalerts.log"
+      rawname: "OSSIMCIK_All"
+      rawfile: "{{ logrotate['Directory'] }}/ossimcik/ossimcik_raw.log"
+   src03:
+      addr: "OSSIMCORR_IP"
+      alertname: "OSSIMCORR_AV_Alerts"
+      alertfile: "{{ logrotate['Directory'] }}/ossimcorr/ossimcorr_alerts.log"
+      rawname: "OSSIMCORR_All"
+      rawfile: "{{ logrotate['Directory'] }}/ossimcorr/ossimcorr_raw.log"
+
+```
 * ISO kurulumu tamamlanmmış ve OSSIMCIK rolü yüklenecek makina üzerinde ansible playbooku çalıştırmak için, Ansible makinasına **ahtapotops** kullanıcısı ile SSH bağlantısı yapılarak, "**ossimcik.yml**" playbooku çalıştırılır.
 ```
 $ cd /etc/ansible

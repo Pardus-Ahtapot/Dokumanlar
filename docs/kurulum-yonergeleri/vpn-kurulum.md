@@ -94,7 +94,7 @@ export KEY_NAME="server"
 # cd /etc/easy-rsa && source ./vars && ./build-key client_adi
 ```
 
-* Belirlenen client için OVPN dosyası oluşturularak kuruluma devam edilir. “**/etc/easy-rsa/keys/sunucu_adi.ovpn**” dosyası metin düzenleyicisi ile açılarak “**remote**” satırında bulunan OpenVPN Server IP ve port bilgisi güncellenerek kaydedilir.
+* Belirlenen client için OVPN dosyası oluşturularak kuruluma devam edilir. “**/etc/easy-rsa/keys/sunucu_adi.ovpn**” dosyası metin düzenleyicisi ile açılarak “**remote**” satırında bulunan OpenVPN Server IP ve port bilgisi güncellenerek kaydedilir. Bu noktoda OVPN dosyasındaki “**proto**” satırındaki bağlantı protokolü bilgisinin sunucu konfigürasyon dosyasında ki ile aynı olması gerekmektedir. Aksi halde bağlantı sağlanamaz.
 
 ```
 # vi /etc/easy-rsa/keys/sunucu_adi.ovpn
@@ -246,7 +246,7 @@ $ ansible-playbook playbooks/openvpn.yml
 # cd /etc/easy-rsa && source ./vars && ./build-key client_adi
 ```
 
-* Belirlenen client için OVPN dosyası oluşturularak kuruluma devam edilir. “**/etc/easy-rsa/keys/sunucu_adi.ovpn**” dosyası metin düzenleyicisi ile açılarak “**remote**” satırında bulunan OpenVPN Server IP ve port bilgisi güncellenerek kaydedilir.
+* Belirlenen client için OVPN dosyası oluşturularak kuruluma devam edilir. “**/etc/easy-rsa/keys/sunucu_adi.ovpn**” dosyası metin düzenleyicisi ile açılarak “**remote**” satırında bulunan OpenVPN Server IP ve port bilgisi güncellenerek kaydedilir. Bu noktoda OVPN dosyasındaki “**proto**” satırındaki bağlantı protokolü bilgisinin sunucu konfigürasyon dosyasında ki ile aynı olması gerekmektedir. Aksi halde bağlantı sağlanamaz.
 
 ```
 # vi /etc/easy-rsa/keys/sunucu_adi.ovpn
@@ -307,13 +307,13 @@ cipher AES-256-CBC
 
 * Kurulum öncesinde aralarında bağlantı sağlanacak ipsec vpn sunucularının iç ve dış bacaklarına ait ip/subnet bilgileri kesinleştirilmelidir.
 
-* CA Sunucusu üzerinde IPsec için kök sertifika oluşturulmalıdır. Bunun için aşağıdaki gibi öncelikle strongswan paketi kurulur.
+* CA Sunucusu üzerinde IPsec için kök sertifika oluşturulmalıdır. Bunun için aşağıdaki gibi öncelikle gerekli strongswan paketleri kurulur.
 
 ```
-# apt-get install -y strongswan
+# apt-get install -y strongswan strongswan-pki
 ```
 
-* İlgili paket kurulduktan sonra, sertifika oluşturulur. Config dosyası adımında aynı bilgilerin kullanılması koşulu ile “**"C=TR, O=ULAKBIM, CN=ULAKBIM CA"**” bölümüne kuruma uygun bilgiler girilir.
+* İlgili paketler kurulduktan sonra, sertifika oluşturulur. Config dosyası adımında aynı bilgilerin kullanılması koşulu ile “**"C=TR, O=ULAKBIM, CN=ULAKBIM CA"**” bölümüne kuruma uygun bilgiler girilir.
 
 ```
 # ipsec pki --gen --outform pem > /etc/ipsec.d/private/caKey.pem
@@ -323,7 +323,7 @@ cipher AES-256-CBC
 * İlk kurulumda vpn sunucuların biribiri ile iletişimi olmadığından IPsec kurulumu elle yapılmalıdır. IPsec için gerekli paketlerin kurulumunu yapmak için aşağıdaki komut her iki VPN sunucusu üzerinde de çalıştırılmalıdır.
 
 ```
-# apt-get install strongswan strongswan-charon strongswan-libcharon strongswan-starter libstrongswan libstrongswan-extra-plugins libstrongswan-standard-plugins libcharon-extra-plugins
+# apt-get install strongswan strongswan-pki strongswan-charon strongswan-libcharon strongswan-starter libstrongswan libstrongswan-extra-plugins libstrongswan-standard-plugins libcharon-extra-plugins
 ```
 
 * Ilk vpn sunususu üzerinde kendisi için gerekli public ve private key aşağıdaki gibi oluşturulur. 

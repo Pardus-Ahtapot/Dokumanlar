@@ -217,6 +217,14 @@ komutları çalıştırılmalıdır.
 ```
 openssl genrsa -out rootCA.key 2048
 openssl req -x509 -new -nodes -key rootCA.key -sha256 -days 1024 -out rootCA.pem
+-----
+#Country Name (2 letter code) [AU]:TR
+#State or Province Name (full name) [Some-State]:Ankara
+#Locality Name (eg, city) []:Ankara
+#Organization Name (eg, company) [Internet Widgits Pty Ltd]:ULAKBIM
+#Organizational Unit Name (eg, section) []:Pardus
+#Common Name (e.g. server FQDN or YOUR name) []:makina_fqdn_bilgisi
+#Email Address []:
 ```
 
 * Log gönderecek veya log'u alacak makineler için openssl kullanılarak anahtarlar oluşturulur. İkinci komut çalıştırıldığında gelen soru ekranlarında "**Common Name**" satırına ilgili makinanın **FQDN** bilgisi girilmesi zaruridir.
@@ -224,6 +232,13 @@ openssl req -x509 -new -nodes -key rootCA.key -sha256 -days 1024 -out rootCA.pem
 ```
 openssl genrsa -out client_fqdn.key 2048
 openssl req -new -key client_fqdn.key -out client_fqdn.csr
+#Country Name (2 letter code) [AU]:TR
+#State or Province Name (full name) [Some-State]:Ankara
+#Locality Name (eg, city) []:Ankara
+#Organization Name (eg, company) [Internet Widgits Pty Ltd]:ULAKBIM
+#Organizational Unit Name (eg, section) []:Pardus
+#Common Name (e.g. server FQDN or YOUR name) []:makina_fqdn_bilgisi
+#Email Address []:
 ```
 
 * Oluşturulan anahtarlar rootCA ile imzalanır.

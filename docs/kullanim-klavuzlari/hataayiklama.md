@@ -9,9 +9,34 @@ Bu dökümanda Merkezi Yönetim Sistemi bileşenlerinde karşılaşılabilecek h
 
 ####Ahtapot Hata Ayıklama Rehberi
 
+###SSH Bağlantı Hataları
+
+* Playbooklar oynatıldığında ssh bağlantı hatası alınması durumunda yapılması gerekenler;
+```
+ssh-copy-id client.fqdn_bilgisi 
+#ssh-copy-id mys.ahtapot.org.tr
+```
+* /etc/hosts dosyasında bağlanılmak istenen veya playbook'un çalışması istenen sunucu bilgileri kontrol edilmelidir. 
+
+* ~/.ssh dizini yetkileri, sahiplikleri ve oluşturulan anahtarlar kontrol edilmelidir.
+
+* Playbook oynatıldıktan sonra sunuculara erişilemiyor ise;
+
+ 1. Erişilemeyen sunucuda **/etc/ssh/sshd_config** dosyasında **PasswordAuthentication yes** satırının yes olduğu  kontrol edilmelidir.
+```
+$ sudo nano /etc/ssh/sshd_config
+PasswordAuthentication yes
+$ sudo systemctl sshd.service
+```
+```
+$ sudo chown root: /
+$ sudo reboot
+```
+
 ###Log Gönderimi Hataları
 
 * Client makinelerden Ossimcik Makinesine veya Ossimcik makinelerinden Ossim ve Rsyslog makinelerine logların gönderilmemesi tespit edilmesi durumunda yapılması gerekenler:
+
  1. Logların gönderimi için nxlog ve rsyslog kullanılmaktadır. Hatanın tespiti için öncelikle uygulamaların kendi oluşturdukları loglar incelenmelidir. Rsyslog için "/var/log/syslog" nxlog için "/var/log/nxlog/nxlog.log" dosyaları incelenmelidir.
  2. Log gönderen ve log alan makinelerin "**/etc/rsyslog.conf**" dosyası, windows makineler için "**/etc/nxlog/nxlog.conf**" içerisinde verilen, şifreli log gönderiminde kullanılan anahtarların isimleri ve dizinleri kontrol edilmelidir. Makineler içerisinde anahtarlar kontrol edilmelidir.
 
@@ -28,8 +53,8 @@ $DefaultNetstreamDriverKeyFile /etc/ssl/private/ansible01.gdys.local.key
 *.* @@ossimcik01.gdys.local:514 
 ```
  
- 4. Log gönderen ve log alan makineler farklı subnetlerde bulunması ve arada güvenlik durumu bulunması durumunda rsyslog için "tcp 514" nxlog için "tcp 6514" portlarına güvenlik duvarından izin verilmelidir.
-* Log gönderimi sırasında hatanın log gönderen veya log alan makinelerin hangisinde olduğunu tespit edilmesi için **tcpdump** kullanılır. Tcudump sonucunda hatanın hangi makineden kaynaklı olduğu tespit edilir.
+ 4. Log gönderen ve log alan makineler farklı subnetlerde bulunması ve arada güvenlik durumu bulunması durumunda rsyslog için "tcp 514" nxlog için "tcp 6514" portlarına güvenlik duvarından izin verilmelidir. 
+ Log gönderimi sırasında hatanın log gönderen veya log alan makinelerin hangisinde olduğunu tespit edilmesi için **tcpdump** kullanılır. Tcudump sonucunda hatanın hangi makineden kaynaklı olduğu tespit edilir.
  Client makine içerisinde aşağıdaki komut çalıştırılarak client makineden logların okunup server içerisine gönderimi kontrol edilir.
  ```
  tcpdump host server_ip and port 514

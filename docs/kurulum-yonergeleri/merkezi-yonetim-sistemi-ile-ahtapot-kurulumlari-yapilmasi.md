@@ -21,25 +21,15 @@ $ cd /home/ahtapotops
 $ mkdir ~/.ssh && chmod 700 ~/.ssh
 $ cp /home/ahtapotops/ahtapotops /home/ahtapotops/.ssh/id_rsa  && chmod 600 /home/ahtapotops/.ssh/id_rsa
 $ cp /home/ahtapotops/ahtapotops-cert.pub /home/ahtapotops/.ssh/id_rsa-cert.pub  && chmod 600 /home/ahtapotops/.ssh/id_rsa-cert.pub
+$ cp /home/ahtapotops/ahtapotops.pub /home/ahtapotops/.ssh/id_rsa.pub  && chmod 600 /home/ahtapotops/.ssh/id_rsa.pub
 ```
-
-* Aşağıdaki komut ile ansible ve git kurulumları yapılır. Ansible versiyonu kontrol edilir. (Pardus onyedi reposunda ansible 2.x.x versiyonu, yenikuşak reposunda 1.7.2 versiyonu bulunmaktadır.)
-```
-$ sudo apt-get install -y ansible
-$ ansible --version
-$ sudo apt-get install -y git
-$ cd /etc/ansible
-```
-
 * Kurulum, sıkılaştırma vb. gibi işleri otomatize etmeyi sağlayan ansible playbook’ları Ahtapot reposundan ahtapot-mys paketi ile indirilebilir veya Github'tan Ahtapot projesi indirilerek, son güncel ahtapotmys kullanılabilir.
 ```
 $ sudo apt-get install -y ahtapot-mys
 $ sudo chown ahtapotops:ahtapotops -R /etc/ansible/
-```
-```
-$ git clone -b development https://github.com/Pardus-Ahtapot/MYS.git
-$ sudo cp -rf /MYS/ahtapotmys/* /etc/ansible/
-$ sudo chown ahtapotops:ahtapotops -R /etc/ansible/
+$ sudo apt-get install -y git
+$ cd /etc/ansible
+$ git clone -b development https://github.com/Pardus-Ahtapot/MYS.git && cp -rf /etc/ansible/MYS/ahtapotmys/* /etc/ansible/
 ```
 * Ahtapot projesi kapsamında oluşacak tüm loglar **/var/log/ahtapot/** dizinine yazılmaktadır. Bu dizinin sahipliğini **ahtapotops** kullanıcısına vermek için aşağıdaki komut çalıştırılır.
 
@@ -76,6 +66,18 @@ base_repositories:
         state: present
     repo04:
         url: 'deb [trusted=yes] http://depo.pardus.org.tr/pardus-yenikusak yenikusak main non-free contrib'
+        updatecache: yes
+        state: present
+    repo05:
+        url: 'deb http://depo.pardus.org.tr/guvenlik onyedi main contrib non-free'
+        updatecache: yes
+        state: present
+   repo06:
+        url: 'deb [trusted=yes] http://depo.pardus.org.tr/ahtapot-siem yenikusak main'
+        updatecache: yes
+        state: present   
+   repo07:
+        url: 'deb [trusted=yes] http://depo.pardus.org.tr/ahtapot yenikusak main'
         updatecache: yes
         state: present
 #    repoXX:
@@ -130,7 +132,7 @@ base_host_servers:
 #       hostname: "ansible"
 ```
 
-* Sunucular sanal ortamda kuruluyor ise, **/etc/ansible/roles/base/vars/kernelmodules_remove.yml** dizinlerindeki bir modül bırakılarak silinmeli veya yorum satırına dönüştürülmelidir.
+* Sunucular sanal ortamda kuruluyor ise, **/etc/ansible/roles/base/vars/kernelmodules_remove.yml** dizinlerindeki modüllerin sanal makinada olmamasından kaynaklı hata verebilir. Playbook çalıştan sonra hata veren modülü yorum satırı yapabilirsiniz veya modülleri kontrol etmek istemiyor iseniz tüm modülleri yorum satırı yapabilir veya silebilirsiniz.
 * Sunucular fiziksel ise herhangi bir değişiklik yapmaya gerek yoktur.
 
 ```
@@ -158,16 +160,12 @@ to_be_removed_modules:
 * Sunucuların birbirlerinin “**known_host**” dosyasında kayıtlarının olması için “**ahtapotops**” kullanıcısı ile ssh bağlantısı sağlanması gerekmektedir. Bunun için aşağıdaki komutlar ansible makinesinden diğer makinelere doğru çalıştırılmalı ve sunucu anahtarlarının kabul edilmesi sorusu sorulduğunda “yes” yazılmalıdır. Bağlantıda sorun ile karşılaşılması durumunda anahtarların doğruluğu kontrol edilmelidir. 
 
 ```
-$ ssh ahtapotops@mys_ip_adresi
+$ ssh-copy-id client.fqdn_bilgisi
+$ ssh ahtapotops@mys.fqdn_bilgisi
 $ exit
-$ ssh localhost
 # örnek olarak
-$ ssh ahtapotops@10.10.10.12
-$ exit
-# daha sonra kuracağınız diğer sunucular için örnek
-$ ssh sunucu@fqdn_bilgisi
-$ exit
-
+# ssh mys.ahtapot.org.tr
+# $ exit
 ```
 * Playbook oynatıldıktan sonra MYS sunucusuna uzaktan erişim sağlayabilmek için **/etc/ansible/roles/base/vars/ssh.yml** playbook'unda **PasswordAuthentication: "yes"** düzenleme yapılmalıdır. Ansible sunucunuza uzaktan erişim sağlanılmayacaksa düzenleme yapılmasına gerek yoktur.
 
@@ -262,16 +260,12 @@ ssh:
 * Sunucu üzerinde gerekli sıkılaştırma işlemleri ve ansible kurulumu yapacak olan **ansible.yml** playbook’u açılır ve **roles:** altinda sadece **base** rolü açık kalacak şekilde **ansible** ve **post** rollerinin başına **#** koyulur daha sonra bu dosya aşağıda gösterildiği şekilde çalıştırılır.
 
 ```
-$ ansible-playbook /etc/ansible/playbooks/ansible.yml -k
+$ ansible-playbook /etc/ansible/playbooks/ansible.yml
 
 ```
 
 * ansible.yml playbookunun çalışması bittikten sonra, konfigürasyon yedeklemesi ve güvenliğinin sağlanması, yetkisiz değişikliklerin görülebilmesi için Gitlab kurulumu yapılması zorunludur. Aşağıda anlatıldığı şekilde Gitlab kurulumu yapıldıktan sonra Ansible kurulumu tamamlanmış olacak ve sistem diğer sunucuları yönetebilir hale gelmiş olacaktır.
 
-```
-$ ssh ansible.ahtapot.org.tr
-$ exit
-```
 ####Ansible Playbook ile GitLab Kurulumu
 * MYS'de /etc/ansible/hosts ve /etc/ansible/roles/base/vars/host.yml dosyalarında gitlab sunucusu bilgileri düzenlenir.
 
@@ -328,8 +322,7 @@ base_host_servers:
 * PasswordAuthentication: "no" parametresi sunucuya uzaktan erişimin engellenmesi içindir. Makinanıza uzaktan erişebilmek için "yes" olarak değiştiriniz. Gerçek sistem kurulumlarında "no" olmalıdır.
 
 ```
-$ cd roles/base/vars/
-$ sudo vi ssh.yml
+$ nano /etc/ansible/roles/base/vars/ssh.yml
 # Ssh degiskenlerini iceren dosyadir.
 ssh:
     conf:
@@ -407,15 +400,21 @@ $ nano /etc/ansible/roles/ansible/vars/git.yml
 # Gitin degiskenlerini iceren dosyadir
 gitrepos:
     repo01:
-        repo: "ssh://git@yerel_gitlab_adresi:ssh_port/ahtapotops/gdys.git"
+        repo: "ssh://git@Gitlab_sunucu_fqdn:SSH_PORT/ahtapotops/gdys.git"
         accept_hostkey: "yes"
         destination: "/etc/fw/gdys"
         key_file: "/home/ahtapotops/.ssh/id_rsa"
     repo02:
-        repo: "ssh://git@yerel_gitlab_adresi:ssh_port/ahtapotops/mys.git"
+        repo: "ssh://git@Gitlab_sunucu_fqdn:SSH_PORT/ahtapotops/mys.git"
         accept_hostkey: "yes"
         destination: "/etc/ansible/"
         key_file: "/home/ahtapotops/.ssh/id_rsa"
+    repo03:
+        repo: "ssh://git@Gitlab_sunucu_fqdn:SSH_PORT/ahtapotops/sb.git"
+        accept_hostkey: "yes"
+        destination: "/etc/ansible/"
+        key_file: "/home/ahtapotops/.ssh/id_rsa"
+       
 # örnek
 #    repoXX:
 #        repo: "ssh://git@gitlab.ahtapot.org.tr:22/ahtapotops/gdys.git"
@@ -432,8 +431,7 @@ gitrepos:
 
 
 ```
-$ cd roles/gitlab/vars/
-$ sudo vi main.yml
+$ nano /etc/ansible/roles/gitlab/vars/main.yml
 # GitLab'in degiskenlerinin tutuldugu dosyadir.
 gitlab:
 # git kullanicisini yapilandirmasi belirtilmektedir.
@@ -471,7 +469,7 @@ gitlab:
         owner: root
         group: root
         mode: 600
-    external_url: https://yerel_gitlab_URL
+    external_url: https://Gitlab_FQDN
     firstrunpath: /var/opt/gitlab/bootstrapped
     gitlab_rails:
         gitlab_email_enabled: "true"
@@ -479,7 +477,7 @@ gitlab:
         gitlab_email_display_name: GdysGitlab 
         gitlab_email_reply_to: no-reply@Domain_Adi
         gitlab_default_theme: 2
-        gitlab_shell_ssh_port: 22
+        gitlab_shell_ssh_port: SSH_PORT
         smtp_enable: "true" 
         smtp_address: smtp_sunucu_adı
         smtp_port: 25 
@@ -546,8 +544,7 @@ subprocess.Popen(["/usr/bin/ssh -o StrictHostKeyChecking=no -o UserKnownHostsFil
 * ISO’dan kurulumu yapılmış her makinenin ilk planda ssh portları **22** olarak belirlendiğinden dolayı, ansible ilk kurulumu yaparken her makineye 22. Porttan bağlanacaktır. Bu sebep ile **ansible.cfg** dosyasında bulunan **remote_port** parametresinin **22** olduğu teyit edilmelidir.
 
 ```
-$ cd /etc/ansible/
-$ sudo vi ansible.cfg
+$ nano /etc/ansible/ansible.cfg
 # config file for ansible -- http://ansible.com/
 # ==============================================
 
@@ -576,7 +573,7 @@ remote_port    = ssh_port
 * “**Ansible Playbookları**” dokümanında detaylı anlatımı bulunan, sunucu üzerinde gerekli sıkılaştırma işlemleri ve gitlab kurulumu yapacak olan “**gitlab.yml**” playbook’u çalıştırılır. Ancak ilk kurulma mahsus olmak üzere playbook çalıştırılmadan önce "**gitlab.yml**" dosyası açılır ve "**roles**" altında bulunan "**post**" satırının başına **#** işareti konularak ilk kuruluma mahsus bu rolün çalışmaması sağlanır.
 
 ```
-$ ansible-playbook /etc/ansible/playbooks/gitlab.yml -k
+$ ansible-playbook /etc/ansible/playbooks/gitlab.yml
 ```
 
 * Git kurulumdan sonra parolasız git işlemlerini yapabilmek için   [CA Kurulumu ve Anahtar Yönetimi](ca-kurulum.md) dokümanına uygun bir şekilde oluşturulmuş git kullanıcısına ait anahtalar, GitLab sunucu üzerinde ilgili yerlere kopyalama işlemi yapılmalıdır. Bu adımlar hem GitLab sunucusunda hem de yedek GitLab sunucusunda yapılmalıdır.
@@ -599,23 +596,10 @@ $ sudo cp /home/ahtapotops/gdyshook-cert.pub /var/opt/gitlab/.ssh/gdyshook-cert.
 $ sudo cp /home/ahtapotops/gdyshook.pub /var/opt/gitlab/.ssh/gdyshook.pub
 ```
 ```
-$ chmod 700 ~/.ssh
-$ cd ~/.ssh/
+$ chmod 700 ~/.ssh & cd ~/.ssh/
 $ chmod 600 id_rsa gdyshook myshook
 $ exit
 ```
-
-* **NOT:** Dökümanda yapılması istenilen değişiklikler gitlab arayüzü yerine terminal üzerinden yapılması durumunda playbook oynatılmadan önce yapılan değişiklikler git'e push edilmelidir.
-
-```
-$ cd /etc/ansible
-git status komutu ile yapılan değişiklikler gözlemlenir.
-$ git status
-$ git add --all
-$ git commit -m "yapılan değişiklik commiti yazılır"
-$ git push origin master
-```
-
 
 **NOT :** Gitlab yedekli kurulacak ise, yedek sistem üzerinde bu adımlar el ile yapılmalıdır.
 
@@ -800,22 +784,13 @@ $ ls -la /tmp
 drwx------  3 ahtapotops ahtapotops   60 Nis 11 18:43 mys
 ```
 
-  * Ansible kurulumu sırasında Github üzerinden yerele indirilen playbooklar, bulunduğu dizin içerisinden alınız ve geçici dizin altında oluşmuş olan **mys** klasörüne kopyalayınız.
-
 ```
-$ sudo cp -rf /etc/ansible/* /tmp/mys/
-```
-
-  * Dosyaların kopyalandığını teyit etmek amacı ile ilgili dizini kontrol ediniz.
-
-```
-$ ls -ltr /tmp/mys
-$ sudo chown -R ahtapotops:ahtapotops *
+$ sudo cp -rf /tmp/mys/.git /etc/ansible/ && sudo chown -R ahtapotops:ahtapotops /etc/ansible/.git
+$ sudo chown -R ahtapotops:ahtapotops /etc/ansible/*
 ```
 
-  * **mys** klasörüne kopyalanmış playbookların kopyalandığını teyit ettikten sonra, GitLab arayüzüne gönderiniz.
-
 ```
+$ git status
 $ git add --all
 $ git config --global user.email “ansible@test.com”
 $ git config --global user.name “Ansible Makinesi”
@@ -824,7 +799,7 @@ $ git push origin master
 
 ```
 
-* GitLab kurulumunun tamamlanmasının ardından Ansible sunucusundan SSH bağlantı linki üzerinden deponun yerele alınması test edilir.
+* GitLab kurulumunun tamamlanmasının ardından Ansible sunucusundan SSH bağlantı linki üzerinden gdys deposunun yerele alınması test edilir.
 
 ```
 $ cd /tmp 
@@ -857,14 +832,37 @@ Receiving objects: 100% (10/10), 10.22 KiB | 0 bytes/s, done.
 Resolving deltas: 100% (1/1), done.
 ```
 
-* Erişimin sağlandığından emin olduktan sonra, Ansible makinesi üzerine ilk kurulum için koyduğumuz playbookların, MYS reposudan çalışmasını sağlamak için yerel gitlab sunucusu üzerindeki MYS reposu ansible makinesine clonelanarak, **.git** dosyası **/etc/ansible** dosyasına taşınır. Bu dizin altındaki tüm dosyaların sahiplik hakları **ahtapotops** kullanıcısına verilir.
+* GitLab kurulumunun tamamlanmasının ardından Ansible sunucusundan SSH bağlantı linki üzerinden sb deposunun yerele alınması test edilir.
 
 ```
-$ cd /tmp/mys
-$ sudo cp -rf .git /etc/ansible/ && sudo chown -R ahtapotops:ahtapotops /etc/ansible/.git
-$ rm -rf /tmp/mys
-$ sudo chown -R ahtapotops:ahtapotops /etc/ansible/*
+$ cd /tmp 
+$ git clone ssh://git@gitlab_sunucuadı:ssh_port/ahtapotops/sb.git 
+# git clone ssh://git@gitlab.ahtapot.org.tr:22/ahtapotops/sb.git
+$ rm -rf gdys
+```
+```
+Cloning into 'sb'...
+## Bu dosya ansible tarafindan yonetilmektedir!
+## Burada yapilan degisikliklerin uzerine yazilir!!
 
+#+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=
+#  ________  ___  ___  _________  ________  ________  ________  _________   
+# |\     \|\  \|\  \|\___   ___\\     \|\     \|\     \|\___   ___\ 
+# \ \  \|\  \ \  \\\  \|___ \  \_\ \  \|\  \ \  \|\  \ \  \|\  \|___ \  \_| 
+#  \ \     \ \     \   \ \  \ \ \     \ \   ____\ \  \\\  \   \ \  \  
+#   \ \  \ \  \ \  \ \  \   \ \  \ \ \  \ \  \ \  \___|\ \  \\\  \   \ \  \ 
+#    \ \__\ \__\ \__\ \__\   \ \__\ \ \__\ \__\ \__\    \ \_______\   \ \__\
+#     \||\||\||\||    \||  \||\||\||     \|_______|    \||
+#                                                                           
+#+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=
+# AHTAPOT tarafindan yonetilen gitlab makinasina erisiyorsunuz !!!
+# Tum erisim ve hareketleriniz loglaniyor
+#+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=
+remote: Counting objects: 10, done.
+remote: Compressing objects: 100% (6/6), done.
+remote: Total 10 (delta 1), reused 0 (delta 0)
+Receiving objects: 100% (10/10), 10.22 KiB | 0 bytes/s, done.
+Resolving deltas: 100% (1/1), done.
 ```
 
 **NOT :** Ansible yedekli kurulacak ise, yedek sistemde sadece bu madde adımları aşağıdaki şekilde çalıştırılmalıdır.
@@ -872,9 +870,8 @@ $ sudo chown -R ahtapotops:ahtapotops /etc/ansible/*
 ```
 $ cd /tmp
 $ git clone ssh://git@gitlab_sunucuadı:ssh_port/ahtapotops/mys.git
-$ cd mys/
-$ sudo cp -rf .git /etc/ansible/ && sudo chown ahtapotops:ahtapotops /etc/ansible/.git
-$ rm -rf ../mys
+$ sudo cp -rf /tmp/mys/.git /etc/ansible/ && sudo chown ahtapotops:ahtapotops /etc/ansible/.git
+$ rm -rf /tmp/mys/
 $ sudo chown ahtapotops:ahtapotops /etc/ansible/*
 ```
 
@@ -891,14 +888,14 @@ $ git push origin master
 * **ÖNEMLİ:** Gitlab kurulumu tamamlandığına göre bir önceki adım olan MYS kurulumu adımına geri dönülür ve başına **#** işareti koyduğumuz **ansible** ve **post** satırlarının başındaki **#** işareti silinir ve **ansible.yml** yeniden aşağıdaki gibi çalıştırılır.
 
 ```
-$ ansible-playbook /etc/ansible/playbooks/ansible.yml -k
+$ ansible-playbook /etc/ansible/playbooks/ansible.yml
 
 ```
 
 Ardından yine başına "**gitlab.yml**" dosyası içinde başına **#** işareti koyduğumuz **post** satırının başındaki **#** işareti silinir ve "**gitlab.yml**" yeniden çalıştırılır.
 
 ```
-$ ansible-playbook /etc/ansible/playbooks/ansible.yml -k
+$ ansible-playbook /etc/ansible/playbooks/gitlab.yml
 
 ```
 

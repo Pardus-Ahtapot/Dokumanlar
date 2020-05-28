@@ -2,17 +2,18 @@
 
 ### Pardus 17 Ahtapot ISO'sunun indirilmesi
 
-Pardus 17 Ahtapot ISO'su [http://ahtapot.org.tr/indirmeler.html](http://ahtapot.org.tr/indirmeler.html) adresinden, 	**Pardus 17 Ahtapot ISO** bağlantısından indirilebilir.
+**Pardus 17 Ahtapot ISO** 'su indirmek için; [http://ahtapot.org.tr/indirmeler.html](http://ahtapot.org.tr/indirmeler.html)
 
-**NOT:** Pardus 17 Ahtapot, **ahtapotops** ön tanımlı kullanıcısı ile gelmektedir. Ön tanımlı ahtapotops kullanıcısının parolası : **LA123**  Parola ilk giriş sırasında değiştirilmek zorundadır. 
+**NOT:** Pardus 17 Ahtapot, **ahtapotops** ön tanımlı kullanıcısı ile gelmektedir. Ön tanımlı ahtapotops kullanıcısının parolası **LA123**  Parola ilk giriş sırasında değiştirilir.
 
 ### Pardus-Ahtapot Kurumsal 5 ISO'sunun indirilmesi
 
-Pardus-Ahtapot Kurumsal 5 ISO'su [http://ahtapot.org.tr/indirmeler.html](http://ahtapot.org.tr/indirmeler.html) adresinden, **Kurumsal 5 Ahtapot ISO** bağlantısından indirilebilir.
+**Pardus-Ahtapot Kurumsal 5 ISO** 'su indirmek için; [http://ahtapot.org.tr/indirmeler.html](http://ahtapot.org.tr/indirmeler.html) 
+**NOT: ahtapotops** ön tanımlı kullanıcısı ile gelmektedir. Ön tanımlı ahtapotops kullanıcısının parolası **LA123!!**
 
 ### Pardus17 Sunucu ISO'nun İndirilmesi ve Repo Ayarları
 
-Pardus17 Sunucu ISO'su [indir.pardus.org.tr/ISO/Pardus17/Pardus-17.4-SERVER-amd64.iso](indir.pardus.org.tr/ISO/Pardus17/Pardus-17.4-SERVER-amd64.iso) adresinden indirilebilir. Pardus17 isosunda gerekli üzenlemeleri el ile yapılması gerekmektedir. Öntanımlı kullanıcı parola yoktur.
+**Pardus17 Sunucu ISO** 'su indirmek için [indir.pardus.org.tr/ISO/Pardus17/Pardus-17.4-SERVER-amd64.iso](indir.pardus.org.tr/ISO/Pardus17/Pardus-17.4-SERVER-amd64.iso) Pardus17 isosunda gerekli üzenlemeleri el ile yapılması gerekmektedir. Öntanımlı kullanıcı parola yoktur.
 
 * Depo adreslerini /etc/apt/sources.list dosyasından düzenleyiniz.
 
@@ -20,22 +21,23 @@ Pardus17 Sunucu ISO'su [indir.pardus.org.tr/ISO/Pardus17/Pardus-17.4-SERVER-amd6
 ahtapotops@ansible:~$ sudo nano /etc/apt/source.list
 ```
 ```
+deb [trusted=yes] http://depo.pardus.org.tr/ahtapot yenikusak main
+deb [trusted=yes] http://depo.pardus.org.tr/ahtapot-siem yenikusak main
 deb [trusted=yes] http://depo.pardus.org.tr/pardus-yenikusak yenikusak main non-free contrib
-deb [trusted=yes] http://depo.pardus.org.tr/ahtapot testing main
-deb [trusted=yes] http://depo.pardus.org.tr/ahtapot stable main
 deb http://depo.pardus.org.tr/pardus onyedi main contrib non-free
+deb http://depo.pardus.org.tr/guvenlik onyedi main contrib non-free
+deb http://depo.pardus.org.tr/ahtapot stable main
+deb http://depo.pardus.org.tr/ahtapot testing main
 ```
+* Yenikuşak reposuna anahtar eklemek için aşağıdaki komutlar yardımı ile pardus reposundan anahtar indirilir ve eklenir.
+
 ```
+$ wget http://depo.pardus.org.tr/pardus/pool/main/p/pardus-archive-keyring/pardus-archive-keyring_2017.2_all.deb
+$ wget http://depo.pardus.org.tr/pardus-yenikusak-public.asc
+$ sudo dpkg -i pardus-archive-keyring_2017.2_all.deb
+$ sudo apt-key add pardus-yenikusak-public.asc
 $ sudo apt-get update
 ```
-* Yenikuşak reposu için anahtar eklemeniz istenirse aşağıdaki komutlar yardımı ile pardus reposundan anahtar indirilir ve eklenir.
-```
-$ sudo wget http://depo.pardus.org.tr/pardus/pool/main/p/pardus-archive-keyring/pardus-archive-keyring_2017.2_all.deb
-$ sudo dpkg -i pardus-archive-keyring_2017.2_all.deb
-$ sudo wget depo.pardus.org.tr/pardus-yenikusak-public.asc
-$ sudo apt-key add pardus-yenikusak-public.asc
-```
-
 **DİKKAT:** Pardus Ahtapot ISOları, Pardus Sunucu ISO 'sunun sıkılaştırma ve Ahtapot projesi için gerek görülmeyen paketlerin kaldırılmasıyla oluşturulur. Test ortamında Pardus Sunucu versiyonu kullanılabilir, fakat gerçek ortamda Ahtapot ISOlarının tercih edilmesi güvenlik açısından önerilir.
 
 ### Sertifika Otoritesi Sunucusunun Kurulması
@@ -46,11 +48,11 @@ Ayrı bir sunucu olmasına gerek duymuyor iseniz, Merkezi Yönetim Sistemi (ansi
 
 ### Kurulum Sırasındaki Önceliklendirmeler
 
-Diğer Ahtapot sistemlerinin verimli ve hızlı bir şekilde kurulabilmesi için;
+Diğer Ahtapot sistemlerinin verimli ve hızlı bir şekilde kurulabilmesi için izlenmesi gereken adımlar;
 
-* Sertifika Otoritesi kurulumu tamamlanmalıdır.
-* Gitlab kurulmalidir
-* Merkezi Yönetim Sistemi suncusu kurulmalıdır.
+* Sertifika Otoritesi Kurulumu
+* Gitlab Kurulumu
+* Merkezi Yönetim Sistemi Kurulumu
 
 Merkezi Yönetim Sistemi kurulumu tamamlandıktan sonra ihtiyaca göre diğer bileşenlerin kurulumları yapılmalıdır.
 
