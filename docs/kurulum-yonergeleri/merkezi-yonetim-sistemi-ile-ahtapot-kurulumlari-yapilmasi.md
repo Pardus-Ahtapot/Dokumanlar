@@ -916,11 +916,13 @@ Bu adımlar sonunda artık gitlab ve ansible rolleri tamamıyla kurulmuş olacak
 ```
 $ cd /home/ahtapotops/.ssh/
 $ mv ahtapotops id_rsa
-$ mv ahtaporops-cert.pub id_rsa-cert.pub
+$ mv ahtapotops-cert.pub id_rsa-cert.pub
 $ mv ahtapotops.pub id_rsa.pub
 $ chmod 600 id_rsa
 ```
 *  Gitlab arayüzünden veya MYS sunusundan **roles/firewallbuilder/vars/git.yml** dosyası üzerinde **repo01** fonksiyonu altında **repo** satırında bulunan **yerel_gitlab_adresi** bölümünün yerine Merkezi Yönetim Sistemi kapsamında kurulacak Git sunucusunun adresi girilmelidir.
+
+**NOT :** Gitlab adresi girilirken FQDN tamamen küçük harflerler girilmelidir.
 
 ```
 $ nano /etc/ansible/roles/firewallbuilder/vars/git.yml
@@ -979,9 +981,24 @@ fwb_editable_objects:
 
 ```
 $ cd /etc/ansible/
-$ ansible-playbook playbooks/firewallbuilder.yml -k
+$ ansible-playbook playbooks/firewallbuilder.yml
 ```
-
+**NOT :** Bu sırada `"msg": "failed to get the hostkey for git_sunucusu_fqdn"` şeklinde bir hata alınması durumunda aşağıdaki adımlar uygulanmalıdır:
+1. Aşağıdaki komut ile sunucu fqdn'ine ait ssh key mevcudiyeti kontrol edilir.
+    ```
+    $ ssh-keygen -H -F git_sunucusu_fqdn
+    ```
+2. Aşağıdaki komutlar ile eski keylerin temizlenmesi sağlanır.
+    ```
+    $ ssh-keygen -R git_sunucusu_fqdn
+    $ ssh-keygen -R git_sunucusu_ip
+    ```
+3. Daha sonra aşağıdaki komut kullanılarak key'in tekrardan doğru şekilde alınması sağlanır
+    ```
+    $ ssh -o HostKeyAlias=git_sunucusu_fqdn user@git_sunucusu_fqdn -p git_sunucusu_ssh_port
+    ```
+4. ilk adımdaki kontrol tekrar yapılır. fqdn içinde eğer büyük harf kullanılmışsa küçük harfe çevrilir. Ardından playbook tekrar çalıştırılır.
+    
 * Firewall Builder makinesinde gyds-gui dizinine izin vermek için aşağıdaki komut Firewallbuilder makinesinden çalıştırılır
 
 ```
