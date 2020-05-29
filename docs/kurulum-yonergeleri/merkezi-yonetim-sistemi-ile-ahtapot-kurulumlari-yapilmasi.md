@@ -922,7 +922,7 @@ $ chmod 600 id_rsa
 ```
 *  Gitlab arayüzünden veya MYS sunusundan **roles/firewallbuilder/vars/git.yml** dosyası üzerinde **repo01** fonksiyonu altında **repo** satırında bulunan **yerel_gitlab_adresi** bölümünün yerine Merkezi Yönetim Sistemi kapsamında kurulacak Git sunucusunun adresi girilmelidir.
 
-**NOT :** Gitlab adresi girilirken FQDN tamamen küçük harflerler girilmelidir.
+**NOT :** Gitlab adresi girilirken FQDN tamamen küçük harflerle girilmelidir.
 
 ```
 $ nano /etc/ansible/roles/firewallbuilder/vars/git.yml
@@ -983,7 +983,7 @@ fwb_editable_objects:
 $ cd /etc/ansible/
 $ ansible-playbook playbooks/firewallbuilder.yml
 ```
-**NOT :** Bu sırada `"msg": "failed to get the hostkey for git_sunucusu_fqdn"` şeklinde bir hata alınması durumunda aşağıdaki adımlar uygulanmalıdır:
+**NOT :** Bu sırada `"msg": "failed to get the hostkey for git_sunucusu_fqdn"` şeklinde bir hata alınması durumunda aşağıdaki adımlar mys ve firewallbuilder makinesinde uygulanmalıdır:
 1. Aşağıdaki komut ile sunucu fqdn'ine ait ssh key mevcudiyeti kontrol edilir.
     ```
     $ ssh-keygen -H -F git_sunucusu_fqdn
