@@ -1207,7 +1207,7 @@ iptables:
 
 ```
 $ cd /etc/ansible/
-$ ansible-playbook playbooks/firewall.yml --skip-tag=deploy 
+$ ansible-playbook playbooks/firewall.yml --skip-tags=deploy 
 ```
 
 ####Güvenlik Duvarı Yönetim Sistemi Entegrasyon Adımları
