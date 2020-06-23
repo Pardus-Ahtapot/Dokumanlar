@@ -9,6 +9,13 @@ Bu dökümanda Merkezi Yönetim Sistemi bileşenlerinde karşılaşılabilecek h
 
 ####Ahtapot Hata Ayıklama Rehberi
 
+###Git Repo İndirme Hataları
+$git clone -b kickstart-gui https://github.com/selinakbuga/Araclar.git
+Cloning into 'Araclar'...
+fatal: unable to access 'https://github.com/selinakbuga/Araclar.git/': Problem with the SSL CA cert (path? access rights?)
+
+$sudo apt install ca-certificates
+
 ###SSH Bağlantı Hataları
 
 * Playbooklar oynatıldığında ssh bağlantı hatası alınması durumunda yapılması gerekenler;
