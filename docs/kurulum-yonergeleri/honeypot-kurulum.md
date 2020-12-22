@@ -40,8 +40,8 @@ Ardından balküpü sistemi ile ilgili aşağıda tanımlanmış değişkenler a
   VETH: Bu yapıda lxc honeypot host makinesi üzerinde sanal bir bridge network oluşturarak containerlar için farklı subnette bir network yapısı kurar. Containerlara direk olarak erişilemez. Bunun için honeypot host'u üzerinde nat kuralları girilerek ilgili trafik ilgili honeypot container'ına aktarılır.  
   MACVLAN: Bu yapı için honeypot host'u üzerinde minimum 2 adet NIC bulunması gerekmektedir. Birincisi honeypot host sunucusunun MYS ile haberleşmesinde kullanılmak üzere ikincisi ise honeypot containerları için tahsis edilmek üzeredir. Burada Honeypot containerları normal birer host gibi Network içerisine dahil olurlar ve ip alırlar.  
         
-- **NOT:** Eğer yapılandırma MACVLAN olacak ise bal küpü sunucusu üzerinde aşığdaki işlemler yapılmalıdır:  
-  Continerlar için tahsis edilen interface(örn ens224) aşağıdaki komut ile "**up**" konuma getirilmelidir: 
+- **NOT:** Eğer yapılandırma MACVLAN olacak ise bal küpü sunucusu üzerinde aşağıdaki işlemler yapılmalıdır:  
+  Continerlar için tahsis edilen interface (örn ens224) aşağıdaki komut ile "**up**" konuma getirilmelidir: 
   ``` 
   sudo ip link set dev ens224 up
   ```
@@ -57,23 +57,22 @@ Ardından balküpü sistemi ile ilgili aşağıda tanımlanmış değişkenler a
 #### Balküpü Rolü Değişkenleri
 Bu roldeki değişkenler “**/etc/ansible/roles/honeypot/vars/**” dizini altında bulunan yml dosyalarında belirtilmiştir. yml dosyalarının içerikleri ve değişken bilgileri aşağıdaki gibidir;
 
-- "**main.yml**" dosyasında bulunan değişkenlerin görevi şu şekildedir:
-
-- "**container_mirror**" değişkeni lxc içine kurulacak pardus container'ı için repo adresinin tanımlandığı değişkendir.  
-- "**container_security_mirror**" değişkeni lxc içine kurulacak pardus container'ı için güvenlik repo adresinin tanımlandığı değişkendir.  
-- "**mhn_url**" değişkeni, mhn servisinin hizmet verdiği adresin belirtildiği değişkendir.  
-- "**mhn_honeymap_url**" değişkeni, mhn honeymap servisinin hizmet verdiği adresin belirtildiği değişkendir.  
+"**main.yml**" dosyasında bulunan değişkenlerin görevi şu şekildedir:  
+- "**container_mirror**" değişkeni lxc içine kurulacak pardus container'ı için repo adresinin tanımlandığı değişkendir.
+- "**container_security_mirror**" değişkeni lxc içine kurulacak pardus container'ı için güvenlik repo adresinin tanımlandığı değişkendir.
+- "**mhn_url**" değişkeni, mhn servisinin hizmet verdiği adresin belirtildiği değişkendir.
+- "**mhn_honeymap_url**" değişkeni, mhn honeymap servisinin hizmet verdiği adresin belirtildiği değişkendir.
 - "**mhn_deploy_key**" değişkeni mhn sistemine entegre edilecek balküpü sistemler için gerekli olan anahtarın belirtildiği değişkendir. Mhn sisteminin kurulumunun ardından arayüzden bu bilgi alınabilir.  
-- "**lxc**" değişkeni altına "/etc/ansible/hosts" dosyasında [honeypot] altına tanımlanan sunucu fqdn adresleri girilir. Bu sayede farklı sunucular için farklı ayarlar yapılma imkanı olur. Her sunucu değişkeni altında da şu değişkenler bulunur: 
-- "**network_type**" containerların kullanacağı ağ yapılandırması tipinin girildiği değişkendir. Basit kullanım için "veth" modunun kullanımı tavsiye edilir. Gelişmiş kullanım ve network içindeki doğal dağılım yapısını sağlamak için ise "macvlan" modu tavsiye edilir. 
-- "**network_link**" containerların erişeceği bridge ağ bacağının ismidir. Eğer; 
-        "network_type" değişkeni "veth" olarak girilmişse => Bu değişken değeri "lxcbr0" olmalıdır. Bu isimle bir bridge arabirim otomatik olarak yaratılacaktır.
-        "network_type" değişkeni "macvlan" olarak girilmişse => Bu değişken değeri yukarıda bahsedildiği üzere containerlar için tahsis edilmiş ağ arabiriminin adı olmalıdır.
+- "**lxc**" değişkeni altına "/etc/ansible/hosts" dosyasında [honeypot] altına tanımlanan sunucu fqdn adresleri girilir. Bu sayede farklı sunucular için farklı ayarlar yapılma imkanı olur. Her sunucu değişkeni altında da şu değişkenler bulunur:  
+- "**network_type**" containerların kullanacağı ağ yapılandırması tipinin girildiği değişkendir. Basit kullanım için "veth" modunun kullanımı tavsiye edilir. Gelişmiş kullanım ve network içindeki doğal dağılım yapısını sağlamak için ise "macvlan" modu tavsiye edilir.
+- "**network_link**" containerların erişeceği bridge ağ bacağının ismidir. Eğer;  
+  "network_type" değişkeni "veth" olarak girilmişse => Bu değişken değeri "lxcbr0" olmalıdır. Bu isimle bir bridge arabirim otomatik olarak yaratılacaktır.
+  "network_type" değişkeni "macvlan" olarak girilmişse => Bu değişken değeri yukarıda bahsedildiği üzere containerlar için tahsis edilmiş ağ arabiriminin adı olmalıdır.
 - "**network_hwaddr**" containerlar için türetilecek MAC adresinin ilk üç segmentinin belirtildiği değişkendir. Son üç segment xx:xx:xx olarak yazılır.
 - "**netowrk_link_bridge_slave**" Eğer; 
         - "network_type" değişkeni "veth" olarak girilmişse => Yaratılacak bridge arabirime bağlanacak ağ arabiriminin adı olmalıdır.
-        - "network_type" değişkeni "macvlan" olarak girilmişse => Bu değişken değeri yukarıda bahsedildiği üzere containerlar için tahsis edilmiş ağ arabiriminin adı olmalıdır.
-- "**containers**" değişkeni altına "/etc/ansible/hosts" dosyasında [honeypot] altına tanımlanan sunucu fqdn adresleri girilir. Bu sayede farklı sunucular için farklı ayarlar yapılma imkanı olur. Her sunucu değişkeni altında kurulması istenen balküpü sistemlerinin tanımlarından oluşan bir liste bulunur. Bu sistemlerin tipi şunlardan biri olmak zorundadır: "amun dionaea ftp pop3 smtp wordpot cowrie elastichoney glastopf p0f shockpot suricata conpot"
+        - "network_type" değişkeni "macvlan" olarak girilmişse => Bu değişken değeri yukarıda bahsedildiği üzere containerlar için tahsis edilmiş ağ arabiriminin adı olmalıdır.  
+- "**containers**" değişkeni altına "/etc/ansible/hosts" dosyasında [honeypot] altına tanımlanan sunucu fqdn adresleri girilir. Bu sayede farklı sunucular için farklı ayarlar yapılma imkanı olur. Her sunucu değişkeni altında kurulması istenen balküpü sistemlerinin tanımlarından oluşan bir liste bulunur. Bu sistemlerin tipi şunlardan biri olmak zorundadır: "amun dionaea ftp pop3 smtp wordpot cowrie elastichoney glastopf p0f shockpot suricata conpot"  
 - "**type**" değişkeni yukarıda belirtilen balküpü tiplerinden biri olabilir.
 - "**start_auto**" değişkeni eğer 1 yapılırsa sunucu yeniden başlatıldığında bu balküpü otomatik olarak başlatılır, 0 yapılırsa başlatılmaz.
 - "**start_delay**" değişkeni ile container başlatılmadan önce kaç saniye bekleneceği belirtilir.
