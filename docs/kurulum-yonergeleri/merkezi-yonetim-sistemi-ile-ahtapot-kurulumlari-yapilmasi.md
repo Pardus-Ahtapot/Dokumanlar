@@ -72,11 +72,11 @@ base_repositories:
         url: 'deb http://depo.pardus.org.tr/guvenlik onyedi main contrib non-free'
         updatecache: yes
         state: present
-   repo06:
+    repo06:
         url: 'deb [trusted=yes] http://depo.pardus.org.tr/ahtapot-siem yenikusak main'
         updatecache: yes
         state: present   
-   repo07:
+    repo07:
         url: 'deb [trusted=yes] http://depo.pardus.org.tr/ahtapot yenikusak main'
         updatecache: yes
         state: present
@@ -1230,7 +1230,7 @@ iptables:
 
 ```
 $ cd /etc/ansible/
-$ ansible-playbook playbooks/firewall.yml --skip-tag=deploy 
+$ ansible-playbook playbooks/firewall.yml --skip-tags=deploy 
 ```
 
 ####Güvenlik Duvarı Yönetim Sistemi Entegrasyon Adımları
