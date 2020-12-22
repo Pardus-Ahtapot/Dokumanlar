@@ -65,7 +65,7 @@ Bu roldeki değişkenler “**/etc/ansible/roles/honeypot/vars/**” dizini alt�
 - "**mhn_deploy_key**" değişkeni mhn sistemine entegre edilecek balküpü sistemler için gerekli olan anahtarın belirtildiği değişkendir. Mhn sisteminin kurulumunun ardından arayüzden bu bilgi alınabilir.  
 - "**lxc**" değişkeni altına "/etc/ansible/hosts" dosyasında [honeypot] altına tanımlanan sunucu fqdn adresleri girilir. Bu sayede farklı sunucular için farklı ayarlar yapılma imkanı olur. Her sunucu değişkeni altında da şu değişkenler bulunur:  
 - "**network_type**" containerların kullanacağı ağ yapılandırması tipinin girildiği değişkendir. Basit kullanım için "veth" modunun kullanımı tavsiye edilir. Gelişmiş kullanım ve network içindeki doğal dağılım yapısını sağlamak için ise "macvlan" modu tavsiye edilir.
-- "**network_link**" containerların erişeceği bridge ağ bacağının ismidir. Eğer;  
+- "**network_link**" containerların erişeceği ağ bacağının ismidir. Eğer;  
   - "network_type" değişkeni "veth" olarak girilmişse => Bu değişken değeri "lxcbr0" olmalıdır. Bu isimle bir bridge arabirim otomatik olarak yaratılacaktır.
   - "network_type" değişkeni "macvlan" olarak girilmişse => Bu değişken değeri yukarıda bahsedildiği üzere containerlar için tahsis edilmiş ağ arabiriminin adı olmalıdır.
 - "**network_hwaddr**" containerlar için türetilecek MAC adresinin ilk üç segmentinin belirtildiği değişkendir. Son üç segment xx:xx:xx olarak yazılır.
