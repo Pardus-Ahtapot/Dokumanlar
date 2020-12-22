@@ -63,3 +63,4 @@ cp myshook-cert.pub /etc/ansible/roles/gitlab-container/templates/myshook-cert.p
 cd /etc/ansible
 ansible-playbook playbooks/gitlab-contianer.yml
 ```
+- Bu adımdan sonra "**merkezi-yonetim-sistemi-ile-ahtapot-kurulumlari-yapilmasi**" dökümanındaki "**GitLab Arayüz Yapılandırması**" kısmına gidilerek gitlab arayüzünün yapılandırılması gerekmektedir.
