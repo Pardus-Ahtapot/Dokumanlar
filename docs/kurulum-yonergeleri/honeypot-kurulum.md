@@ -47,9 +47,9 @@ Ardından balküpü sistemi ile ilgili aşağıda tanımlanmış değişkenler a
   ```
   - Daha sonra boot sırasında bu interface'in up duruma gelmesi için "**/etc/network/interfaces**" dosyasına aşağıdaki konfigürasyon eklenmelidir:  
   ```  
-  auto ens256   
-  iface ens256 inet manual   
-  up ip link set ens256 up  
+  auto ens224   
+  iface ens224 inet manual   
+  up ip link set ens224 up  
   ```  
         
 
