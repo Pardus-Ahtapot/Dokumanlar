@@ -37,15 +37,15 @@ serverN:
 Ardından balküpü sistemi ile ilgili aşağıda tanımlanmış değişkenler açıklamalarda belirtilen şekilde uygun değerlerle doldurulur.
 
 - **NOT:** Aşağıdaki adıma geçilmeden önce bal küpü container yapısının network tipi kararlaştırılmalıdır. Bu noktada iki seçenek vardır.  
-  VETH: Bu yapıda lxc honeypot host makinesi üzerinde sanal bir bridge network oluşturarak containerlar için farklı subnette bir network yapısı kurar. Containerlara direk olarak erişilemez. Bunun için honeypot host'u üzerinde nat kuralları girilerek ilgili trafik ilgili honeypot container'ına aktarılır.  
-  MACVLAN: Bu yapı için honeypot host'u üzerinde minimum 2 adet NIC bulunması gerekmektedir. Birincisi honeypot host sunucusunun MYS ile haberleşmesinde kullanılmak üzere ikincisi ise honeypot containerları için tahsis edilmek üzeredir. Burada Honeypot containerları normal birer host gibi Network içerisine dahil olurlar ve ip alırlar.  
+  - "**VETH:**" Bu yapıda lxc honeypot host makinesi üzerinde sanal bir bridge network oluşturarak containerlar için farklı subnette bir network yapısı kurar. Containerlara direk olarak erişilemez. Bunun için honeypot host'u üzerinde nat kuralları girilerek ilgili trafik ilgili honeypot container'ına aktarılır.  
+  - "**MACVLAN:**" Bu yapı için honeypot host'u üzerinde minimum 2 adet NIC bulunması gerekmektedir. Birincisi honeypot host sunucusunun MYS ile haberleşmesinde kullanılmak üzere ikincisi ise honeypot containerları için tahsis edilmek üzeredir. Burada Honeypot containerları normal birer host gibi Network içerisine dahil olurlar ve ip alırlar.  
         
 - **NOT:** Eğer yapılandırma MACVLAN olacak ise bal küpü sunucusu üzerinde aşağıdaki işlemler yapılmalıdır:  
-  Continerlar için tahsis edilen interface (örn ens224) aşağıdaki komut ile "**up**" konuma getirilmelidir: 
+  - Continerlar için tahsis edilen interface (örn ens224) aşağıdaki komut ile "**up**" konuma getirilmelidir: 
   ``` 
   sudo ip link set dev ens224 up
   ```
-  Daha sonra boot sırasında bu interface'in up duruma gelmesi için "**/etc/network/interfaces**" dosyasına aşağıdaki konfigürasyon eklenmelidir:  
+  - Daha sonra boot sırasında bu interface'in up duruma gelmesi için "**/etc/network/interfaces**" dosyasına aşağıdaki konfigürasyon eklenmelidir:  
   ```  
   auto ens256   
   iface ens256 inet manual   
@@ -69,7 +69,7 @@ Bu roldeki değişkenler “**/etc/ansible/roles/honeypot/vars/**” dizini alt�
   - "network_type" değişkeni "veth" olarak girilmişse => Bu değişken değeri "lxcbr0" olmalıdır. Bu isimle bir bridge arabirim otomatik olarak yaratılacaktır.
   - "network_type" değişkeni "macvlan" olarak girilmişse => Bu değişken değeri yukarıda bahsedildiği üzere containerlar için tahsis edilmiş ağ arabiriminin adı olmalıdır.
 - "**network_hwaddr**" containerlar için türetilecek MAC adresinin ilk üç segmentinin belirtildiği değişkendir. Son üç segment xx:xx:xx olarak yazılır.
-- "**netowrk_link_bridge_slave**" Eğer;  
+- "**network_link_bridge_slave**" Eğer;  
   - "network_type" değişkeni "veth" olarak girilmişse => Yaratılacak bridge arabirime bağlanacak ağ arabiriminin adı olmalıdır.
   - "network_type" değişkeni "macvlan" olarak girilmişse => Bu değişken değeri yukarıda bahsedildiği üzere containerlar için tahsis edilmiş ağ arabiriminin adı olmalıdır.  
 - "**containers**" değişkeni altına "/etc/ansible/hosts" dosyasında [honeypot] altına tanımlanan sunucu fqdn adresleri girilir. Bu sayede farklı sunucular için farklı ayarlar yapılma imkanı olur. Her sunucu değişkeni altında kurulması istenen balküpü sistemlerinin tanımlarından oluşan bir liste bulunur. Bu sistemlerin tipi şunlardan biri olmak zorundadır: "amun dionaea ftp pop3 smtp wordpot cowrie elastichoney glastopf p0f shockpot suricata conpot"  
