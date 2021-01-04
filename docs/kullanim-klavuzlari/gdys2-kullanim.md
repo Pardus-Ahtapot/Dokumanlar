@@ -36,9 +36,9 @@ Gereken : GYDS Entegrasyonu yapılmış Ansible, Gitlab, GDYS2 sunucuları Pardu
 ![NEW_IFACE](../img/gdys2/new_iface.png)  
 
 - Yeni eklenen arabirim üzerine yeni bir adres eklenmek isteniyorsa; aşağıdaki adımlar takip edilerek **yeni adres ekle** butonuna tıklanır.
-![NEW_IFACE](../img/gdys2/add_addr_to_iface_button.png.png) 
+![ADD_ADDR_TO_IFACE_BUTTON](../img/gdys2/add_addr_to_iface_button.png) 
 
 - Daha sonra açılan pencerede eklenecek olan adres için;
   - **Adres İsmi** girilir. (örn: WAN)
   - **Adres** değeri subnet'i **/32** olacak şekilde girilir. Ardından kaydet tuşuna basılır.
-![NEW_IFACE](../img/gdys2/add_addr_to_iface.png.png) 
+![ADD_ADDR_TO_IFACE](../img/gdys2/add_addr_to_iface.png) 
