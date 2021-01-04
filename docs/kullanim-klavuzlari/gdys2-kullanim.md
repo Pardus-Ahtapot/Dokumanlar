@@ -145,7 +145,7 @@ Gereken : GYDS Entegrasyonu yapılmış Ansible, Gitlab, GDYS2 sunucuları Pardu
  ![USERS_TABLE](../img/gdys2/users_table.png)
  
  - Yeni bir kullanıcı eklenmek isteniyorsa yukarıda bulunan **Yeni Kullanıcı Ekle** butonuna basılır.
- ![ADD_NEW_USER_BUTTON](../img/gdys2/add_new_user_button.png)
+ ![ADD_NEW_USER_BUTTON](../img/gdys2/add_new_users_button.png)
  
  - Ardından açılan pencerede;
    - Kullanıcıya ait **Ad Soyad, Kullanıcı Adı, E-Posta ve Parola** bilgileri girilir.
@@ -155,4 +155,33 @@ Gereken : GYDS Entegrasyonu yapılmış Ansible, Gitlab, GDYS2 sunucuları Pardu
 ![ADD_NEW_USER](../img/gdys2/add_new_user.png)
    
  - Eğer bir kullanıcı bilgisi güncellenmek veya silinmek istenirse kullanıcı kaydına ait satırın sonunda bulunan üç noktaya basılarak istenilen işlem gerçekleştirilir.
+ 
+ 
+ ## Kural Tanımlamaları
+ 
+ - Bir güvenlik duvarı için kural tanımlaması yapabilmek için öncelikle sol üst tarafta bulunan **Güvenlik duvarı Seç** butonuna tıklanarak işlem yapılmak istenilen güvenlik duvarı seçilmelidir.
+ ![CHOOSE_FW](../img/gdys2/choose_fw.png)
+ 
+ - Seçim işlemi yapıldıktan sonra kural tanımlama işlemlerine devam edilebilir.
+ 
+ ### IPv4 Kurallarının Tanımlanması
+ 
+ - Sol taraftaki menüden **Kurallar > Ipv4 Kuralları** bölümüne gidilir.
+ ![V4_RULES_BUTTON](../img/gdys2/v4_rules_button.png)
+ 
+ - Açılan pencerede 3 adet sekme bulunmaktadır. Bunlar sırasıyla **Policy Kuralları, Nat Kuralları, Routing Kuralları**dır. Varsayılan olarak **Policy Kuralları** sekmesi aktif olarak gelmektedir.
+ ![V4_RULES_TABS](../img/gdys2/v4_rules_tabs.png)
+ 
+ - Girilmek istenilen kural türüne ait sekmeye tıklanır.
+ 
+ - Her sekme altında o kural türüne ait daha önceden girilmiş kurallar bulunmaktadır. Kurallara ait bilgiler tabloda yer almaktadır. Sonda bulunan **Aktif/Pasif** ifadesi kuralın şuanki durumunu belirtmektedir. Örn:
+ ![V4_POLICY_RULES_TABLE](../img/gdys2/v4_policy_rules_table.png)
+ ![V4_NAT_RULES_TABLE](../img/gdys2/v4_nat_rules_table.png)
+ 
+ - Yeni bir kural eklenmek isterse ilgili sekmede sol üstte bulunan **Yeni Kural Ekle** butonuna basılarak daha önceden eklenmiş **adres, servis, zaman profili** kayıtları kullanılarak istenilen kural eklenebilir.
+ 
+ - Eklenilen kuralları ait açıklamalar tablo üzerinde görüntülenmek istenirse kural kaydına ait satırın başında bulunan **Info** kolonundaki butona basılarak kural açıklaması görüntülenir.
+![RULE_DESC](../img/gdys2/rule_desc.png)
+
+* **NOT:** Bütün ekleme,güncelleme ve silme işlemlerinden sonra yapılanların güvenlik duvarı üzerinde etkin olabilmesi için ayarların onaylanması gerekmektedir!
  
