@@ -78,3 +78,42 @@ Gereken : GYDS Entegrasyonu yapılmış Ansible, Gitlab, GDYS2 sunucuları Pardu
  * Not: Eğer Tekil bir makineye ait adres eklenmek isteniyorsa **Tür: Netmask** seçilerek **Subnet** değeri **32** olarak seçilir.
  
 ### Servis Tanımlamaları
+ - Sol taraftaki menü üzerinden **Servisler** sekmesine tıklanır.
+ ![SERVICES_BUTTON](../img/gdys2/services_button.png)
+ 
+ - Açılan ekranda daha önce eklenmiş olan servisler listelenmektedir. Burada genel olarak kullanılan 100+ servis varsayılan olarak ekli gelmektedir.
+ ![SERVICES_TABLE](../img/gdys2/services_table.png)
+ 
+ - Yeni bir servis eklenmek isteniyorsa yukarıda bulunan **Yeni servis ekle** butonuna basılır.
+ ![NEW_SRV_BUTTON](../img/gdys2/add_new_serv_btn.png)
+ 
+ - Ardından açılan ekranda;
+   - Servis tanımlamasına ait isim girilir.
+   - Yeni eklenen servise ait Kategori ve Protokol seçilir.
+   - Eğer Protokol ICMP olarak seçilirse **port** bölümlerinin doldurulmasına gerek yoktur.
+   - Eklenen TCP ve UDP servislerine ait port tanımlamaları girilir. Eğer Herhangi bir bölüm **Any** olarak bırakılmak istenirse orası boş bırakılarak **Kaydet** butonuna basılır.
+![NEW_SRV_BUTTON](../img/gdys2/add_new_serv.png)
+
+- Eğer bir servis bilgisi güncellenmek veya silinmek istenirse servis kaydına ait satırın sonunda bulunan üç noktaya basılarak istenilen işlem gerçekleştirilir.
+
+### Zaman Profili Tanımlamaları
+ - Sol taraftaki menü üzerinden **Zamanlama** sekmesine tıklanır.
+ ![TIME_PROFILE_BUTTON](../img/gdys2/time_profiles_btn.png)
+ 
+ - Açılan ekranda daha önce eklenmiş olan zaman profilleri listelenmektedir.
+ ![TIME_PROFILE_TABLE](../img/gdys2/services_table.png)
+ 
+ - Yeni bir zamanlama profili eklenmek isteniyorsa yukarıda bulunan **Yeni Zaman Profili** butonuna basılır.
+ ![NEW_TIME_PROFILE_BUTTON](../img/gdys2/add_new_time_profile_button.png)
+ 
+ - Ardından açılan ekranda;
+   - Zaman profiline ait isim girilir.
+   - Zaman profilinin uygulanacağı başlangıç ve bitiş tarih&saat bilgileri girilir. Eğer belirli bir tarih aralığı belirlenmek istenmiyorsa(kural devamlı olacaksa) tarih bölümleri boş bırakılır. Saat bölümlerinin girilmesi ise zorunludur.
+   - Zaman profilinin uygulanacağı günler seçilir. Ardından kaydet butonuna basılır.
+ ![NEW_TIME_PROFILE](../img/gdys2/add_new_time_profile.png)
+ 
+ - Eğer bir zaman profili bilgisi güncellenmek veya silinmek istenirse zaman profili kaydına ait satırın sonunda bulunan üç noktaya basılarak istenilen işlem gerçekleştirilir.
+ 
+ ## Yetkilendirme işlemleri
+ 
+   
