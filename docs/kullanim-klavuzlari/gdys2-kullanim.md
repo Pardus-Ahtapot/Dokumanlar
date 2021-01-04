@@ -128,7 +128,7 @@ Gereken : GYDS Entegrasyonu yapılmış Ansible, Gitlab, GDYS2 sunucuları Pardu
  - Yeni bir rol eklenmek isteniyorsa yukarıda bulunan **Yeni Grup Ekle** butonuna basılır.
  ![ADD_NEW_ROLE_BUTTON](../img/gdys2/add_new_role_button.png)
  
- - Ardından açılan bencerede
+ - Ardından açılan pencerede;
    - Rol grubuna ait isim ve açıklama bilgileri girilir.
    - Ardından bu grubun sahip olacağı izinler tablo içerisinden fare ile seçilerek seçili izinlerin bulunduğu tabloya aktarılması sağlanır. Eğer bütün izinler seçilmek isteniyorsa tablo üzerinde bulunan **->->** butonuna basılır.
    - Rolün atandığı kullanıcıların bu izinlerinin hangi güvenlik duvarları üzerinde geçerli olacağı son tablodan seçilerek ayarlanır. Eğer bütün güvenlil duvarları seçilmek isteniyorsa tablo üzerinde bulunan **->->** butonuna basılır.
@@ -140,3 +140,19 @@ Gereken : GYDS Entegrasyonu yapılmış Ansible, Gitlab, GDYS2 sunucuları Pardu
 ### Kullanıcı Tanımlamaları
  - Sol taraftaki menü üzerinden **Yetkilendirme > Kullanıcılar** bölümüne gidilir.
  ![USERS_BUTTON](../img/gdys2/users.png)
+ 
+ - Açılan ekranda daha önce eklenmiş olan kullanıcılar listelenmektedir. Admin kullanıcıs varsayılan olarak oluşturulmaktadır.
+ ![USERS_TABLE](../img/gdys2/users_table.png)
+ 
+ - Yeni bir kullanıcı eklenmek isteniyorsa yukarıda bulunan **Yeni Kullanıcı Ekle** butonuna basılır.
+ ![ADD_NEW_USER_BUTTON](../img/gdys2/add_new_user_button.png)
+ 
+ - Ardından açılan pencerede;
+   - Kullanıcıya ait **Ad Soyad, Kullanıcı Adı, E-Posta ve Parola** bilgileri girilir.
+   - Eğer ilk giriş yaptığında kullanıcının parolasını değiştirmesi isteniyorsa **Parola Değiştirilmeli** seçeneği **Evet** olarak ayarlanmalıdır.
+   - Ardından kullanıcının dahil olunması istenilen **Rol Grubu** seçilir.
+   - Kullanıcı, **Durum** seçeneği **Aktif** konuma alınırsa giriş yapabilir. Eğer **Pasif** durumunda bırakılırsa kullanıcı eklenir fakat giriş yapamaz. Bu seçenek daha sonra kullanıcı düzenlenerek tekrar **Aktif** ya da **Pasif** durumuna getirilebilir.
+![ADD_NEW_USER](../img/gdys2/add_new_user.png)
+   
+ - Eğer bir kullanıcı bilgisi güncellenmek veya silinmek istenirse kullanıcı kaydına ait satırın sonunda bulunan üç noktaya basılarak istenilen işlem gerçekleştirilir.
+ 
