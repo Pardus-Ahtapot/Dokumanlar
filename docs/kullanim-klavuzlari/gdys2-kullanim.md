@@ -12,7 +12,7 @@ Gereken : GYDS Entegrasyonu yapılmış Ansible, Gitlab, GDYS2 sunucuları Pardu
 ![LOGIN](../img/gdys2/login.png)
 
 - Gelen ekranda konfigürasyon sırasında belirlenene kullanıcı adı şifre değerleri girilerek (Varsayılan: kullanıcı adı: admin, şifre: LA123) ana ekrana erişim sağlanır.
-![LOGIN](../img/gdys2/home.png)
+![LOGIN](../img/gdys2/home_page.png)
 
 - Ardından ekranda bulunan **Yeni güvenlik duvarı ekle** butonuna basılarak yeni bir güvenlik duvarı eklenilir. Burada Sırasıyla gelen;
   - **Firewall Adı** kısmına firewall'a ait fqdn bilgisi (örn: fw1.ahtapot.org)
@@ -114,6 +114,29 @@ Gereken : GYDS Entegrasyonu yapılmış Ansible, Gitlab, GDYS2 sunucuları Pardu
  
  - Eğer bir zaman profili bilgisi güncellenmek veya silinmek istenirse zaman profili kaydına ait satırın sonunda bulunan üç noktaya basılarak istenilen işlem gerçekleştirilir.
  
- ## Yetkilendirme işlemleri
+## Yetkilendirme işlemleri
  
-   
+ - Yetkilendirme işlemleri Rol ve Kullanıcı işlemleri olarak iki bölümden oluşmaktadır. Burada Rol işlemleri bir grup olarak tanımlanarak o role sahip olan kullanıcıların yapabileceği işlemleri belirler. Kullanıcılar ise sahip oldukları roller neticesinde sistem içerisine login olarak işlemler gerçekleştirebilirler.
+ 
+### Rol Tanımlamaları
+ - Sol taraftaki menü üzerinden **Yetkilendirme > Roller** bölümüne gidilir.
+ ![ROLES_BUTTON](../img/gdys2/roles.png)
+ 
+ - Açılan ekranda daha önce eklenmiş olan roller listelenmektedir. Admin rolü varsayılan olarak oluşturulmaktadır.
+ ![ROLES_TABLE](../img/gdys2/roles_table.png)
+ 
+ - Yeni bir rol eklenmek isteniyorsa yukarıda bulunan **Yeni Grup Ekle** butonuna basılır.
+ ![ADD_NEW_ROLE_BUTTON](../img/gdys2/add_new_role_button.png)
+ 
+ - Ardından açılan bencerede
+   - Rol grubuna ait isim ve açıklama bilgileri girilir.
+   - Ardından bu grubun sahip olacağı izinler tablo içerisinden fare ile seçilerek seçili izinlerin bulunduğu tabloya aktarılması sağlanır. Eğer bütün izinler seçilmek isteniyorsa tablo üzerinde bulunan **->->** butonuna basılır.
+   - Rolün atandığı kullanıcıların bu izinlerinin hangi güvenlik duvarları üzerinde geçerli olacağı son tablodan seçilerek ayarlanır. Eğer bütün güvenlil duvarları seçilmek isteniyorsa tablo üzerinde bulunan **->->** butonuna basılır.
+   - Eğer bu grubun bütün izinleri içeren bir grup olması isteniyorsa kısaca yukarıdaki **Süper Kullanıcı Grubu** seçeneği **Evet** olarak işaretlenir.
+   - Ardından sayfa aşağı kaydırılarak **Kaydet** butonuna basılır.
+ ![ADD_NEW_ROLE](../img/gdys2/add_new_role.png)
+ - Eğer bir rol grubu bilgisi güncellenmek veya silinmek istenirse rol grubu kaydına ait satırın sonunda bulunan üç noktaya basılarak istenilen işlem gerçekleştirilir.
+ 
+### Kullanıcı Tanımlamaları
+ - Sol taraftaki menü üzerinden **Yetkilendirme > Kullanıcılar** bölümüne gidilir.
+ ![USERS_BUTTON](../img/gdys2/users.png)
