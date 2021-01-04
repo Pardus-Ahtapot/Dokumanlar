@@ -160,7 +160,7 @@ Gereken : GYDS Entegrasyonu yapılmış Ansible, Gitlab, GDYS2 sunucuları Pardu
  ## Kural Tanımlamaları
  
  - Bir güvenlik duvarı için kural tanımlaması yapabilmek için öncelikle sol üst tarafta bulunan **Güvenlik duvarı Seç** butonuna tıklanarak işlem yapılmak istenilen güvenlik duvarı seçilmelidir.
- ![CHOOSE_FW](../img/gdys2/choose_fw.png)
+ ![CHOOSE_FW](../img/gdys2/choose_fw_btn.png)
  
  - Seçim işlemi yapıldıktan sonra kural tanımlama işlemlerine devam edilebilir.
  
