@@ -42,3 +42,39 @@ Gereken : GYDS Entegrasyonu yapılmış Ansible, Gitlab, GDYS2 sunucuları Pardu
   - **Adres İsmi** girilir. (örn: WAN)
   - **Adres** değeri subnet'i **/32** olacak şekilde girilir. Ardından kaydet tuşuna basılır.
 ![ADD_ADDR_TO_IFACE](../img/gdys2/add_addr_to_iface.png) 
+
+- Bu işlemler ardından güvenlik duvarı GDYS sistemi üzerine eklenmiş olacaktır. Yapılan değişikliklerin güvenlik duvarı üzerine gönderilebilmesi için uygulanması gerekmektedir.
+
+### Değişikliklerin Uygulanması
+- Yapılan değişikliklerin uygulanabilmesi için yukarıda bulunan **Uygula** butonuna basılır.
+![APPLY_BUTTON](../img/gdys2/apply_button.png) 
+
+- Açılan pencerede yapılan değişiklikler incelenir. Eğer değişiklikler uygulanmak isteniyorsa aşağıda bulunan **Uygula** eğer geri alınmak yani discard edilmek isteniyorsa **Eski haline çevir** butonuna basılır.
+![APPLY_MODAL](../img/gdys2/apply_modal.png)
+
+- Ardından değişiklikler bütün firewall scriptlerini yeniden oluşturacak şekilde onaylanmak isteniyorsa;
+  - **Uygulanacak Firewallar** kısmı hepsi olarak seçilmelidir. Eğer belirli firewallar üzerinde uygulanmak isteniyorsa liste açılarak istenilen firewallar seçilmelidir.
+  - **Onaylama Mesajı** kısmına ise yapılan değişikliklerin açıklaması özet haline yazılarak **Uygula** butonuna basılır.
+  - Böylelikle yapılan değişiklikler seçili firewallar üzerinde uygulanır ve git sunucusuna kaydedilir.
+  ![APPLY_MODAL_LAST](../img/gdys2/apply_modal_last.png)
+  
+### Adres Tanımlamaları
+ - Sol taraftaki menü üzerinden **Adresler** sekmesine tıklanır.
+ ![ADDRESSES_BUTTON](../img/gdys2/addresses_button.png)
+ 
+ - Açılan ekranda daha önce eklenmiş olan adresler listelenmektedir.
+ ![ADDRESSES_TABLE](../img/gdys2/addresses_table.png)
+ 
+ - Yeni bir adres eklenmek isteniyorsa yukarıda bulunan **Yeni adres ekle** butonuna basılır.
+ ![NEW_ADDR_BUTTON](../img/gdys2/new_addr_button.png)
+ 
+ - Ardından açılan ekranda;
+   - Adres tanımlamasına ait isim girilir.
+   - Eklenen adresin Tür'ü girilir. 
+   - Ardından istenilen değerler doldurulur ve **Kaydet** butonuna tıklanır.
+ ![ADD_NEW_ADDR](../img/gdys2/add_new_addr.png)
+ 
+ - Eğer bir adres bilgisi güncellenmek veya silinmek istenirse adres kaydına ait satırın sonunda bulunan üç noktaya basılarak istenilen işlem gerçekleştirilir.
+ * Not: Eğer Tekil bir makineye ait adres eklenmek isteniyorsa **Tür: Netmask** seçilerek **Subnet** değeri **32** olarak seçilir.
+ 
+### Servis Tanımlamaları
