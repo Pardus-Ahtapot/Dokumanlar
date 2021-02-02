@@ -65,19 +65,11 @@ base_repositories:
         updatecache: yes 
         state: present
     repo04:
-        url: 'deb [trusted=yes] http://depo.pardus.org.tr/pardus-yenikusak yenikusak main non-free contrib'
+        url: 'deb http://depo.pardus.org.tr/ahtapot siem main'
         updatecache: yes
         state: present
     repo05:
         url: 'deb http://depo.pardus.org.tr/guvenlik onyedi main contrib non-free'
-        updatecache: yes
-        state: present
-    repo06:
-        url: 'deb [trusted=yes] http://depo.pardus.org.tr/ahtapot-siem yenikusak main'
-        updatecache: yes
-        state: present   
-    repo07:
-        url: 'deb [trusted=yes] http://depo.pardus.org.tr/ahtapot yenikusak main'
         updatecache: yes
         state: present
 #    repoXX:
