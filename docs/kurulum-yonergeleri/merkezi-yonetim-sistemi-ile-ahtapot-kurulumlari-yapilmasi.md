@@ -511,6 +511,7 @@ $ sudo cp /home/ahtapotops/myshook.pub /var/opt/gitlab/.ssh/myshook.pub
 $ sudo cp /home/ahtapotops/gdyshook /var/opt/gitlab/.ssh/gdyshook   
 $ sudo cp /home/ahtapotops/gdyshook-cert.pub /var/opt/gitlab/.ssh/gdyshook-cert.pub
 $ sudo cp /home/ahtapotops/gdyshook.pub /var/opt/gitlab/.ssh/gdyshook.pub
+$ sudo chown ahtapotops:ahtapotops /var/opt/gitlab/.ssh/*
 ```
 ```
 $ chmod 700 ~/.ssh & cd ~/.ssh/
