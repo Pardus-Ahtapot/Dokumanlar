@@ -149,7 +149,7 @@ to_be_removed_modules:
 
 ```
 
-* Sunucuların birbirlerinin “**known_host**” dosyasında kayıtlarının olması için “**ahtapotops**” kullanıcısı ile ssh bağlantısı sağlanması gerekmektedir. Bunun için aşağıdaki komutlar ansible makinesinden diğer makinelere doğru çalıştırılmalı ve sunucu anahtarlarının kabul edilmesi sorusu sorulduğunda “yes” yazılmalıdır. Bağlantıda sorun ile karşılaşılması durumunda anahtarların doğruluğu kontrol edilmelidir. 
+* Sunucuların birbirlerinin “**known_host**” dosyasında kayıtlarının olması için “**ahtapotops**” kullanıcısı ile ssh bağlantısı sağlanması gerekmektedir. Bunun için aşağıdaki komutlar ansible makinesinden diğer makinelere (örn: gitlab) doğru çalıştırılmalı ve sunucu anahtarlarının kabul edilmesi sorusu sorulduğunda “yes” yazılmalıdır. Bağlantıda sorun ile karşılaşılması durumunda anahtarların doğruluğu kontrol edilmelidir. 
 
 ```
 $ ssh-copy-id client.fqdn_bilgisi
@@ -487,6 +487,8 @@ transport      = smart
 remote_port    = ssh_port 
 ```
 
+**NOT :** Eğer gitlab web arayüzü için halihazırda bulunan ssl  sertifikaları dışında yeni veya halihazırda bulunan başka bir sertifika kullanılmak isteniyorsa "**/etc/ansible/roles/gitlab/templates**" dizininde bulunan "**ssl-crt.j2**" dosyasının yerine kendi ssl sertifikanızı, "**ssl-key.j2**" dosyasının yerine ise kendi sertifikanıza ait key dosyasını koymanız gerekmektedir. Bu noktada yeni koyulacak olan dosyaların isminin "**ssl-crt.j2**" ve "**ssl-key.j2**" olması zaruridir. Aksi takdirde kurulum sırasında hata almanız kaçınılmazdır.
+
 * “**Ansible Playbookları**” dokümanında detaylı anlatımı bulunan, sunucu üzerinde gerekli sıkılaştırma işlemleri ve gitlab kurulumu yapacak olan “**gitlab.yml**” playbook’u çalıştırılır. Ancak ilk kurulma mahsus olmak üzere playbook çalıştırılmadan önce "**gitlab.yml**" dosyası açılır ve "**roles**" altında bulunan "**post**" satırının başına **#** işareti konularak ilk kuruluma mahsus bu rolün çalışmaması sağlanır.
 
 ```
@@ -514,7 +516,8 @@ $ sudo cp /home/ahtapotops/gdyshook.pub /var/opt/gitlab/.ssh/gdyshook.pub
 $ sudo chown ahtapotops:ahtapotops /var/opt/gitlab/.ssh/*
 ```
 ```
-$ chmod 700 ~/.ssh & cd ~/.ssh/
+$ sudo su
+$ chmod 700 /var/opt/gitlab/.ssh & cd /var/opt/gitlab/.ssh/
 $ chmod 600 id_rsa gdyshook myshook
 $ exit
 ```
@@ -708,11 +711,12 @@ $ sudo chown -R ahtapotops:ahtapotops /etc/ansible/*
 ```
 
 ```
+$ cd /etc/ansible
 $ git status
 $ git add --all
-$ git config --global user.email “ansible@test.com”
-$ git config --global user.name “Ansible Makinesi”
-$ git commit -m “MYS ana dosyalari eklendi.” 
+$ git config --global user.email "ansible@test.com"
+$ git config --global user.name "Ansible Makinesi"
+$ git commit -m "MYS ana dosyalari eklendi." 
 $ git push origin master
 
 ```
@@ -806,6 +810,7 @@ $ git push origin master
 * **ÖNEMLİ:** Gitlab kurulumu tamamlandığına göre bir önceki adım olan MYS kurulumu adımına geri dönülür ve başına **#** işareti koyduğumuz **ansible** ve **post** satırlarının başındaki **#** işareti silinir ve **ansible.yml** yeniden aşağıdaki gibi çalıştırılır.
 
 ```
+$ nano /etc/ansible/playbooks/ansible.yml
 $ ansible-playbook /etc/ansible/playbooks/ansible.yml
 
 ```
@@ -813,6 +818,7 @@ $ ansible-playbook /etc/ansible/playbooks/ansible.yml
 Ardından yine başına "**gitlab.yml**" dosyası içinde başına **#** işareti koyduğumuz **post** satırının başındaki **#** işareti silinir ve "**gitlab.yml**" yeniden çalıştırılır.
 
 ```
+$ nano /etc/ansible/playbooks/gitlab.yml
 $ ansible-playbook /etc/ansible/playbooks/gitlab.yml
 
 ```
@@ -828,11 +834,13 @@ Bu adımlar sonunda artık gitlab ve ansible rolleri tamamıyla kurulmuş olacak
 ```
 $ cd /home/ahtapotops/.ssh/
 $ mv ahtapotops id_rsa
-$ mv ahtaporops-cert.pub id_rsa-cert.pub
+$ mv ahtapotops-cert.pub id_rsa-cert.pub
 $ mv ahtapotops.pub id_rsa.pub
 $ chmod 600 id_rsa
 ```
 *  Gitlab arayüzünden veya MYS sunusundan **roles/firewallbuilder/vars/git.yml** dosyası üzerinde **repo01** fonksiyonu altında **repo** satırında bulunan **yerel_gitlab_adresi** bölümünün yerine Merkezi Yönetim Sistemi kapsamında kurulacak Git sunucusunun adresi girilmelidir.
+
+**NOT :** Gitlab adresi girilirken FQDN tamamen küçük harflerle girilmelidir.
 
 ```
 $ nano /etc/ansible/roles/firewallbuilder/vars/git.yml
@@ -891,9 +899,24 @@ fwb_editable_objects:
 
 ```
 $ cd /etc/ansible/
-$ ansible-playbook playbooks/firewallbuilder.yml -k
+$ ansible-playbook playbooks/firewallbuilder.yml
 ```
-
+**NOT :** Bu sırada `"msg": "failed to get the hostkey for git_sunucusu_fqdn"` şeklinde bir hata alınması durumunda aşağıdaki adımlar mys ve firewallbuilder makinesinde uygulanmalıdır:
+1. Aşağıdaki komut ile sunucu fqdn'ine ait ssh key mevcudiyeti kontrol edilir.
+    ```
+    $ ssh-keygen -H -F git_sunucusu_fqdn
+    ```
+2. Aşağıdaki komutlar ile eski keylerin temizlenmesi sağlanır.
+    ```
+    $ ssh-keygen -R git_sunucusu_fqdn
+    $ ssh-keygen -R git_sunucusu_ip
+    ```
+3. Daha sonra aşağıdaki komut kullanılarak key'in tekrardan doğru şekilde alınması sağlanır
+    ```
+    $ ssh -o HostKeyAlias=git_sunucusu_fqdn user@git_sunucusu_fqdn -p git_sunucusu_ssh_port
+    ```
+4. ilk adımdaki kontrol tekrar yapılır. fqdn içinde eğer büyük harf kullanılmışsa küçük harfe çevrilir. Ardından playbook tekrar çalıştırılır.
+    
 * Firewall Builder makinesinde gyds-gui dizinine izin vermek için aşağıdaki komut Firewallbuilder makinesinden çalıştırılır
 
 ```

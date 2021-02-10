@@ -36,39 +36,90 @@ serverN:
 
 Ardından balküpü sistemi ile ilgili aşağıda tanımlanmış değişkenler açıklamalarda belirtilen şekilde uygun değerlerle doldurulur.
 
+- **NOT:** Aşağıdaki adıma geçilmeden önce bal küpü container yapısının network tipi kararlaştırılmalıdır. Bu noktada iki seçenek vardır.  
+  - "**VETH:**" Bu yapıda lxc honeypot host makinesi üzerinde sanal bir bridge network oluşturarak containerlar için farklı subnette bir network yapısı kurar. Containerlara direk olarak erişilemez. Bunun için honeypot host'u üzerinde nat kuralları girilerek ilgili trafik ilgili honeypot container'ına aktarılır.  
+  - "**MACVLAN:**" Bu yapı için honeypot host'u üzerinde minimum 2 adet NIC bulunması gerekmektedir. Birincisi honeypot host sunucusunun MYS ile haberleşmesinde kullanılmak üzere ikincisi ise honeypot containerları için tahsis edilmek üzeredir. Burada Honeypot containerları normal birer host gibi Network içerisine dahil olurlar ve ip alırlar.  
+        
+- **NOT:** Eğer yapılandırma MACVLAN olacak ise bal küpü sunucusu üzerinde aşağıdaki işlemler yapılmalıdır:  
+  - Continerlar için tahsis edilen interface (örn ens224) aşağıdaki komut ile "**up**" konuma getirilmelidir: 
+  ``` 
+  sudo ip link set dev ens224 up
+  ```
+  - Daha sonra boot sırasında bu interface'in up duruma gelmesi için "**/etc/network/interfaces**" dosyasına aşağıdaki konfigürasyon eklenmelidir:  
+  ```  
+  auto ens224   
+  iface ens224 inet manual   
+  up ip link set ens224 up  
+  ```  
+        
+
 
 #### Balküpü Rolü Değişkenleri
 Bu roldeki değişkenler “**/etc/ansible/roles/honeypot/vars/**” dizini altında bulunan yml dosyalarında belirtilmiştir. yml dosyalarının içerikleri ve değişken bilgileri aşağıdaki gibidir;
 
--   “**main.yml**” dosyasında bulunan değişkenlerin görevi şu şekildedir. "**container_mirror**" değişkeni lxc içine kurulacak pardus container'ı için repo adresinin tanımlandığı değişkendir. "**container_security_mirror**" değişkeni lxc içine kurulacak pardus container'ı için güvenlik repo adresinin tanımlandığı değişkendir. "**mhn_url**" değişkeni, mhn servisinin hizmet verdiği adresin belirtildiği değişkendir. "**mhn_deploy_key**" değişkeni mhn sistemine entegre edilecek balküpü sistemler için gerekli olan anahtarın belirtildiği değişkendir. Mhn sisteminin kurulumunun ardından arayüzden bu bilgi alınabilir. 
-"**lxc**" değişkeni altına "/etc/ansible/hosts" dosyasında [honeypot] altına tanımlanan sunucu fqdn adresleri girilir. Bu sayede farklı sunucular için farklı ayarlar yapılma imkanı olur. Her sunucu değişkeni altında da şu değişkenler bulunur:
-"**network_type**" containerların kullanacağı ağ yapılandırması tipinin girildiği değişkendir. "veth" modunun kullanımı tavsiye edilir.
-"**network_link**" containerların erişeceği bridge ağ bacağının ismidir. Bu isimle bir bridge arabirim otomatik olarak yaratılacaktır.
-"**network_hwaddr**" containerlar için türetilecek MAC adresinin ilk üç segmentinin belirtildiği değişkendir. Son üç segment xx:xx:xx olarak yazılır.
-"**netowrk_link_bridge_slave**" yaratılacak bridge arabirime bağlanacak ağ arabiriminin belirtildiği değişkendir.
-"**containers**" değişkeni altına "/etc/ansible/hosts" dosyasında [honeypot] altına tanımlanan sunucu fqdn adresleri girilir. Bu sayede farklı sunucular için farklı ayarlar yapılma imkanı olur. Her sunucu değişkeni altında kurulması istenen balküpü sistemlerinin tanımlarından oluşan bir liste bulunur. Bu sistemlerin tipi şunlardan biri olmak zorundadır: "amun dionaea ftp pop3 smtp wordpot cowrie elastichoney glastopf p0f shockpot suricata conpot"
-"**type**" değişkeni yukarıda belirtilen balküpü tiplerinden biri olabilir.
-"**start_auto**" değişkeni eğer 1 yapılırsa sunucu yeniden başlatıldığında bu balküpü otomatik olarak başlatılır, 0 yapılırsa başlatılmaz.
-"**start_delay**" değişkeni ile container başlatılmadan önce kaç saniye bekleneceği belirtilir.
-"**start_order**" değişkeni ile container'ın hangi öncelikle başlatılacağı belirtilir. Yüksek sayı yüksek öncelik demektir.
-"**force_register**" değişkeni ile container'ın yeniden MHN'e kayıt olup olmaması belirtilir. Eğer aynı container silinmeden tekrar kayıt edilirse MHN sensör listesinde çift kayıt oluşur. Bu nedenle container mhn arayüzünden silinmediği sürece bu değişkenin false olarak kalması tavsiye edilir.
-"**interfaces**"  değişkeni ile ilgili container'ın ağ arabirimleri ve yapılandırmaları belirtilir.
+"**main.yml**" dosyasında bulunan değişkenlerin görevi şu şekildedir:  
+- "**container_mirror**" değişkeni lxc içine kurulacak pardus container'ı için repo adresinin tanımlandığı değişkendir.
+- "**container_security_mirror**" değişkeni lxc içine kurulacak pardus container'ı için güvenlik repo adresinin tanımlandığı değişkendir.
+- "**mhn_url**" değişkeni, mhn servisinin hizmet verdiği adresin belirtildiği değişkendir.
+- "**mhn_honeymap_url**" değişkeni, mhn honeymap servisinin hizmet verdiği adresin belirtildiği değişkendir.
+- "**mhn_deploy_key**" değişkeni mhn sistemine entegre edilecek balküpü sistemler için gerekli olan anahtarın belirtildiği değişkendir. Mhn sisteminin kurulumunun ardından arayüzden bu bilgi alınabilir.  
+- "**lxc**" değişkeni altına "/etc/ansible/hosts" dosyasında [honeypot] altına tanımlanan sunucu fqdn adresleri girilir. Bu sayede farklı sunucular için farklı ayarlar yapılma imkanı olur. Her sunucu değişkeni altında da şu değişkenler bulunur:  
+- "**network_type**" containerların kullanacağı ağ yapılandırması tipinin girildiği değişkendir. Basit kullanım için "veth" modunun kullanımı tavsiye edilir. Gelişmiş kullanım ve network içindeki doğal dağılım yapısını sağlamak için ise "macvlan" modu tavsiye edilir.
+- "**network_link**" containerların erişeceği ağ bacağının ismidir. Eğer;  
+  - "network_type" değişkeni "veth" olarak girilmişse => Bu değişken değeri "lxcbr0" olmalıdır. Bu isimle bir bridge arabirim otomatik olarak yaratılacaktır.
+  - "network_type" değişkeni "macvlan" olarak girilmişse => Bu değişken değeri yukarıda bahsedildiği üzere containerlar için tahsis edilmiş ağ arabiriminin adı olmalıdır.
+- "**network_hwaddr**" containerlar için türetilecek MAC adresinin ilk üç segmentinin belirtildiği değişkendir. Son üç segment xx:xx:xx olarak yazılır.
+- "**network_link_bridge_slave**" Eğer;  
+  - "network_type" değişkeni "veth" olarak girilmişse => Yaratılacak bridge arabirime bağlanacak ağ arabiriminin adı olmalıdır.
+  - "network_type" değişkeni "macvlan" olarak girilmişse => Bu değişken değeri yukarıda bahsedildiği üzere containerlar için tahsis edilmiş ağ arabiriminin adı olmalıdır.  
+- "**containers**" değişkeni altına "/etc/ansible/hosts" dosyasında [honeypot] altına tanımlanan sunucu fqdn adresleri girilir. Bu sayede farklı sunucular için farklı ayarlar yapılma imkanı olur. Her sunucu değişkeni altında kurulması istenen balküpü sistemlerinin tanımlarından oluşan bir liste bulunur. Bu sistemlerin tipi şunlardan biri olmak zorundadır: "amun dionaea ftp pop3 smtp wordpot cowrie elastichoney glastopf p0f shockpot suricata conpot"  
+- "**type**" değişkeni yukarıda belirtilen balküpü tiplerinden biri olabilir.
+- "**start_auto**" değişkeni eğer 1 yapılırsa sunucu yeniden başlatıldığında bu balküpü otomatik olarak başlatılır, 0 yapılırsa başlatılmaz.
+- "**start_delay**" değişkeni ile container başlatılmadan önce kaç saniye bekleneceği belirtilir.
+- "**start_order**" değişkeni ile container'ın hangi öncelikle başlatılacağı belirtilir. Yüksek sayı yüksek öncelik demektir.
+- "**force_register**" değişkeni ile container'ın yeniden MHN'e kayıt olup olmaması belirtilir. Eğer aynı container silinmeden tekrar kayıt edilirse MHN sensör listesinde çift kayıt oluşur. Bu nedenle container mhn arayüzünden silinmediği sürece bu değişkenin false olarak kalması tavsiye edilir.
+- "**interfaces**"  değişkeni ile ilgili container'ın ağ arabirimleri ve yapılandırmaları belirtilir.
 
 ```
 ---
 container_mirror: http://depo.pardus.org.tr/pardus/
 container_security_mirror: http://depo.pardus.org.tr/guvenlik/
-mhn_url: http://169.254.1.9
-mhn_deploy_key: r0SwHB9N
+mhn_url: http://10.0.3.100 # Asagida tanimlanan mhn containerina ait IP bilgisi
+mhn_honeymap_url: http://10.0.3.100:3000 # Mhn containerina ait IP bilgisi
+mhn_deploy_key: xlINEePk
+lxc_upgrade_minute: 0
+lxc_upgrade_hour: 3
 lxc:
   pardus.ahtapot:
-    network_type: veth # veth|macvlan
-    network_link: br0
+    network_type: macvlan # veth|macvlan
+    network_link: enp0s3 # type veth ise => lxcbr0
     network_hwaddr: 00:16:3e:xx:xx:xx
-    netowrk_link_bridge_slave: enp0s3
+    network_link_bridge_slave: enp0s3
+    rsyslog_type: omfile
+    rsyslog_target:
+    rsyslog_port:
+    rsyslog_tls:
+    rsyslog_tls_cacert:
+    rsyslog_tls_mycert:
+    rsyslog_tls_myprivkey:
+    rsyslog_tls_authmode:
+    rsyslog_tls_permittedpeer:
 containers:
 # amun dionaea ftp pop3 smtp wordpot cowrie elastichoney conpot glastopf p0f shockpot suricata
   pardus.ahtapot:
+  - type: "mhn"
+    start_auto: 1
+    start_delay: 0
+    start_order: 0
+    force_register: true
+    interfaces:
+    - name: eth0
+      type: static
+      address: 10.0.3.100
+      netmask: 255.255.255.0
+      network: 10.0.3.0
+      broadcast: 10.0.3.255
+      gateway: 10.0.3.1
   - type: "cowrie"
     start_auto: 1
     start_delay: 0
@@ -77,11 +128,11 @@ containers:
     interfaces:
     - name: eth0
       type: static
-      address: 169.254.1.101
+      address: 10.0.3.101
       netmask: 255.255.255.0
-      network: 169.254.1.0
-      broadcast: 169.254.1.255
-      gateway: 169.254.1.9
+      network: 10.0.3.0
+      broadcast: 10.0.3.255
+      gateway: 10.0.3.1
   - type: "dionaea"
     start_auto: 1
     start_delay: 0
@@ -90,11 +141,11 @@ containers:
     interfaces:
     - name: eth0
       type: static
-      address: 169.254.1.102
+      address: 10.0.3.102
       netmask: 255.255.255.0
-      network: 169.254.1.0
-      broadcast: 169.254.1.255
-      gateway: 169.254.1.9
+      network: 10.0.3.0
+      broadcast: 10.0.3.255
+      gateway: 10.0.3.1
   - type: "p0f"
     start_auto: 1
     start_delay: 0
@@ -103,11 +154,11 @@ containers:
     interfaces:
     - name: eth0
       type: static
-      address: 169.254.1.103
+      address: 10.0.3.103
       netmask: 255.255.255.0
-      network: 169.254.1.0
-      broadcast: 169.254.1.255
-      gateway: 169.254.1.9 
+      network: 10.0.3.0
+      broadcast: 10.0.3.255
+      gateway: 10.0.3.1 
   - type: "smtp"
     start_auto: 1
     start_delay: 0
@@ -116,11 +167,11 @@ containers:
     interfaces:
     - name: eth0
       type: static
-      address: 169.254.1.104
+      address: 10.0.3.104
       netmask: 255.255.255.0
-      network: 169.254.1.0
-      broadcast: 169.254.1.255
-      gateway: 169.254.1.9
+      network: 10.0.3.0
+      broadcast: 10.0.3.255
+      gateway: 10.0.3.1
   - type: "glastopf"
     start_auto: 1
     start_delay: 0
@@ -129,11 +180,11 @@ containers:
     interfaces:
     - name: eth0
       type: static
-      address: 169.254.1.105
+      address: 10.0.3.105
       netmask: 255.255.255.0
-      network: 169.254.1.0
-      broadcast: 169.254.1.255
-      gateway: 169.254.1.9
+      network: 10.0.3.0
+      broadcast: 10.0.3.255
+      gateway: 10.0.3.1
   - type: "ftp"
     start_auto: 1
     start_delay: 0
@@ -142,11 +193,11 @@ containers:
     interfaces:
     - name: eth0
       type: static
-      address: 169.254.1.106
+      address: 10.0.3.106
       netmask: 255.255.255.0
-      network: 169.254.1.0
-      broadcast: 169.254.1.255
-      gateway: 169.254.1.9
+      network: 10.0.3.0
+      broadcast: 10.0.3.255
+      gateway: 10.0.3.1
   - type: "pop3"
     start_auto: 1
     start_delay: 0
@@ -155,11 +206,11 @@ containers:
     interfaces:
     - name: eth0
       type: static
-      address: 169.254.1.107
+      address: 10.0.3.107
       netmask: 255.255.255.0
-      network: 169.254.1.0
-      broadcast: 169.254.1.255
-      gateway: 169.254.1.9
+      network: 10.0.3.0
+      broadcast: 10.0.3.255
+      gateway: 10.0.3.1
   - type: "shockpot"
     start_auto: 1
     start_delay: 0
@@ -168,11 +219,11 @@ containers:
     interfaces:
     - name: eth0
       type: static
-      address: 169.254.1.108
+      address: 10.0.3.108
       netmask: 255.255.255.0
-      network: 169.254.1.0
-      broadcast: 169.254.1.255
-      gateway: 169.254.1.9
+      network: 10.0.3.0
+      broadcast: 10.0.3.255
+      gateway: 10.0.3.1
   - type: "wordpot"
     start_auto: 1
     start_delay: 0
@@ -181,11 +232,11 @@ containers:
     interfaces:
     - name: eth0
       type: static
-      address: 169.254.1.109
+      address: 10.0.3.109
       netmask: 255.255.255.0
-      network: 169.254.1.0
-      broadcast: 169.254.1.255
-      gateway: 169.254.1.9
+      network: 10.0.3.0
+      broadcast: 10.0.3.255
+      gateway: 10.0.3.1
   - type: "amun"
     start_auto: 1
     start_delay: 0
@@ -194,11 +245,11 @@ containers:
     interfaces:
     - name: eth0
       type: static
-      address: 169.254.1.110
+      address: 10.0.3.110
       netmask: 255.255.255.0
-      network: 169.254.1.0
-      broadcast: 169.254.1.255
-      gateway: 169.254.1.9
+      network: 10.0.3.0
+      broadcast: 10.0.3.255
+      gateway: 10.0.3.1
   - type: "suricata"
     start_auto: 1
     start_delay: 0
@@ -207,11 +258,11 @@ containers:
     interfaces:
     - name: eth0
       type: static
-      address: 169.254.1.111
+      address: 10.0.3.111
       netmask: 255.255.255.0
-      network: 169.254.1.0
-      broadcast: 169.254.1.255
-      gateway: 169.254.1.9
+      network: 10.0.3.0
+      broadcast: 10.0.3.255
+      gateway: 10.0.3.1
   - type: "elastichoney"
     start_auto: 1
     start_delay: 0
@@ -220,12 +271,12 @@ containers:
     interfaces:
     - name: eth0
       type: static
-      address: 169.254.1.112
+      address: 10.0.3.112
       netmask: 255.255.255.0
-      network: 169.254.1.0
-      broadcast: 169.254.1.255
-      gateway: 169.254.1.9
-- type: "conpot"
+      network: 10.0.3.0
+      broadcast: 10.0.3.255
+      gateway: 10.0.3.1
+  - type: "conpot"
     start_auto: 1
     start_delay: 0
     start_order: 0
@@ -233,15 +284,12 @@ containers:
     interfaces:
     - name: eth0
       type: static
-      address: 169.254.1.113
+      address: 10.0.3.113
       netmask: 255.255.255.0
-      network: 169.254.1.0
-      broadcast: 169.254.1.255
-      gateway: 169.254.1.9
-
-
+      network: 10.0.3.0
+      broadcast: 10.0.3.255
+      gateway: 10.0.3.1
 ```
-
 -   “**cowrie.yml**” dosyası ile cowrie balküpü sistemlerinin ortak yapılandırmaları yapılır. Bu dosyada bulunan değişkenler şu şekildedir.
 "**cowrie_hostname**" değişkeni cowrie balküpü sisteminin hostname'inin belirtildiği değişkendir.  "**cowrie_enable_ssh**" değişkeni cowrie balküpü sisteminin ssh tuzak sisteminin aktif olup olmamasının belirtildiği değişkendir. "**cowrie_real_ssh_port**" cowrie balküpü sistemine erişip yönetebilmek için kullanılacak port tanımının yapıldığı değişkendir.   "**cowrie_ssh_port**" değişkeni, cowrie balküpü sisteminde tuzak ssh sunucusunun hizmet vereceği portun belirtildiği değişkendir. "**cowrie_ssh_version**" tuzak ssh sisteminin taklit edeceği ssh sürümünün belirtildiği değişkendir.  "**cowrie_enable_telnet**" değişkeni cowrie balküpü sisteminin telnet tuzak sisteminin aktif olup olmamasının belirtildiği değişkendir. "**cowrie_telnet_port**" değişkeni, cowrie balküpü sisteminde tuzak telnet sunucusunun hizmet vereceği portun belirtildiği değişkendir. "**cowrie_register_check_file**" cowrie balküpünün Mhn'e başarılı bir şekilde kayıt olduktan sonra oluşturduğu dosyanın yoludur.
 ```
