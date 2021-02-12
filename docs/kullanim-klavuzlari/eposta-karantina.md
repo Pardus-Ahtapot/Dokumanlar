@@ -48,6 +48,12 @@ quarantine_db_root_pass: "root"
 ```
 
 ### E-posta Karantina Kullanımı
+```
+URL: karantina.mail.test.org (yukarıdaki örneğe istinaden)
+Varsayılan Kullanıcı Adı: admin
+Varsayılan Şifre: password
+```
+- **NOT:** Arayüze FQDN adresi üzerinden erişim sağlamak zorunludur. Ip adresi üzerinden gelen isteklere cevap verilmez.
 
 ![Karantina](../img/modoboa.png)
 
