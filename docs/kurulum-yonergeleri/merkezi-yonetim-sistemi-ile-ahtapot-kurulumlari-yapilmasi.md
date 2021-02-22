@@ -30,6 +30,7 @@ $ sudo chown ahtapotops:ahtapotops -R /etc/ansible/
 $ sudo apt-get install -y git
 $ cd /etc/ansible
 $ git clone -b development https://github.com/Pardus-Ahtapot/MYS.git && cp -rf /etc/ansible/MYS/ahtapotmys/* /etc/ansible/
+$ rm -rf /etc/ansible/MYS
 ```
 * Ahtapot projesi kapsamında oluşacak tüm loglar **/var/log/ahtapot/** dizinine yazılmaktadır. Bu dizinin sahipliğini **ahtapotops** kullanıcısına vermek için aşağıdaki komut çalıştırılır.
 
