@@ -22,6 +22,7 @@ $ mkdir ~/.ssh && chmod 700 ~/.ssh
 $ cp /home/ahtapotops/ahtapotops /home/ahtapotops/.ssh/id_rsa  && chmod 600 /home/ahtapotops/.ssh/id_rsa
 $ cp /home/ahtapotops/ahtapotops-cert.pub /home/ahtapotops/.ssh/id_rsa-cert.pub  && chmod 600 /home/ahtapotops/.ssh/id_rsa-cert.pub
 $ cp /home/ahtapotops/ahtapotops.pub /home/ahtapotops/.ssh/id_rsa.pub  && chmod 600 /home/ahtapotops/.ssh/id_rsa.pub
+$ touch /home/ahtapotops/.ssh/authorized_keys && cat ahtapotops.pub >> ~/.ssh/authorized_keys
 ```
 * Kurulum, sıkılaştırma vb. gibi işleri otomatize etmeyi sağlayan ansible playbook’ları Ahtapot reposundan ahtapot-mys paketi ile indirilebilir veya Github'tan Ahtapot projesi indirilerek, son güncel ahtapotmys kullanılabilir.
 ```
