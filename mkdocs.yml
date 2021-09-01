@@ -21,6 +21,8 @@ pages:
     - 'Icinga Kurulumu': 'kurulum-yonergeleri/icinga-kurulum.md'
     - 'Veritabanı Güvenlik Duvarı Kurulumu': 'kurulum-yonergeleri/veritabani-guvenlik-duvari-kurulumu.md'
     - 'Web Uygulama Güvenlik Duvarı Kurulumu': 'kurulum-yonergeleri/web-uygulama-guvenlik-duvari-kurulumu.md'
+    - 'DNS Güvenlik Duvarı Kurulumu': 'kurulum-yonergeli/dns-guvenlik-duvari-kurulumu.md'
+
 - "KULLANIM KLAVUZLARI": 
     - 'Güvenlik Duvarı Yönetim Sistemi Kullanımı': 'kullanim-klavuzlari/gdys-kullanim.md'
     - 'Geçici Kural Tanımlama Sistemi Kullanımı': 'kullanim-klavuzlari/gkts-kullanim.md'
