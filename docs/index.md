@@ -22,7 +22,7 @@ Ahtapot, Pardus Linux üzerine inşa edilen ve bir kurumun ihtiyaç duyacağı t
 * Ağ Erişim Kontrol Sistemi (NAC)
 * Örün Uygulama Güvenlik Duvarı (WAF)
 * Veritabanı Güvenlik Duvarı 
-
+* DNS Güvenlik Duvarı
 
 
 ### Bütünleştirilmesi Devam Eden Bileşenler
